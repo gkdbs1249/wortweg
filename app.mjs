@@ -1,4 +1,4 @@
-import { addDays, bilingualMeaning, buildNightLesson, calendarDayStatus, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, isExampleGapCorrect, isGermanHeadwordCorrect, learningCardSides, lessonOverview, monthCalendarDays, prioritizeReviewItems, pronounceableGerman, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts } from './src/core.mjs';
+import { addDays, bilingualMeaning, buildNightLesson, calendarDayStatus, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, isExampleGapCorrect, isGermanHeadwordCorrect, learningCardSides, lessonOverview, monthCalendarDays, prioritizeReviewItems, pronounceableGerman, reverseEnterAction, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts } from './src/core.mjs';
 import { initializeCloudSync, queueCloudProgressSave, signInWithGoogle, signOutFromGoogle } from './src/cloud-sync.mjs';
 
 const STORAGE_KEY = 'wortweg-a1-progress-v1';
@@ -448,10 +448,12 @@ function renderReverseLearning(cohort, sessionWordIds, index, attemptId, submitt
     ? isFullPerfectNow ? 'Richtig(정답)! 🎉 이번 회차 전체 무오답이에요!' : 'Richtig(정답)!'
     : 'Noch nicht(아직 아니에요).';
   const nextLabel = isFinalQuestion ? '전체 단어 보기' : '다음 단어';
-  app.innerHTML = `<section class="session"><div class="session-head"><h1>뜻 → 독일어 거꾸로 학습</h1><span class="pill">${attempt.number}회차 · ${index+1} / ${sessionWordIds.length}</span></div><div class="progress-track"><div class="progress-bar" style="width:${(index/sessionWordIds.length)*100}%"></div></div><article class="flashcard"><div class="word">${escapeHtml(prompt)}</div><div class="meta">한국어·영어 뜻에 맞는 독일어를 직접 입력하세요. 명사는 관사까지 써보세요.</div><form id="reverseForm" class="answer-form"><input id="reverseAnswer" type="text" style="font-size:20px" value="${escapeHtml(submittedAnswer ?? '')}" placeholder="독일어를 입력하세요" autocomplete="off" autocapitalize="none" spellcheck="false" ${submitted?'disabled':'required'}><button class="primary" type="submit" ${submitted?'disabled':''}>제출</button></form>${submitted?`<div class="feedback ${correct?'correct-text':'wrong-text'}">${answerFeedback}</div><div class="meaning">정답: ${escapeHtml(item.german)}</div>${pronunciationButton(item.german)}`:''}</article><div class="card-actions"><button id="home" class="secondary">나가기</button>${submitted?`<button id="next" class="primary">${nextLabel}</button>`:''}</div></section>`;
+  app.innerHTML = `<section class="session reverse-learning-session" data-reverse-submitted="${submitted}"><div class="session-head"><h1>뜻 → 독일어 거꾸로 학습</h1><span class="pill">${attempt.number}회차 · ${index+1} / ${sessionWordIds.length}</span></div><div class="progress-track"><div class="progress-bar" style="width:${(index/sessionWordIds.length)*100}%"></div></div><article class="flashcard"><div class="word">${escapeHtml(prompt)}</div><div class="meta">한국어·영어 뜻에 맞는 독일어를 직접 입력하세요. 명사는 관사까지 써보세요.</div><form id="reverseForm" class="answer-form"><input id="reverseAnswer" type="text" style="font-size:20px" value="${escapeHtml(submittedAnswer ?? '')}" placeholder="독일어를 입력하세요" autocomplete="off" autocapitalize="none" spellcheck="false" ${submitted?'disabled':'required'}><button class="primary" type="submit" ${submitted?'disabled':''}>제출</button></form>${submitted?`<div class="feedback ${correct?'correct-text':'wrong-text'}">${answerFeedback}</div><div class="meaning">정답: ${escapeHtml(item.german)}</div>${pronunciationButton(item.german)}`:''}</article><div class="card-actions"><button id="home" class="secondary">나가기</button>${submitted?`<button id="next" class="primary">${nextLabel}</button>`:''}</div></section>`;
   document.querySelector('#home').onclick=renderDashboard;
   if (submitted) {
-    document.querySelector('#next').onclick=()=>renderReverseLearning(cohort,sessionWordIds,index+1,attemptId);
+    const nextButton = document.querySelector('#next');
+    nextButton.onclick=()=>renderReverseLearning(cohort,sessionWordIds,index+1,attemptId);
+    nextButton.focus();
   } else {
     const input = document.querySelector('#reverseAnswer');
     input.focus();
@@ -575,6 +577,24 @@ function renderComplete(icon,title,message) {
   document.querySelector('#backHome').onclick=renderDashboard;
 }
 
+function bindReverseKeyboard() {
+  app.addEventListener('keydown', event => {
+    if (event.key !== 'Enter') return;
+    const session = event.target.closest('[data-reverse-submitted]');
+    if (!session) return;
+    const action = reverseEnterAction({
+      submitted: session.dataset.reverseSubmitted === 'true',
+      targetIsNext: Boolean(event.target.closest('#next')),
+      isComposing: event.isComposing || event.keyCode === 229,
+      repeat: event.repeat,
+      isTextArea: event.target.matches('textarea,[contenteditable="true"]'),
+    });
+    if (action === 'native' || action === 'submit') return;
+    event.preventDefault();
+    if (action === 'next') session.querySelector('#next')?.click();
+  });
+}
+
 function bindGlobalNavigation() {
   document.querySelector('.brand').onclick=event=>{
     event.preventDefault();
@@ -634,7 +654,7 @@ async function init() {
   if(!response.ok) throw new Error('단어 데이터를 불러오지 못했습니다.');
   words=await response.json();
   if(words.some(item=>!item.korean||!item.english||!item.exampleGerman)) throw new Error('한국어·영어 뜻 또는 공식 예문 데이터가 아직 완성되지 않았습니다.');
-  byId=new Map(words.map(item=>[item.id,item])); bindGlobalNavigation(); bindPronunciation(); bindSettings(); renderDashboard(); bindAuth();
+  byId=new Map(words.map(item=>[item.id,item])); bindGlobalNavigation(); bindPronunciation(); bindReverseKeyboard(); bindSettings(); renderDashboard(); bindAuth();
   if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
 }
 init().catch(error=>{app.innerHTML=`<section class="complete"><div class="celebrate">⚠️</div><h1>앱을 시작할 수 없어요</h1><p>${escapeHtml(error.message)}</p></section>`});

@@ -23,6 +23,7 @@ import {
   nounArticleQuestion,
   prioritizeReviewItems,
   pronounceableGerman,
+  reverseEnterAction,
   shuffleCopy,
   summarizeLearningDay,
   summarizeReverseAttempts,
@@ -433,4 +434,17 @@ test('learner can add a chosen number of fresh words to today without duplicates
   assert.equal(result.cohort.newCount, 4);
   assert.equal(result.cohort.learningDone, false);
   assert.deepEqual(cohort.wordIds, ['w1', 'w2']);
+});
+
+test('reverse Enter submits before feedback and advances only after a fresh second press', () => {
+  assert.equal(reverseEnterAction({ submitted: false }), 'submit');
+  assert.equal(reverseEnterAction({ submitted: true, targetIsNext: true }), 'next');
+  assert.equal(reverseEnterAction({ submitted: true, targetIsNext: true, enterHeld: true }), 'ignore');
+  assert.equal(reverseEnterAction({ submitted: true, targetIsNext: true, repeat: true }), 'ignore');
+  assert.equal(reverseEnterAction({ submitted: true, targetIsNext: true, isComposing: true }), 'ignore');
+});
+
+test('reverse Enter leaves other controls to their native behavior', () => {
+  assert.equal(reverseEnterAction({ submitted: true, targetIsNext: false }), 'native');
+  assert.equal(reverseEnterAction({ submitted: true, targetIsNext: true, isTextArea: true }), 'native');
 });

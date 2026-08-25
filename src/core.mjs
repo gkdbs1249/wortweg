@@ -387,6 +387,13 @@ export function summarizeLearningDay(cohort) {
   };
 }
 
+export function reverseEnterAction({ submitted, targetIsNext = false, isComposing = false, repeat = false, enterHeld = false, isTextArea = false }) {
+  if (isTextArea) return 'native';
+  if (isComposing || repeat || enterHeld) return 'ignore';
+  if (!submitted) return 'submit';
+  return targetIsNext ? 'next' : 'native';
+}
+
 export function buildNightLesson(freshWords, carriedWords, dailyCount = 20) {
   const selected = freshWords.slice(0, dailyCount);
   const ids = new Set(selected.map(word => word.id));

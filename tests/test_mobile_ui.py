@@ -170,6 +170,21 @@ class MobileInputTests(unittest.TestCase):
         self.assertIn("addExtraWordsToday", app)
         self.assertRegex(styles, r"\.extra-word-controls\{[^}]*display:grid")
 
+    def test_extra_word_card_stays_compact_on_mobile(self):
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn(".extra-word-task{display:grid;grid-template-columns:48px minmax(0,1fr)}", styles)
+        self.assertIn(".extra-word-task .task-copy{min-width:0}", styles)
+        self.assertIn(".extra-word-controls{grid-column:1/-1;width:100%", styles)
+
+    def test_reverse_enter_submits_then_advances_on_a_fresh_second_press(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        self.assertIn("bindReverseKeyboard()", app)
+        self.assertIn("data-reverse-submitted=", app)
+        self.assertIn("reverseEnterAction", app)
+        self.assertIn("nextButton.focus()", app)
+        self.assertIn("event.isComposing", app)
+        self.assertIn("event.repeat", app)
+
 
 if __name__ == "__main__":
     unittest.main()
