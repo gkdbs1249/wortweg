@@ -185,6 +185,11 @@ class MobileInputTests(unittest.TestCase):
         self.assertIn("event.isComposing", app)
         self.assertIn("event.repeat", app)
 
+    def test_service_worker_activates_new_keyboard_fix_without_waiting_for_old_tabs(self):
+        worker = (ROOT / "sw.js").read_text(encoding="utf-8")
+        self.assertIn("self.skipWaiting()", worker)
+        self.assertIn("self.clients.claim()", worker)
+
 
 if __name__ == "__main__":
     unittest.main()
