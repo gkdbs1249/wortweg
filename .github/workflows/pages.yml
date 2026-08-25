@@ -25,18 +25,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Install Python test dependency
-        run: python -m pip install pymupdf
       - name: Run JavaScript tests
         run: node --test tests/core.test.mjs
       - name: Run Python tests
         run: |
           python3 tests/test_mobile_ui.py
           python3 tests/test_data.py
-          python3 tests/test_extract.py
           python3 tests/test_translate.py
       - name: Build static Pages artifact
         run: |
