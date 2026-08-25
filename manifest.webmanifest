@@ -1,0 +1,10 @@
+{
+  "name": "WortWeg · Goethe A1 단어 학습",
+  "short_name": "WortWeg",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f7f7f7",
+  "theme_color": "#ff385c",
+  "description": "2026년 10월 20일 Goethe A1 시험 대비 단어 학습과 간격 복습",
+  "icons": []
+}

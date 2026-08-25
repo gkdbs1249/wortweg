@@ -1,0 +1,5362 @@
+[
+  {
+    "id": "da23614e0246",
+    "german": "ab",
+    "korean": "~부터",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "from/as of",
+    "exampleGerman": "Ab morgen muss ich arbeiten."
+  },
+  {
+    "id": "329ed817c5dc",
+    "german": "aber",
+    "korean": "하지만",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "but/however",
+    "exampleGerman": "Ich bin oft im Büro, aber nur für wenige Stunden."
+  },
+  {
+    "id": "819928af4835",
+    "german": "abfahren",
+    "korean": "출발하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "depart/leave",
+    "exampleGerman": "Wir fahren um zwölf Uhr ab."
+  },
+  {
+    "id": "ac879268d159",
+    "german": "die Abfahrt",
+    "korean": "출발",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "departure",
+    "exampleGerman": "Vor der Abfahrt rufe ich an."
+  },
+  {
+    "id": "50a705ff18c0",
+    "german": "abgeben",
+    "korean": "제출하다/건네주다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "submit/hand in",
+    "exampleGerman": "Ich muss meine Schlüssel abgeben."
+  },
+  {
+    "id": "e0c6204e8bc1",
+    "german": "abholen",
+    "korean": "데리러 가다/찾아오다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "pick up/collect",
+    "exampleGerman": "Wann kann ich den Schrank bei dir abholen?"
+  },
+  {
+    "id": "69e39a2c32f1",
+    "german": "der Absender",
+    "korean": "발신인",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "sender",
+    "exampleGerman": "Da ist ein Brief für dich ohne Absender."
+  },
+  {
+    "id": "eb92b8d3531e",
+    "german": "Achtung",
+    "korean": "주의",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "attention/caution",
+    "exampleGerman": "Achtung! Das dürfen Sie nicht tun."
+  },
+  {
+    "id": "714159ea7b11",
+    "german": "die Adresse,-en",
+    "korean": "주소",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "address",
+    "exampleGerman": "Können Sie mir seine Adresse sagen?"
+  },
+  {
+    "id": "d87c448044de",
+    "german": "all-",
+    "korean": "모든",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "all/every",
+    "exampleGerman": "Alles Gute!"
+  },
+  {
+    "id": "dc56aa1f450d",
+    "german": "allein",
+    "korean": "혼자",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "alone",
+    "exampleGerman": "Er kommt allein."
+  },
+  {
+    "id": "09706c418809",
+    "german": "also",
+    "korean": "그러니까/그래서",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "so/therefore",
+    "exampleGerman": "Also, es ist so: ..."
+  },
+  {
+    "id": "325562c769da",
+    "german": "alt",
+    "korean": "나이 든/오래된",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "old",
+    "exampleGerman": "Wie alt sind Sie?"
+  },
+  {
+    "id": "bc2281b3f2fc",
+    "german": "das Alter",
+    "korean": "나이",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "age",
+    "exampleGerman": "Alter: 26 Jahre."
+  },
+  {
+    "id": "de73eac0c305",
+    "german": "an",
+    "korean": "~에/~에서",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "at/on",
+    "exampleGerman": "Fahren Sie an der nächsten Straße nach rechts."
+  },
+  {
+    "id": "577fee23e2f5",
+    "german": "anbieten",
+    "korean": "제공하다/권하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "offer",
+    "exampleGerman": "Was darf ich dir anbieten?"
+  },
+  {
+    "id": "70adab2ebb80",
+    "german": "das Angebot, -e",
+    "korean": "제안/특가 상품",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "offer/special offer",
+    "exampleGerman": "Heute sind Sportschuhe im Angebot."
+  },
+  {
+    "id": "02e5d17c3d0e",
+    "german": "ander-",
+    "korean": "다른",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "other/different",
+    "exampleGerman": "WiIlst du diese Jacke?"
+  },
+  {
+    "id": "44804c519d7a",
+    "german": "anfangen",
+    "korean": "시작하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "begin/start",
+    "exampleGerman": "Hier fängt die Bahnhofstraße an."
+  },
+  {
+    "id": "55c39266f3f8",
+    "german": "der Anfang",
+    "korean": "시작",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "beginning/start",
+    "exampleGerman": "Sie wohnt am Anfang der Straße."
+  },
+  {
+    "id": "e9927cddf2fa",
+    "german": "anklicken",
+    "korean": "클릭하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "click",
+    "exampleGerman": "Da musst du dieses Wort anklicken."
+  },
+  {
+    "id": "c59854fc3049",
+    "german": "ankommen",
+    "korean": "도착하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "arrive",
+    "exampleGerman": "Wann kommt dieser Zug in Hamburg an?"
+  },
+  {
+    "id": "c7f5f0e63cb7",
+    "german": "die Ankunft",
+    "korean": "도착",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "arrival",
+    "exampleGerman": "Auf diesem Plan steht nur die Ankunft(-szeit) der Züge."
+  },
+  {
+    "id": "44a857b1b1f0",
+    "german": "ankreuzen",
+    "korean": "표시하다/체크하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "tick/check",
+    "exampleGerman": "Auf dem Formular müssen Sie an mehreren Stellen etwas ankreuzen."
+  },
+  {
+    "id": "605c7ed9dd46",
+    "german": "anmachen",
+    "korean": "켜다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "turn on/switch on",
+    "exampleGerman": "Mach bitte das Licht an!"
+  },
+  {
+    "id": "a088a5b85674",
+    "german": "(sich) anmelden",
+    "korean": "신청하다/등록하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "register/sign up",
+    "exampleGerman": "Wo kann ich mich anmelden?"
+  },
+  {
+    "id": "71bb49856cd6",
+    "german": "die Anmeldung",
+    "korean": "신청/등록",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "registration/sign-up",
+    "exampleGerman": "Eine Anmeldung für diesen Kurs ist nicht mehr möglich."
+  },
+  {
+    "id": "edf8a438c00a",
+    "german": "die Anrede",
+    "korean": "호칭",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "form of address/salutation",
+    "exampleGerman": "Schreiben Sie auch eine Anrede und einen Gruß."
+  },
+  {
+    "id": "44f8f8722798",
+    "german": "anrufen",
+    "korean": "전화하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "call/phone",
+    "exampleGerman": "Kann man Sie anrufen?"
+  },
+  {
+    "id": "8414ac976419",
+    "german": "der Anruf, -e",
+    "korean": "전화",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "call/phone call",
+    "exampleGerman": "Sie bekommt viele Anrufe auf ihrem Handy."
+  },
+  {
+    "id": "5878f52a569b",
+    "german": "der Anrufbeantworter",
+    "korean": "자동응답기",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "answering machine/voicemail",
+    "exampleGerman": "Wir sind im Moment nicht da. Sprechen Sie bitte auf den Anrufbeantworter."
+  },
+  {
+    "id": "d3e50818c717",
+    "german": "die Ansage, -n",
+    "korean": "안내 방송/메시지",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "announcement/recorded message",
+    "exampleGerman": "Hören Sie die Ansagen."
+  },
+  {
+    "id": "9242c606d760",
+    "german": "der Anschluss",
+    "korean": "연결/접속",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "connection/connecting service",
+    "exampleGerman": "In Mannheim haben Sie Anschluss nach Saarbrücken."
+  },
+  {
+    "id": "bd6ab7785400",
+    "german": "an sein",
+    "korean": "켜져 있다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "be on",
+    "exampleGerman": "Heute Nacht war das Licht an."
+  },
+  {
+    "id": "ec17cc36a682",
+    "german": "antworten",
+    "korean": "대답하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "answer/reply",
+    "exampleGerman": "Er antwortet nicht."
+  },
+  {
+    "id": "66f8e3b27ced",
+    "german": "die Antwort, -en",
+    "korean": "대답",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "answer/reply",
+    "exampleGerman": "Er gibt leider keine Antwort."
+  },
+  {
+    "id": "4b48ba465938",
+    "german": "die Anzeige, -n",
+    "korean": "광고",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "advertisement/display",
+    "exampleGerman": "Ich habe Ihre Anzeige in der Zeitung gelesen."
+  },
+  {
+    "id": "95fcb8e0d521",
+    "german": "(sich) anziehen",
+    "korean": "옷을 입다/입히다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "get dressed/put on",
+    "exampleGerman": "Ich muss mich noch anziehen."
+  },
+  {
+    "id": "cceeaae0faf5",
+    "german": "das Apartment, -s",
+    "korean": "아파트",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "apartment/flat",
+    "exampleGerman": "Wir haben ein Apartment gemietet."
+  },
+  {
+    "id": "bbb7d574385b",
+    "german": "der Apfel, -Ä",
+    "korean": "사과",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "apple",
+    "exampleGerman": "Ein Pfund Äpfel bitte."
+  },
+  {
+    "id": "c9f01b9a667b",
+    "german": "der Appetit",
+    "korean": "식욕",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "appetite",
+    "exampleGerman": "Guten Appetit!"
+  },
+  {
+    "id": "a4d48f1fb2cb",
+    "german": "arbeiten",
+    "korean": "일하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "work",
+    "exampleGerman": "Wo arbeiten Sie?"
+  },
+  {
+    "id": "7ba2c8dd882b",
+    "german": "die Arbeit, -en",
+    "korean": "일/직장",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "work/job",
+    "exampleGerman": "Mein Bruder sucht Arbeit."
+  },
+  {
+    "id": "be2eeba66fb4",
+    "german": "arbeitslos",
+    "korean": "실직한",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "unemployed/jobless",
+    "exampleGerman": "Es gibt bei uns viele Leute, die schon lange arbeitslos sind."
+  },
+  {
+    "id": "c59f3095041a",
+    "german": "der Arbeitsplatz, -ä, e",
+    "korean": "일자리/근무 장소",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "workplace/job",
+    "exampleGerman": "An meinem Arbeitsplatz fehlt ein Drucker."
+  },
+  {
+    "id": "3948edae44a6",
+    "german": "der Arm, -e",
+    "korean": "팔",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "arm",
+    "exampleGerman": "Mein Arm tut weh."
+  },
+  {
+    "id": "076d090a9238",
+    "german": "der Arzt, -Ä, e",
+    "korean": "의사",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "doctor",
+    "exampleGerman": "Morgen habe ich einen Termin bei meiner Ärztin."
+  },
+  {
+    "id": "3ae54a2721b4",
+    "german": "auch",
+    "korean": "또한/~도",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "also/too",
+    "exampleGerman": "Ich bin auch Spanier."
+  },
+  {
+    "id": "ddf835c91bc6",
+    "german": "auf",
+    "korean": "~위에/~에서",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "on/onto",
+    "exampleGerman": "Die Kinder spielen auf der Straße."
+  },
+  {
+    "id": "225847f0c6fa",
+    "german": "die Aufgabe, -n",
+    "korean": "과제/일",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "task/exercise",
+    "exampleGerman": "Das ist eine schwere Aufgabe."
+  },
+  {
+    "id": "230af0e45e70",
+    "german": "aufhören",
+    "korean": "그만두다/끝나다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "stop/quit",
+    "exampleGerman": "Der Kurs hört in einer Woche auf."
+  },
+  {
+    "id": "fa3893ecd557",
+    "german": "auf sein",
+    "korean": "열려 있다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "be open",
+    "exampleGerman": "Du brauchst den Schlüssel nicht. Die Wohnung ist auf."
+  },
+  {
+    "id": "f201e4ca5948",
+    "german": "aufstehen",
+    "korean": "일어나다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "get up/stand up",
+    "exampleGerman": "Ich muss immer um vier Uhr aufstehen."
+  },
+  {
+    "id": "f510c702615d",
+    "german": "der Aufzug, -ü, e",
+    "korean": "엘리베이터",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "elevator/lift",
+    "exampleGerman": "In diesem Haus gibt es keinen Aufzug."
+  },
+  {
+    "id": "71d6eb8bc80c",
+    "german": "das Auge, -n",
+    "korean": "눈",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "eye",
+    "exampleGerman": "Er hat blaue Augen."
+  },
+  {
+    "id": "ff0187bcd476",
+    "german": "aus",
+    "korean": "~에서/밖으로",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "from/out of",
+    "exampleGerman": "Er kommt aus Brasilien."
+  },
+  {
+    "id": "64799923e7d4",
+    "german": "der Ausflug",
+    "korean": "소풍/나들이",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "excursion/trip",
+    "exampleGerman": "Morgen machen wir einen Ausflug nach Heidelberg."
+  },
+  {
+    "id": "fd7af0b723c8",
+    "german": "ausfüllen",
+    "korean": "작성하다/기입하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "fill out/complete",
+    "exampleGerman": "Füllen Sie bitte dieses Formular aus."
+  },
+  {
+    "id": "7025a1988ee3",
+    "german": "der Ausgang",
+    "korean": "출구",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "exit",
+    "exampleGerman": "Wo ist der Ausgang?"
+  },
+  {
+    "id": "1dd4d9db9dcc",
+    "german": "die Auskunft, -ü, e",
+    "korean": "안내/정보",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "information/advice",
+    "exampleGerman": "Können Sie mir eine Auskunft geben?"
+  },
+  {
+    "id": "900b5f724f62",
+    "german": "das Ausland",
+    "korean": "외국/해외",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "foreign country/abroad",
+    "exampleGerman": "Fahren Sie ins Ausland?"
+  },
+  {
+    "id": "62a227757839",
+    "german": "der Ausländer, -",
+    "korean": "외국인",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "foreigner",
+    "exampleGerman": "SInd Sie Ausländerin?"
+  },
+  {
+    "id": "c636b533b960",
+    "german": "ausländisch",
+    "korean": "외국의",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "foreign",
+    "exampleGerman": "Leider habe ich nur ausländisches Geld."
+  },
+  {
+    "id": "89c128f33398",
+    "german": "ausmachen",
+    "korean": "끄다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "turn off/arrange",
+    "exampleGerman": "Mach bitte das Licht aus!"
+  },
+  {
+    "id": "4a53fc83b01f",
+    "german": "die Aussage, -n",
+    "korean": "진술/발언",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "statement",
+    "exampleGerman": "Ist die Aussage richtig oder falsch?"
+  },
+  {
+    "id": "e4131c88d57b",
+    "german": "aussehen",
+    "korean": "~처럼 보이다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "look/appear",
+    "exampleGerman": "Das sieht schön aus."
+  },
+  {
+    "id": "e18895f684c3",
+    "german": "aus sein",
+    "korean": "꺼져 있다/끝나다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "be off/be over",
+    "exampleGerman": "Das Licht ist aus."
+  },
+  {
+    "id": "71b19485e2e2",
+    "german": "aussteigen",
+    "korean": "내리다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "get off/get out",
+    "exampleGerman": "Wo muss ich aussteigen?"
+  },
+  {
+    "id": "098451cc49f8",
+    "german": "der Ausweis",
+    "korean": "신분증",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "ID/identity card",
+    "exampleGerman": "Hier ist mein Ausweis."
+  },
+  {
+    "id": "6b807f27099f",
+    "german": "(sich) ausziehen",
+    "korean": "벗다/이사하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "take off/move out",
+    "exampleGerman": "Zieh die Schuhe aus, bitte!"
+  },
+  {
+    "id": "0b5c76e56c9b",
+    "german": "das Auto, -s",
+    "korean": "자동차",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "car",
+    "exampleGerman": "Er kommt mit dem Auto."
+  },
+  {
+    "id": "2e3db29d5249",
+    "german": "die Autobahn, -en",
+    "korean": "고속도로",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "motorway/highway",
+    "exampleGerman": "Wo geht‘s hier bitte zur Autobahn?"
+  },
+  {
+    "id": "104e00aa521f",
+    "german": "der Automat",
+    "korean": "자동판매기/자동기계",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "vending machine/machine",
+    "exampleGerman": "Die Fahrkarten gibt es nur am Automaten."
+  },
+  {
+    "id": "651d3d887e26",
+    "german": "automatisch",
+    "korean": "자동으로",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "automatic/automatically",
+    "exampleGerman": "Du musst nichts machen. Das geht automatisch."
+  },
+  {
+    "id": "e31cafd0bf6c",
+    "german": "das Baby, -s",
+    "korean": "아기",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "baby",
+    "exampleGerman": "Mein Kind ist noch ein Baby."
+  },
+  {
+    "id": "e06e9dba3113",
+    "german": "die Bäckerei",
+    "korean": "빵집",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bakery",
+    "exampleGerman": "Ich geh mal schnell zur Bäckerei."
+  },
+  {
+    "id": "519616ef0975",
+    "german": "das Bad",
+    "korean": "욕실/목욕",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bathroom/bath",
+    "exampleGerman": "Wir haben kein großes Bad."
+  },
+  {
+    "id": "4ed26a758e5e",
+    "german": "baden",
+    "korean": "목욕하다/수영하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bathe/swim",
+    "exampleGerman": "Ich bade nicht so gern, ich dusche lieber."
+  },
+  {
+    "id": "159a8a89fe59",
+    "german": "die Bahn",
+    "korean": "철도/기차",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "train/railway",
+    "exampleGerman": "Wir fahren lieber mit der Bahn."
+  },
+  {
+    "id": "1fbbd26cd0c2",
+    "german": "der Bahnhof",
+    "korean": "기차역",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "train station",
+    "exampleGerman": "Komme ich hier zum Bahnhof?"
+  },
+  {
+    "id": "e473f84de489",
+    "german": "der Bahnsteig",
+    "korean": "승강장",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "platform",
+    "exampleGerman": "Auf welchem Bahnsteig fährt der Zug?"
+  },
+  {
+    "id": "4675f60d8b28",
+    "german": "bald",
+    "korean": "곧",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "soon",
+    "exampleGerman": "Ich komme bald."
+  },
+  {
+    "id": "d0a867036cdb",
+    "german": "der Balkon",
+    "korean": "발코니",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "balcony",
+    "exampleGerman": "Die Wohnung hat auch einen kleinen Balkon."
+  },
+  {
+    "id": "bd46c448e30d",
+    "german": "die Banane, -n",
+    "korean": "바나나",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "banana",
+    "exampleGerman": "Drei Bananen, bitte!"
+  },
+  {
+    "id": "68785f03c4a9",
+    "german": "die Bank",
+    "korean": "은행/벤치",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bank/bench",
+    "exampleGerman": "Die Bank schließt schon um vier Uhr."
+  },
+  {
+    "id": "62cdb7020ff9",
+    "german": "bar",
+    "korean": "현금으로",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "in cash",
+    "exampleGerman": "Muss ich bar zahlen oder geht‘s auch mit Karte?"
+  },
+  {
+    "id": "661d8ea9faa4",
+    "german": "der Bauch",
+    "korean": "배",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "belly/stomach",
+    "exampleGerman": "Seit gestern tut mir der Bauch weh."
+  },
+  {
+    "id": "c4aaf5ebf9da",
+    "german": "der Baum, -ä, e",
+    "korean": "나무",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "tree",
+    "exampleGerman": "Vorsicht, fahr nicht an den Baum!"
+  },
+  {
+    "id": "0a2d80cd85f9",
+    "german": "der Beamte, -n",
+    "korean": "공무원",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "civil servant/official",
+    "exampleGerman": "Fragen Sie die Beamtin an Schalter acht!"
+  },
+  {
+    "id": "b64190afe15b",
+    "german": "bedeuten",
+    "korean": "의미하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "mean/signify",
+    "exampleGerman": "Was bedeutet das Wort?"
+  },
+  {
+    "id": "529ef49535f9",
+    "german": "beginnen",
+    "korean": "시작하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "begin/start",
+    "exampleGerman": "Das Spiel beginnt um 15.30 Uhr."
+  },
+  {
+    "id": "fbbb118f529e",
+    "german": "bei",
+    "korean": "~에서/~의 곁에",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "at/with",
+    "exampleGerman": "Offenbach liegt bei Frankfurt."
+  },
+  {
+    "id": "0778d73407fb",
+    "german": "beide",
+    "korean": "둘 다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "both",
+    "exampleGerman": "Beide Eltern arbeiten."
+  },
+  {
+    "id": "d4bee444de6f",
+    "german": "das Bein, -e",
+    "korean": "다리",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "leg",
+    "exampleGerman": "Mein rechtes Bein tut weh."
+  },
+  {
+    "id": "126d6165f873",
+    "german": "das Beispiel, -e",
+    "korean": "예/사례",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "example",
+    "exampleGerman": "Kannst du mir ein Beispiel sagen?"
+  },
+  {
+    "id": "b7d206f7b3c2",
+    "german": "zum Beispiel/z. B.",
+    "korean": "예를 들어",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "for example",
+    "exampleGerman": "Viele meiner Verwandten, z. B. meine beiden Brüder, arbeiten auch hier."
+  },
+  {
+    "id": "237a8728b4ec",
+    "german": "bekannt",
+    "korean": "알려진/친숙한",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "known/familiar",
+    "exampleGerman": "Picasso ist sehr bekannt."
+  },
+  {
+    "id": "773c2036f894",
+    "german": "der/die Bekannte, -n",
+    "korean": "아는 사람/지인",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "acquaintance",
+    "exampleGerman": "Ein Bekannter von mir heißt Klaus."
+  },
+  {
+    "id": "870acc20ddb9",
+    "german": "bekommen",
+    "korean": "받다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "get/receive",
+    "exampleGerman": "Haben Sie meinen Brief bekommen?"
+  },
+  {
+    "id": "f17e5adf24c4",
+    "german": "benutzen",
+    "korean": "사용하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "use",
+    "exampleGerman": "Die Aufzüge bitte nicht benutzen!"
+  },
+  {
+    "id": "552679b7f9c8",
+    "german": "der Beruf, -e",
+    "korean": "직업",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "profession/job",
+    "exampleGerman": "Was sind Sie von Beruf?"
+  },
+  {
+    "id": "f5ec6b32e006",
+    "german": "besetzt",
+    "korean": "사용 중인/자리가 찬",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "occupied/busy",
+    "exampleGerman": "Die Nummer ist immer besetzt."
+  },
+  {
+    "id": "a63fe64a4466",
+    "german": "besichtigen",
+    "korean": "관람하다/둘러보다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "visit/view",
+    "exampleGerman": "Ich möchte gern den Dom besichtigen."
+  },
+  {
+    "id": "e43833de5a73",
+    "german": "besser",
+    "korean": "더 좋은/더 잘",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "better",
+    "exampleGerman": "Es geht mir schon besser."
+  },
+  {
+    "id": "c5f5e4d75252",
+    "german": "best-",
+    "korean": "가장 좋은",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "best",
+    "exampleGerman": "Am besten treffen wir uns morgen."
+  },
+  {
+    "id": "61f4c8d9c7f7",
+    "german": "bestellen",
+    "korean": "주문하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "order",
+    "exampleGerman": "Wir möchten bestellen, bitte."
+  },
+  {
+    "id": "c4b843d000b5",
+    "german": "besuchen",
+    "korean": "방문하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "visit",
+    "exampleGerman": "Darf ich dich besuchen?"
+  },
+  {
+    "id": "1c0587e0f213",
+    "german": "das Bett, -en",
+    "korean": "침대",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bed",
+    "exampleGerman": "Wir brauchen noch ein Kinderbett."
+  },
+  {
+    "id": "ab8526793d64",
+    "german": "bezahlen",
+    "korean": "지불하다/계산하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "pay",
+    "exampleGerman": "Wo muss ich bezahlen?"
+  },
+  {
+    "id": "07707df6e5be",
+    "german": "das Bier",
+    "korean": "맥주",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "beer",
+    "exampleGerman": "Noch ein Bier bitte."
+  },
+  {
+    "id": "de9c0610b2e7",
+    "german": "das Bild, -er",
+    "korean": "그림/사진",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "picture/image",
+    "exampleGerman": "Hast du ein Bild von deinem Sohn?"
+  },
+  {
+    "id": "f074a3ca0d97",
+    "german": "die Birne, -n",
+    "korean": "배/전구",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "pear/light bulb",
+    "exampleGerman": "Ein Kilo Birnen, bitte!"
+  },
+  {
+    "id": "1094cd06521b",
+    "german": "bis",
+    "korean": "~까지",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "until/to",
+    "exampleGerman": "Ich fahre nur bis Stuttgart."
+  },
+  {
+    "id": "1e8785c03319",
+    "german": "bisschen",
+    "korean": "조금",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "a little",
+    "exampleGerman": "Ich spreche Englisch, Französisch und ein bisschen Deutsch."
+  },
+  {
+    "id": "4462f2eb5bca",
+    "german": "bitte",
+    "korean": "부탁합니다/천만에요",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "please/you're welcome",
+    "exampleGerman": "Eine Tasse Kaffee, bitte!"
+  },
+  {
+    "id": "96a908a43d1e",
+    "german": "die Bitte, -n",
+    "korean": "부탁",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "request/plea",
+    "exampleGerman": "Ich habe noch eine Bitte."
+  },
+  {
+    "id": "090ef54998fd",
+    "german": "bitten",
+    "korean": "부탁하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "ask/request",
+    "exampleGerman": "Darf ich Sie um etwas bitten?"
+  },
+  {
+    "id": "23fda791fa87",
+    "german": "bitter",
+    "korean": "쓴",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bitter",
+    "exampleGerman": "Der Kaffee schmeckt bitter."
+  },
+  {
+    "id": "a9d5f20b40eb",
+    "german": "bleiben",
+    "korean": "머무르다/남다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "stay/remain",
+    "exampleGerman": "Ich bleibe heute zu Hause."
+  },
+  {
+    "id": "d766901c9845",
+    "german": "der Bleistift, -e",
+    "korean": "연필",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "pencil",
+    "exampleGerman": "Hast du einen Bleistift?"
+  },
+  {
+    "id": "6e01012d061c",
+    "german": "der Blick",
+    "korean": "시선/눈길",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "look/view",
+    "exampleGerman": "Von diesem Hotel hat man einen guten Blick auf den Rhein."
+  },
+  {
+    "id": "cd501d3e1b6a",
+    "german": "die Blume, -n",
+    "korean": "꽃",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "flower",
+    "exampleGerman": "Gefallen dir die Blumen?"
+  },
+  {
+    "id": "90dc31b6074a",
+    "german": "der Bogen",
+    "korean": "종이 한 장/활",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "sheet/form",
+    "exampleGerman": "Schreiben Sie Ihre Lösungen bitte auf den Antwortbogen."
+  },
+  {
+    "id": "8bc929981c9d",
+    "german": "böse",
+    "korean": "화난/나쁜",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "angry/bad",
+    "exampleGerman": "Sie ist böse auf mich."
+  },
+  {
+    "id": "01703815697f",
+    "german": "brauchen",
+    "korean": "필요로 하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "need",
+    "exampleGerman": "Brauchst du die Zeitung noch?"
+  },
+  {
+    "id": "3d84bb18c224",
+    "german": "breit",
+    "korean": "넓은",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "wide/broad",
+    "exampleGerman": "Wie breit ist der Schrank?"
+  },
+  {
+    "id": "5c97ef812a84",
+    "german": "der Brief, -e",
+    "korean": "편지",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "letter",
+    "exampleGerman": "Haben Sie einen Brief für mich?"
+  },
+  {
+    "id": "485391f3aaa4",
+    "german": "die Briefmarke, -n",
+    "korean": "우표",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "stamp",
+    "exampleGerman": "Kaufst du bitte Briefmarken bei der Post."
+  },
+  {
+    "id": "625591cb8d06",
+    "german": "bringen",
+    "korean": "가져오다/데려오다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bring",
+    "exampleGerman": "Bringen Sie mir bitte noch einen Kaffee!"
+  },
+  {
+    "id": "a92dd9fa85a9",
+    "german": "das Brot, -e",
+    "korean": "빵",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bread",
+    "exampleGerman": "Haben Sie auch Weißbrot?"
+  },
+  {
+    "id": "5430bc07b0f0",
+    "german": "das Brötchen, –",
+    "korean": "작은 빵",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bread roll/roll",
+    "exampleGerman": "Möchtest du Brötchen zum Frühstück?"
+  },
+  {
+    "id": "a839dce78acc",
+    "german": "der Bruder, -ü",
+    "korean": "남자 형제",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "brother",
+    "exampleGerman": "Sein Bruder arbeitet auch hier."
+  },
+  {
+    "id": "2e5cd533829b",
+    "german": "das Buch, -ü, er",
+    "korean": "책",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "book",
+    "exampleGerman": "Gute Bücher sind oft sehr teuer."
+  },
+  {
+    "id": "5861f6cc16ab",
+    "german": "der Buchstabe, -n",
+    "korean": "글자/알파벳 문자",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "letter/character",
+    "exampleGerman": "Diesen Buchstaben gibt es in meiner Sprache nicht."
+  },
+  {
+    "id": "483e13f9fbe0",
+    "german": "buchstabieren",
+    "korean": "철자를 말하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "spell",
+    "exampleGerman": "Bitte buchstabieren Sie Ihren Namen."
+  },
+  {
+    "id": "61451149aaab",
+    "german": "der Bus, -se",
+    "korean": "버스",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bus",
+    "exampleGerman": "Wann kommt der nächste Bus?"
+  },
+  {
+    "id": "ca171e665862",
+    "german": "die Butter",
+    "korean": "버터",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "butter",
+    "exampleGerman": "Für mich bitte ein Brötchen mit Butter und Käse."
+  },
+  {
+    "id": "0aff6eada2b1",
+    "german": "das Café, -s",
+    "korean": "카페",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "café",
+    "exampleGerman": "Sollen wir uns im Café treffen?"
+  },
+  {
+    "id": "4da53e388e09",
+    "german": "die CD, -s",
+    "korean": "CD",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "CD/disc",
+    "exampleGerman": "Bring bitte deine Lieblings-CD mit."
+  },
+  {
+    "id": "8848583d8635",
+    "german": "der Chef",
+    "korean": "상사/사장",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "boss",
+    "exampleGerman": "Wir haben eine neue Chefin."
+  },
+  {
+    "id": "7bdcf9c6dc0b",
+    "german": "circa/ca.",
+    "korean": "약/대략",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "about/approximately",
+    "exampleGerman": "Von Mainz nach Frankfurt sind es circa fünfzig Kilometer."
+  },
+  {
+    "id": "eb3ee523a7e7",
+    "german": "der Computer, –",
+    "korean": "컴퓨터",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "computer",
+    "exampleGerman": "Wann bekommst du deinen neuen Computer?"
+  },
+  {
+    "id": "cdd4f8740950",
+    "german": "da",
+    "korean": "거기에/그때",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "there/then",
+    "exampleGerman": "Da hinten ist er ja."
+  },
+  {
+    "id": "d79ac6c3ada0",
+    "german": "die Dame, -n",
+    "korean": "숙녀/여성",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "lady/woman",
+    "exampleGerman": "Damen (an der Toilette)"
+  },
+  {
+    "id": "281be1ba2e20",
+    "german": "daneben",
+    "korean": "그 옆에",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "next to it/beside it",
+    "exampleGerman": "Du kennst doch die Post. Daneben ist die Bank."
+  },
+  {
+    "id": "184831158ae7",
+    "german": "danken",
+    "korean": "감사하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "thank",
+    "exampleGerman": "Ich danke Ihnen für die Einladung."
+  },
+  {
+    "id": "979ecb4e4dd5",
+    "german": "der Dank",
+    "korean": "감사",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "thanks/gratitude",
+    "exampleGerman": "Vielen Dank!"
+  },
+  {
+    "id": "032b7fcc66db",
+    "german": "danke",
+    "korean": "고마워요",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "thank you/thanks",
+    "exampleGerman": "Soll ich Ihnen helfen? - Nein, danke!"
+  },
+  {
+    "id": "2cd3eb8290c1",
+    "german": "dann",
+    "korean": "그다음/그러면",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "then/after that",
+    "exampleGerman": "Ich muss noch schnell zur Post, dann komme ich."
+  },
+  {
+    "id": "014161806f83",
+    "german": "das Datum",
+    "korean": "날짜",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "date",
+    "exampleGerman": "Bitte schreiben Sie noch das Datum auf das Formular."
+  },
+  {
+    "id": "ca6e25fc40b6",
+    "german": "dauern",
+    "korean": "지속되다/걸리다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "last/take",
+    "exampleGerman": "Wie lange dauert der Film?"
+  },
+  {
+    "id": "2fa9937478a3",
+    "german": "dein-",
+    "korean": "너의",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "your",
+    "exampleGerman": "Ist das dein Auto?"
+  },
+  {
+    "id": "f2c3f7ec506d",
+    "german": "denn",
+    "korean": "왜냐하면/도대체",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "then/because",
+    "exampleGerman": "Ich kann nicht kommen, denn ich bin krank."
+  },
+  {
+    "id": "65a38f9d7c11",
+    "german": "der, die, das",
+    "korean": "그",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "the",
+    "exampleGerman": "Ich nehme das da."
+  },
+  {
+    "id": "72d430ef95d1",
+    "german": "dich",
+    "korean": "너를",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "you",
+    "exampleGerman": "Die Blumen sind für dich."
+  },
+  {
+    "id": "17d625981db7",
+    "german": "dies-",
+    "korean": "이/이것",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "this",
+    "exampleGerman": "Ich nehme lieber diesen Kuchen."
+  },
+  {
+    "id": "7ee737c83ee6",
+    "german": "dir",
+    "korean": "너에게",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "you",
+    "exampleGerman": "Gefallen dir die Blumen?"
+  },
+  {
+    "id": "2b45dde89503",
+    "german": "die Disco",
+    "korean": "디스코장",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "disco/nightclub",
+    "exampleGerman": "Heute abend gehen wir in die Disco tanzen."
+  },
+  {
+    "id": "22122a3280be",
+    "german": "der Doktor",
+    "korean": "박사/의사",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "doctor",
+    "exampleGerman": "Meine Tochter ist krank. Wir gehen zum Doktor."
+  },
+  {
+    "id": "9f9b8181c34e",
+    "german": "das Doppelzimmer",
+    "korean": "2인실",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "double room",
+    "exampleGerman": "Wollen Sie ein Doppelzimmer oder ein Einzelzimmer?"
+  },
+  {
+    "id": "eb3d9e2d9f29",
+    "german": "das Dorf, -ö, er",
+    "korean": "마을",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "village",
+    "exampleGerman": "Meine Familie lebt in einem Dorf."
+  },
+  {
+    "id": "06f4b270a0e4",
+    "german": "dort, -her, -hin",
+    "korean": "거기에/저기",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "there",
+    "exampleGerman": "Deine Tasche kannst du dorthin stellen."
+  },
+  {
+    "id": "31ee24531845",
+    "german": "draußen",
+    "korean": "밖에",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "outside/outdoors",
+    "exampleGerman": "Wollen wir draußen sitzen?"
+  },
+  {
+    "id": "535ab653fa4e",
+    "german": "drucken",
+    "korean": "인쇄하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "print",
+    "exampleGerman": "Bitte drucke das Formular für mich."
+  },
+  {
+    "id": "116fc5f1a7e6",
+    "german": "der Drucker, –",
+    "korean": "프린터",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "printer",
+    "exampleGerman": "Mein Drucker ist kaputt."
+  },
+  {
+    "id": "4135b264b653",
+    "german": "drücken",
+    "korean": "누르다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "press/push",
+    "exampleGerman": "Drück hier, dann geht der Computer an."
+  },
+  {
+    "id": "f3d66beffba2",
+    "german": "durch",
+    "korean": "통과하여/통해",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "through",
+    "exampleGerman": "Am besten gehen Sie durch die Breite Straße."
+  },
+  {
+    "id": "ee14aa98f4e6",
+    "german": "die Durchsage, -n",
+    "korean": "안내 방송",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "announcement",
+    "exampleGerman": "Ich habe die Durchsage nicht verstanden."
+  },
+  {
+    "id": "e0ad539610ed",
+    "german": "dürfen",
+    "korean": "해도 되다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "may/be allowed to",
+    "exampleGerman": "Sie dürfen hier nicht rauchen."
+  },
+  {
+    "id": "d66add17582f",
+    "german": "der Durst",
+    "korean": "갈증",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "thirst",
+    "exampleGerman": "Hast du etwas zu trinken? Ich habe großen Durst."
+  },
+  {
+    "id": "f6f1a35f180c",
+    "german": "(sich) duschen",
+    "korean": "샤워하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "shower",
+    "exampleGerman": "Ich bade nicht so gern, ich dusche lieber."
+  },
+  {
+    "id": "dac5a1f77ee2",
+    "german": "die Dusche",
+    "korean": "샤워기/샤워실",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "shower",
+    "exampleGerman": "Unsere Wohnung hat nur eine Dusche."
+  },
+  {
+    "id": "564ac2117538",
+    "german": "die Ecke, -n",
+    "korean": "모퉁이/구석",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "corner",
+    "exampleGerman": "An der nächsten Ecke links."
+  },
+  {
+    "id": "c3331a940ba2",
+    "german": "die Ehefrau, -en/ der Ehemann, ä, er",
+    "korean": "아내",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "wife",
+    "exampleGerman": "Das ist mein (Ehe-) Mann/meine (Ehe-) Frau."
+  },
+  {
+    "id": "afc9b36ba4da",
+    "german": "das Ei, -er",
+    "korean": "달걀",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "egg",
+    "exampleGerman": "Möchtest du ein Ei zum Frühstück?"
+  },
+  {
+    "id": "3fa082befb04",
+    "german": "eilig",
+    "korean": "급한/서두르는",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "urgent/in a hurry",
+    "exampleGerman": "Hast du es eilig?"
+  },
+  {
+    "id": "eaa2e2ff60b9",
+    "german": "ein-",
+    "korean": "하나의/어떤",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "a/an",
+    "exampleGerman": "Ich nehme ein Bier. Willst du auch eins?"
+  },
+  {
+    "id": "3f5e71584b94",
+    "german": "einfach",
+    "korean": "쉬운/간단히",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "easy/simple",
+    "exampleGerman": "Die Prüfung ist ganz einfach."
+  },
+  {
+    "id": "3af218605d7b",
+    "german": "der Eingang",
+    "korean": "입구",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "entrance",
+    "exampleGerman": "Der Eingang ist um die Ecke."
+  },
+  {
+    "id": "0b240a46f6ea",
+    "german": "einkaufen",
+    "korean": "장보다/쇼핑하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "shop/go shopping",
+    "exampleGerman": "Ich muss noch für morgen einkaufen."
+  },
+  {
+    "id": "5a9005aa3021",
+    "german": "einladen",
+    "korean": "초대하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "invite",
+    "exampleGerman": "Darf ich Sie zu einem Kaffee einladen?"
+  },
+  {
+    "id": "b7ae22ea0bf9",
+    "german": "einmal",
+    "korean": "한 번",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "once/one time",
+    "exampleGerman": "Diese Prüfung mache ich nicht noch einmal."
+  },
+  {
+    "id": "782f00ca017b",
+    "german": "einsteigen",
+    "korean": "타다/승차하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "get in/board",
+    "exampleGerman": "Schnell, steig ein, der Zug fährt gleich."
+  },
+  {
+    "id": "53392a6bcccf",
+    "german": "der Eintritt",
+    "korean": "입장/입장료",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "admission/entrance fee",
+    "exampleGerman": "Der Preis für den Eintritt ist 5 Euro."
+  },
+  {
+    "id": "4b4510f92595",
+    "german": "das Einzelzimmer",
+    "korean": "1인실",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "single room",
+    "exampleGerman": "Haben Sie noch ein Einzelzimmer?"
+  },
+  {
+    "id": "694976faccfc",
+    "german": "die Eltern (pl.)",
+    "korean": "부모님",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "parents",
+    "exampleGerman": "Meine Eltern leben in Spanien."
+  },
+  {
+    "id": "04cb151079f3",
+    "german": "die E-Mail, -s",
+    "korean": "이메일",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "email",
+    "exampleGerman": "Ich habe Ihre E-Mail nicht bekommen."
+  },
+  {
+    "id": "a0862c8e80ea",
+    "german": "der Empfänger, –",
+    "korean": "수신인",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "recipient",
+    "exampleGerman": "Auf dem Brief steht dein Name, also bist du der Empfänger."
+  },
+  {
+    "id": "b4e3d655bcf8",
+    "german": "empfehlen",
+    "korean": "추천하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "recommend",
+    "exampleGerman": "Welchen Wein können Sie mir empfehlen?"
+  },
+  {
+    "id": "c06ccb50b025",
+    "german": "enden",
+    "korean": "끝나다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "end/finish",
+    "exampleGerman": "Die Straße endet hier."
+  },
+  {
+    "id": "11208d2f848c",
+    "german": "das Ende",
+    "korean": "끝/종료",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "end",
+    "exampleGerman": "Sie wohnt am Ende der Straße."
+  },
+  {
+    "id": "242710ae0e9d",
+    "german": "entschuldigen",
+    "korean": "용서하다/사과하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "excuse/apologize",
+    "exampleGerman": "Entschuldigen Sie bitte!"
+  },
+  {
+    "id": "a98c074590c5",
+    "german": "die Entschuldigung",
+    "korean": "사과/실례",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "apology/excuse",
+    "exampleGerman": "Entschuldigung! – Bitte."
+  },
+  {
+    "id": "602c57ffb51a",
+    "german": "er",
+    "korean": "그가/그는",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "he",
+    "exampleGerman": "Er heißt Ali."
+  },
+  {
+    "id": "4af270fa1b7f",
+    "german": "das Ergebnis, -se",
+    "korean": "결과",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "result",
+    "exampleGerman": "Das Ergebnis des Tests bekommen Sie in zwei Wochen."
+  },
+  {
+    "id": "604c2c35240a",
+    "german": "erklären",
+    "korean": "설명하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "explain",
+    "exampleGerman": "Kannst du mir das erklären?"
+  },
+  {
+    "id": "ee88af6a7259",
+    "german": "erlauben",
+    "korean": "허락하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "allow/permit",
+    "exampleGerman": "Rauchen ist hier nicht erlaubt."
+  },
+  {
+    "id": "727d20bdd51a",
+    "german": "der Erwachsene, -n",
+    "korean": "성인/어른",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "adult",
+    "exampleGerman": "Dieser Film ist nur für Erwachsene."
+  },
+  {
+    "id": "d6145411b0fd",
+    "german": "erzählen",
+    "korean": "이야기하다/말해 주다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "tell/narrate",
+    "exampleGerman": "Wir müssen euch etwas erzählen!"
+  },
+  {
+    "id": "09cd68a2a77b",
+    "german": "es",
+    "korean": "그것",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "it",
+    "exampleGerman": "Es regnet."
+  },
+  {
+    "id": "1c3c8bc4c1fb",
+    "german": "essen",
+    "korean": "먹다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "eat",
+    "exampleGerman": "Was gibt es zu essen?"
+  },
+  {
+    "id": "2ef5f8bc25f8",
+    "german": "das Essen",
+    "korean": "음식/식사",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "food/meal",
+    "exampleGerman": "Das Essen ist heute sehr gut."
+  },
+  {
+    "id": "0df9f29ce8d2",
+    "german": "euer",
+    "korean": "너희의",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "your",
+    "exampleGerman": "Euer Kurs beginnt heute."
+  },
+  {
+    "id": "3672aacec131",
+    "german": "fahren",
+    "korean": "타고 가다/운전하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "travel/drive",
+    "exampleGerman": "Ich fahre mit dem Auto zur Arbeit."
+  },
+  {
+    "id": "6e7e49a7af93",
+    "german": "der Fahrer",
+    "korean": "운전사",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "driver",
+    "exampleGerman": "Bitte nicht mit dem Fahrer sprechen!"
+  },
+  {
+    "id": "8f50ab717776",
+    "german": "die Fahrkarte, -n",
+    "korean": "승차권/표",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "ticket",
+    "exampleGerman": "Hast du schon eine Fahrkarte?"
+  },
+  {
+    "id": "1e8eaacfe721",
+    "german": "das Fahrrad, -ä, er",
+    "korean": "자전거",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bicycle",
+    "exampleGerman": "Fährst du mit dem Fahrrad oder mit dem Auto?"
+  },
+  {
+    "id": "808bf60f1ab6",
+    "german": "falsch",
+    "korean": "틀린/잘못된",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "wrong/incorrect",
+    "exampleGerman": "Das ist falsch."
+  },
+  {
+    "id": "32ca1dc3e885",
+    "german": "die Familie, -n",
+    "korean": "가족",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "family",
+    "exampleGerman": "Meine Familie lebt in Spanien."
+  },
+  {
+    "id": "36311918d206",
+    "german": "der Familienname",
+    "korean": "성",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "surname/family name",
+    "exampleGerman": "Meine Familiennamen sind García González."
+  },
+  {
+    "id": "9d5793b7ee53",
+    "german": "der Familienstand",
+    "korean": "혼인 상태",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "marital status",
+    "exampleGerman": "Bei „Familienstand“ musst du „ledig“ ankreuzen."
+  },
+  {
+    "id": "b3f4040bbfd7",
+    "german": "die Farbe, -n",
+    "korean": "색깔",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "color",
+    "exampleGerman": "Die Farbe gefällt mir gut."
+  },
+  {
+    "id": "21e38ab56a5c",
+    "german": "das Fax, -e",
+    "korean": "팩스",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "fax",
+    "exampleGerman": "Schicken Sie uns einfach ein Fax!"
+  },
+  {
+    "id": "dcdee4b941f4",
+    "german": "Feier-",
+    "korean": "축제/기념일",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "celebration/festival",
+    "exampleGerman": "z. B. Feierabend, Feiertag Am Montag ist Feiertag."
+  },
+  {
+    "id": "152cfbee1f2c",
+    "german": "feiern",
+    "korean": "축하하다/파티하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "celebrate",
+    "exampleGerman": "Wir feiern heute meinen Geburtstag."
+  },
+  {
+    "id": "5f507657a165",
+    "german": "fehlen",
+    "korean": "없다/빠지다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "be missing/lack",
+    "exampleGerman": "Herr Müller ist nicht da, er fehlt schon seit drei Tagen."
+  },
+  {
+    "id": "42b47a464aca",
+    "german": "der Fehler, –",
+    "korean": "실수/오류",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "mistake/error",
+    "exampleGerman": "Diesen Fehler mache ich immer."
+  },
+  {
+    "id": "fd046951d3cf",
+    "german": "fernsehen",
+    "korean": "텔레비전을 보다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "watch television",
+    "exampleGerman": "Wollen wir heute Abend mal fernsehen?"
+  },
+  {
+    "id": "54e0d1a7115f",
+    "german": "fertig",
+    "korean": "끝난/준비된",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "finished/ready",
+    "exampleGerman": "Bist du fertig?"
+  },
+  {
+    "id": "6406c902337e",
+    "german": "das Feuer",
+    "korean": "불",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "fire",
+    "exampleGerman": "Haben Sie Feuer?"
+  },
+  {
+    "id": "a046bcdc4e4b",
+    "german": "das Fieber",
+    "korean": "열/발열",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "fever",
+    "exampleGerman": "Mein Mann hat noch immer Fieber."
+  },
+  {
+    "id": "0cbfb50fdc89",
+    "german": "der Film, -e",
+    "korean": "영화",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "film/movie",
+    "exampleGerman": "Ich möchte gern diesen Film sehen."
+  },
+  {
+    "id": "59b2424a83b3",
+    "german": "finden",
+    "korean": "찾다/발견하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "find",
+    "exampleGerman": "Wir müssen den Schlüssel finden."
+  },
+  {
+    "id": "5f09873dd015",
+    "german": "die Firma",
+    "korean": "회사",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "company",
+    "exampleGerman": "Er arbeitet jetzt bei einer anderen Firma."
+  },
+  {
+    "id": "efa184007e72",
+    "german": "die Flasche, -n",
+    "korean": "병",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bottle",
+    "exampleGerman": "Eine Flasche Bier, bitte."
+  },
+  {
+    "id": "daa5c7be34ae",
+    "german": "das Fleisch",
+    "korean": "고기",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "meat",
+    "exampleGerman": "Fleisch mag ich nicht."
+  },
+  {
+    "id": "0524ba6632d5",
+    "german": "fliegen",
+    "korean": "날다/비행기로 가다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "fly",
+    "exampleGerman": "Ich fliege nicht gern. Deshalb fahre ich mit dem Zug."
+  },
+  {
+    "id": "ab9b2fb9ce3e",
+    "german": "abfliegen",
+    "korean": "출발하다/이륙하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "depart/take off",
+    "exampleGerman": "Wann fliegst du ab?"
+  },
+  {
+    "id": "82d377ff7d14",
+    "german": "der Abflug",
+    "korean": "출발/출국",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "departure/flight departure",
+    "exampleGerman": "Der Abflug ist um 11.20 Uhr."
+  },
+  {
+    "id": "eeedfff9198e",
+    "german": "der Flughafen",
+    "korean": "공항",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "airport",
+    "exampleGerman": "Kannst du mich zum Flughafen bringen?"
+  },
+  {
+    "id": "074081a9f54f",
+    "german": "das Flugzeug",
+    "korean": "비행기",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "airplane",
+    "exampleGerman": "Das Flugzeug aus Berlin kommt heute später an."
+  },
+  {
+    "id": "5f561ababe8c",
+    "german": "das Formular, -e",
+    "korean": "서식/양식",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "form",
+    "exampleGerman": "Sie müssen dieses Formular ausfüllen."
+  },
+  {
+    "id": "1c108a91b07e",
+    "german": "das Foto, -s",
+    "korean": "사진",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "photo",
+    "exampleGerman": "Darf ich ein Foto machen?"
+  },
+  {
+    "id": "2b59c9dee939",
+    "german": "fragen",
+    "korean": "묻다/질문하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "ask",
+    "exampleGerman": "Er möchte Sie etwas fragen. Wann kommen Sie?"
+  },
+  {
+    "id": "94ab023af701",
+    "german": "die Frage, -n",
+    "korean": "질문",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "question",
+    "exampleGerman": "Ich habe eine Frage."
+  },
+  {
+    "id": "ff3331a620ae",
+    "german": "die Frau, -en",
+    "korean": "여자/부인",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "woman/Mrs.",
+    "exampleGerman": "Das ist Frau Becker."
+  },
+  {
+    "id": "fb95c39327b4",
+    "german": "frei",
+    "korean": "자유로운/비어 있는",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "free/available",
+    "exampleGerman": "Ist der Platz noch frei?"
+  },
+  {
+    "id": "aab1833a279c",
+    "german": "die Freizeit",
+    "korean": "여가 시간",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "free time/leisure",
+    "exampleGerman": "In meiner Freizeit spiele ich oft Fußball."
+  },
+  {
+    "id": "9e3100260630",
+    "german": "fremd",
+    "korean": "낯선/외국의",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "strange/foreign",
+    "exampleGerman": "Das weiß ich nicht; ich bin fremd hier."
+  },
+  {
+    "id": "b67d46138044",
+    "german": "(sich) freuen",
+    "korean": "기뻐하다/기대하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "be glad/look forward to",
+    "exampleGerman": "Ich freue mich auf den Urlaub."
+  },
+  {
+    "id": "ab14078bca0a",
+    "german": "der Freund, -e",
+    "korean": "친구/남자 친구",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "friend/boyfriend",
+    "exampleGerman": "Das ist ein Freund von mir."
+  },
+  {
+    "id": "f854e61da556",
+    "german": "früher",
+    "korean": "예전에/더 일찍",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "formerly/earlier",
+    "exampleGerman": "Früher waren wir oft zusammen im Kino."
+  },
+  {
+    "id": "c882502efd5a",
+    "german": "frühstücken",
+    "korean": "아침을 먹다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "have breakfast",
+    "exampleGerman": "Am Sonntag frühstücke ich gern im Bett."
+  },
+  {
+    "id": "8b36005eccbe",
+    "german": "das Frühstück",
+    "korean": "아침 식사",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "breakfast",
+    "exampleGerman": "Möchtest du ein Ei zum Frühstück?"
+  },
+  {
+    "id": "f7917f8a1c77",
+    "german": "die Führung",
+    "korean": "안내/가이드 투어",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "guided tour",
+    "exampleGerman": "Die Führung durch das Haus beginnt in 3 Minuten."
+  },
+  {
+    "id": "a9e9521dfb13",
+    "german": "für",
+    "korean": "~을 위해/~에게",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "for",
+    "exampleGerman": "Das ist für Sie."
+  },
+  {
+    "id": "aa8c2be5eccf",
+    "german": "der Fuß, -ü, e",
+    "korean": "발",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "foot",
+    "exampleGerman": "Der linke Fuß tut mir weh."
+  },
+  {
+    "id": "34740a77f02b",
+    "german": "der Fußball",
+    "korean": "축구",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "football/soccer",
+    "exampleGerman": "Spielt ihr gerne Fußball?"
+  },
+  {
+    "id": "407e8ce6e62c",
+    "german": "der Garten",
+    "korean": "정원",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "garden",
+    "exampleGerman": "Wir haben leider keinen Garten."
+  },
+  {
+    "id": "5bda0aacda9c",
+    "german": "der Gast, -ä, e",
+    "korean": "손님",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "guest",
+    "exampleGerman": "Am Wochenende haben wir mehrere Gäste."
+  },
+  {
+    "id": "2d37761f7b84",
+    "german": "geben",
+    "korean": "주다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "give",
+    "exampleGerman": "Kannst du mir bitte deinen Kugelschreiber geben?"
+  },
+  {
+    "id": "bc38bb2b90e5",
+    "german": "geboren",
+    "korean": "태어난",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "born",
+    "exampleGerman": "Ich bin in Zagreb geboren."
+  },
+  {
+    "id": "cc8102940d84",
+    "german": "das Geburtsjahr",
+    "korean": "출생 연도",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "year of birth",
+    "exampleGerman": "Das Geburtsjahr Ihres Sohnes, bitte?"
+  },
+  {
+    "id": "7f83a2cc0633",
+    "german": "der Geburtsort",
+    "korean": "출생지",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "place of birth",
+    "exampleGerman": "Bitte schreiben Sie Ihren Geburtsort auf das Formular."
+  },
+  {
+    "id": "adb2a51c8e9d",
+    "german": "der Geburtstag",
+    "korean": "생일",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "birthday",
+    "exampleGerman": "Herzlichen Glückwunsch zum Geburtstag!"
+  },
+  {
+    "id": "e3463f5c1780",
+    "german": "gefallen",
+    "korean": "마음에 들다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "like/please",
+    "exampleGerman": "Das gefällt mir."
+  },
+  {
+    "id": "08c7fe840410",
+    "german": "gegen",
+    "korean": "~에 대하여/~에 맞서",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "against/around",
+    "exampleGerman": "Fahr nicht gegen den Baum!"
+  },
+  {
+    "id": "fb8a7fa5198a",
+    "german": "gehen",
+    "korean": "가다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "go",
+    "exampleGerman": "Ich weiß nicht, wie das geht."
+  },
+  {
+    "id": "09131a83cc13",
+    "german": "gehören",
+    "korean": "~의 것이다/~에 속하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "belong to",
+    "exampleGerman": "Wem gehört das?"
+  },
+  {
+    "id": "e35ebe8fb764",
+    "german": "das Geld",
+    "korean": "돈",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "money",
+    "exampleGerman": "Hast du noch Geld?"
+  },
+  {
+    "id": "cc4997109476",
+    "german": "das Gepäck",
+    "korean": "짐/수하물",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "luggage/baggage",
+    "exampleGerman": "Wollen Sie Ihr Gepäck mitnehmen?"
+  },
+  {
+    "id": "64109a0c6527",
+    "german": "gerade",
+    "korean": "지금/방금",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "right now/just",
+    "exampleGerman": "Da kommt er ja gerade."
+  },
+  {
+    "id": "949176169f5b",
+    "german": "geradeaus",
+    "korean": "곧장/직진하여",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "straight ahead",
+    "exampleGerman": "Gehen Sie immer geradeaus!"
+  },
+  {
+    "id": "7c4810f74703",
+    "german": "gern(e)",
+    "korean": "기꺼이/좋아하여",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "gladly/like to",
+    "exampleGerman": "Ich gehe gerne einkaufen."
+  },
+  {
+    "id": "7516382dded5",
+    "german": "das Geschäft, -e",
+    "korean": "가게/사업",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "shop/business",
+    "exampleGerman": "Die Geschäfte schließen um 18.30 Uhr."
+  },
+  {
+    "id": "66a8bd20c859",
+    "german": "das Geschenk, -e",
+    "korean": "선물",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "gift/present",
+    "exampleGerman": "Danke für das schöne Geschenk."
+  },
+  {
+    "id": "54b98f57d2a3",
+    "german": "die Geschwister (pl.)",
+    "korean": "형제자매",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "siblings",
+    "exampleGerman": "Ich habe leider keine Geschwister."
+  },
+  {
+    "id": "43a225ea9202",
+    "german": "das Gespräch, -e",
+    "korean": "대화",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "conversation",
+    "exampleGerman": "Das Gespräch mit Frau Kunz ist um 14 Uhr."
+  },
+  {
+    "id": "919025eab667",
+    "german": "gestern",
+    "korean": "어제",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "yesterday",
+    "exampleGerman": "Gestern war ich krank."
+  },
+  {
+    "id": "dd39db47804c",
+    "german": "gestorben",
+    "korean": "죽은",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "died/deceased",
+    "exampleGerman": "Meine Frau ist gestern gestorben."
+  },
+  {
+    "id": "637e36208a9b",
+    "german": "das Getränk, -e",
+    "korean": "음료",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "drink/beverage",
+    "exampleGerman": "Mein Lieblingsgetränk ist Tomatensaft."
+  },
+  {
+    "id": "788ecee4f6eb",
+    "german": "das Gewicht",
+    "korean": "무게",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "weight",
+    "exampleGerman": "Bei „Gewicht“ schreibst du: 62 Kilo."
+  },
+  {
+    "id": "102d8166ce04",
+    "german": "gewinnen",
+    "korean": "이기다/얻다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "win/gain",
+    "exampleGerman": "Wer gewinnt das Spiel?"
+  },
+  {
+    "id": "04a4e7ee32ad",
+    "german": "das Glas, -ä, er",
+    "korean": "유리잔",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "glass",
+    "exampleGerman": "Bitte noch ein Glas Wein!"
+  },
+  {
+    "id": "9f0b417ed861",
+    "german": "glauben",
+    "korean": "믿다/생각하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "believe/think",
+    "exampleGerman": "Sie können mir glauben, es ist so."
+  },
+  {
+    "id": "e83819cacac4",
+    "german": "gleich",
+    "korean": "같은/곧",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "soon/same",
+    "exampleGerman": "Das ist mir gleich."
+  },
+  {
+    "id": "747b0607e50d",
+    "german": "das Gleis, -e",
+    "korean": "승강장/선로",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "track/platform",
+    "exampleGerman": "Der ICE nach Berlin hält heute an Gleis 12."
+  },
+  {
+    "id": "b95ab1a37733",
+    "german": "das Glück",
+    "korean": "행운",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "luck/happiness",
+    "exampleGerman": "Viel Glück!"
+  },
+  {
+    "id": "c8f884d34cfd",
+    "german": "glücklich",
+    "korean": "행복한",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "happy/lucky",
+    "exampleGerman": "Meine Kinder sind glücklich verheiratet."
+  },
+  {
+    "id": "922e4ba06ffe",
+    "german": "der Glückwunsch",
+    "korean": "축하 인사",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "congratulation",
+    "exampleGerman": "Herzlichen Glückwunsch zum Geburtstag."
+  },
+  {
+    "id": "808e5a5823f7",
+    "german": "Grad (Celsius)",
+    "korean": "도",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "degree",
+    "exampleGerman": "Heute haben wir dreißig Grad."
+  },
+  {
+    "id": "0557777dd11e",
+    "german": "gratulieren",
+    "korean": "축하하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "congratulate",
+    "exampleGerman": "Ich gratuliere dir!"
+  },
+  {
+    "id": "b4ffc867d27f",
+    "german": "grillen",
+    "korean": "굽다/바비큐하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "grill/barbecue",
+    "exampleGerman": "Heute grillen wir im Garten."
+  },
+  {
+    "id": "d96d1a6d471f",
+    "german": "groß",
+    "korean": "큰/키가 큰",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "big/tall",
+    "exampleGerman": "Mein Bruder und ich sind gleich groß."
+  },
+  {
+    "id": "e59f309228b9",
+    "german": "die Größe",
+    "korean": "크기/신체 사이즈",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "size/height",
+    "exampleGerman": "Haben Sie das auch in Größe 40?"
+  },
+  {
+    "id": "7e3d72fba40a",
+    "german": "die Großeltern (pl.)",
+    "korean": "조부모",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "grandparents",
+    "exampleGerman": "Meine Großeltern leben in Japan."
+  },
+  {
+    "id": "bacfdf5dd582",
+    "german": "die Großmutter",
+    "korean": "할머니",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "grandmother",
+    "exampleGerman": "Meine Großmutter heißt Eva."
+  },
+  {
+    "id": "af5467d6c22a",
+    "german": "der Großvater",
+    "korean": "할아버지",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "grandfather",
+    "exampleGerman": "Mein Großvater ist schon 80."
+  },
+  {
+    "id": "cf1d3f758a22",
+    "german": "die Gruppe, -n",
+    "korean": "그룹/무리",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "group",
+    "exampleGerman": "Die erste Gruppe beginnt um 16 Uhr."
+  },
+  {
+    "id": "832ca51e0a71",
+    "german": "der Gruß, -ü, e",
+    "korean": "인사",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "greeting/regards",
+    "exampleGerman": "Viele Grüße an Ihre Frau."
+  },
+  {
+    "id": "75b3a5a1e6f8",
+    "german": "gültig",
+    "korean": "유효한",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "valid",
+    "exampleGerman": "Der Pass ist nicht mehr gültig."
+  },
+  {
+    "id": "75cdf617da15",
+    "german": "günstig",
+    "korean": "저렴한/유리한",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "inexpensive/favorable",
+    "exampleGerman": "Dort gibt es günstige Angebote."
+  },
+  {
+    "id": "823c1e79fcc2",
+    "german": "gut",
+    "korean": "좋은/잘",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "good/well",
+    "exampleGerman": "Das finde ich gut."
+  },
+  {
+    "id": "669aa0565fa0",
+    "german": "das Haar, -e",
+    "korean": "머리카락",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "hair",
+    "exampleGerman": "Sie hat lange Haare."
+  },
+  {
+    "id": "e7997e6b9f5c",
+    "german": "haben",
+    "korean": "가지다/있다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "have",
+    "exampleGerman": "Ich habe ein neues Auto."
+  },
+  {
+    "id": "9bcecef57c3e",
+    "german": "das Hähnchen, -",
+    "korean": "닭고기/통닭",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "chicken",
+    "exampleGerman": "Ein Hähnchen mit Pommes bitte!"
+  },
+  {
+    "id": "b78443c42d29",
+    "german": "die Halbpension",
+    "korean": "아침·저녁 식사 포함 숙박",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "half board",
+    "exampleGerman": "Möchten Sie Vollpension oder Halbpension?"
+  },
+  {
+    "id": "f9c03e4d9639",
+    "german": "die Halle",
+    "korean": "홀/큰 실내 공간",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "hall",
+    "exampleGerman": "Wir treffen uns in Halle B"
+  },
+  {
+    "id": "3e6ff3d15c30",
+    "german": "halten",
+    "korean": "멈추다/잡고 있다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "hold/stop",
+    "exampleGerman": "Dieser Zug hält nicht in Rüdesheim."
+  },
+  {
+    "id": "3ab1f04651d7",
+    "german": "die Haltestelle",
+    "korean": "정류장",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "stop/station",
+    "exampleGerman": "An der nächsten Haltestelle müssen Sie aussteigen."
+  },
+  {
+    "id": "5fa8b316177b",
+    "german": "die Hand, -ä, e",
+    "korean": "손",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "hand",
+    "exampleGerman": "Er gibt mir die Hand."
+  },
+  {
+    "id": "f7f5e30e3802",
+    "german": "das Handy, -s",
+    "korean": "휴대전화",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "mobile phone/cell phone",
+    "exampleGerman": "In der Schule bitte die Handys ausmachen!"
+  },
+  {
+    "id": "8d06fc13544a",
+    "german": "das Haus, -ä, er",
+    "korean": "집",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "house/building",
+    "exampleGerman": "In welchem Haus wohnst du?"
+  },
+  {
+    "id": "43996fb1f73d",
+    "german": "die Hausaufgabe,-n",
+    "korean": "숙제",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "homework",
+    "exampleGerman": "Kannst du mir bei den Hausaufgaben helfen?"
+  },
+  {
+    "id": "85509fdf9d03",
+    "german": "die Hausfrau, -en/ der Hausmann",
+    "korean": "주부",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "housewife",
+    "exampleGerman": "Die Hausfrau/der Hausmann wäscht, kocht und kauft ein."
+  },
+  {
+    "id": "6bd20cf6318d",
+    "german": "die Heimat",
+    "korean": "고향",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "homeland/home",
+    "exampleGerman": "Ich komme aus der Schweiz. Das ist meine Heimat."
+  },
+  {
+    "id": "25a483d266f3",
+    "german": "heiraten",
+    "korean": "결혼하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "marry/get married",
+    "exampleGerman": "Meine Schwester heiratet einen Japaner."
+  },
+  {
+    "id": "f9bb79bc0b3f",
+    "german": "heißen",
+    "korean": "이름이 ~이다/~라고 불리다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "be called/be named",
+    "exampleGerman": "Ich heiße Charlotte Meier."
+  },
+  {
+    "id": "77ef0285725a",
+    "german": "helfen",
+    "korean": "돕다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "help",
+    "exampleGerman": "Können Sie mir helfen, bitte?"
+  },
+  {
+    "id": "a5cec7af5f7a",
+    "german": "hell",
+    "korean": "밝은",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bright/light",
+    "exampleGerman": "Im Sommer ist es bis 21 Uhr hell."
+  },
+  {
+    "id": "52d8e35b90b3",
+    "german": "der Herd",
+    "korean": "레인지/가스레인지",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "stove/cooker",
+    "exampleGerman": "In der neuen Küche fehlt noch der Herd."
+  },
+  {
+    "id": "ddb6e825e743",
+    "german": "der Herr, -en",
+    "korean": "남자/신사",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "man/gentleman",
+    "exampleGerman": "Guten Tag, Herr Sommer!"
+  },
+  {
+    "id": "193bc9b60c82",
+    "german": "herzlich",
+    "korean": "진심 어린/따뜻한",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "cordial/warm",
+    "exampleGerman": "Herzlichen Glückwunsch!"
+  },
+  {
+    "id": "cedb067cba3b",
+    "german": "heute",
+    "korean": "오늘",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "today",
+    "exampleGerman": "Heute ist ein schöner Tag."
+  },
+  {
+    "id": "00cc01ace9aa",
+    "german": "hier",
+    "korean": "여기",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "here",
+    "exampleGerman": "Hier ist 06131-553221, Pamela Linke."
+  },
+  {
+    "id": "3f2655c1f968",
+    "german": "die Hilfe",
+    "korean": "도움",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "help/assistance",
+    "exampleGerman": "Hilfe! Bitte helfen Sie mir!"
+  },
+  {
+    "id": "722d83dac458",
+    "german": "hinten",
+    "korean": "뒤에",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "behind/at the back",
+    "exampleGerman": "Die Tür zum Aussteigen ist hinten."
+  },
+  {
+    "id": "bd11dc0c7b5f",
+    "german": "das Hobby, -s",
+    "korean": "취미",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "hobby",
+    "exampleGerman": "Meine Hobbys sind Wandern und Schwimmen."
+  },
+  {
+    "id": "0e98fb6779f1",
+    "german": "hoch",
+    "korean": "높은",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "high/tall",
+    "exampleGerman": "Der Mount Everest ist 8.880 Meter hoch."
+  },
+  {
+    "id": "818a065ea940",
+    "german": "die Hochzeit",
+    "korean": "결혼식",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "wedding",
+    "exampleGerman": "Zur dieser Hochzeit kommen mehr als fünfzig Gäste."
+  },
+  {
+    "id": "ce1c1050c4f0",
+    "german": "holen",
+    "korean": "가져오다/데리러 가다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "fetch/pick up",
+    "exampleGerman": "Ich hole zwei Flaschen Wasser aus der Küche."
+  },
+  {
+    "id": "5abe95a270bf",
+    "german": "hören",
+    "korean": "듣다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "hear/listen",
+    "exampleGerman": "Hör mal! Was ist das?"
+  },
+  {
+    "id": "e152f6208d9b",
+    "german": "das Hotel, -s",
+    "korean": "호텔",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "hotel",
+    "exampleGerman": "Im Urlaub sind wir in einem Hotel am Meer."
+  },
+  {
+    "id": "dd519d354eb6",
+    "german": "der Hund, -e",
+    "korean": "개",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "dog",
+    "exampleGerman": "Der Hund ist noch jung."
+  },
+  {
+    "id": "ca3ff09c4ab3",
+    "german": "der Hunger",
+    "korean": "배고픔",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "hunger",
+    "exampleGerman": "Ich habe Hunger! Wann ist das Essen fertig?"
+  },
+  {
+    "id": "ac97098edb2e",
+    "german": "ich",
+    "korean": "나",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "I",
+    "exampleGerman": "Ich heiße Veronika."
+  },
+  {
+    "id": "c1cb973b1f6a",
+    "german": "ihr/ihm/ihn",
+    "korean": "그녀를/그에게/그를",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "her/him",
+    "exampleGerman": "Gib ihr/ihm bitte das Buch."
+  },
+  {
+    "id": "42969961735e",
+    "german": "immer",
+    "korean": "항상",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "always",
+    "exampleGerman": "Frau Bast kommt immer zu spät."
+  },
+  {
+    "id": "af10ef20dd90",
+    "german": "in",
+    "korean": "~안에/~로",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "in/into",
+    "exampleGerman": "Ich wohne in Wiesbaden."
+  },
+  {
+    "id": "7ed29adbe2da",
+    "german": "die Information, -en",
+    "korean": "정보",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "information",
+    "exampleGerman": "Wenn Sie Fragen haben, gehen Sie zur Information."
+  },
+  {
+    "id": "4ff75f809574",
+    "german": "international",
+    "korean": "국제적인",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "international",
+    "exampleGerman": "Unser Deutschkurs ist international: Silvana kommt aus Italien, Conchi aus Spanien, Yin aus China ..."
+  },
+  {
+    "id": "ff8696ea820b",
+    "german": "das Internet",
+    "korean": "인터넷",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "internet",
+    "exampleGerman": "Das findest du im Internet."
+  },
+  {
+    "id": "84572ef2253e",
+    "german": "ja",
+    "korean": "네",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "yes",
+    "exampleGerman": "Sind Sie Herr Watanabe? – Ja."
+  },
+  {
+    "id": "7fbc7d24e7c3",
+    "german": "die Jacke, -n",
+    "korean": "재킷/겉옷",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "jacket",
+    "exampleGerman": "Zieh dir eine Jacke an. Es ist kalt."
+  },
+  {
+    "id": "58df768959dd",
+    "german": "jed-",
+    "korean": "각각의/모든",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "each/every",
+    "exampleGerman": "Blumen kannst du in jedem Bahnhof kaufen."
+  },
+  {
+    "id": "20a10d5fc2e5",
+    "german": "jetzt",
+    "korean": "지금",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "now",
+    "exampleGerman": "Jetzt machen wir eine Pause."
+  },
+  {
+    "id": "d5e7160906aa",
+    "german": "der Job, -s",
+    "korean": "일자리/직업",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "job",
+    "exampleGerman": "Jenny hat einen neuen Job bei der Post."
+  },
+  {
+    "id": "7debaee8364f",
+    "german": "der Jugendliche, -n",
+    "korean": "청소년",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "young person/teenager",
+    "exampleGerman": "Viele Jugendliche kaufen gern ein."
+  },
+  {
+    "id": "77fc76465c6d",
+    "german": "jung",
+    "korean": "젊은/어린",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "young",
+    "exampleGerman": "Claudia ist 21. – Was? Noch so jung?"
+  },
+  {
+    "id": "bcadab9403e6",
+    "german": "der Junge, -n",
+    "korean": "소년/남자아이",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "boy",
+    "exampleGerman": "Ich habe zwei Kinder. Einen Jungen und ein Mädchen."
+  },
+  {
+    "id": "218b624479c3",
+    "german": "der Kaffee",
+    "korean": "커피",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "coffee",
+    "exampleGerman": "Zum Frühstück trinke ich immer Kaffee."
+  },
+  {
+    "id": "088ee79fccb2",
+    "german": "kaputt",
+    "korean": "고장 난/망가진",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "broken/damaged",
+    "exampleGerman": "Das Glas war teuer. Es geht sehr leicht kaputt."
+  },
+  {
+    "id": "4e6ec6c5299c",
+    "german": "die Karte, -n",
+    "korean": "카드/지도",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "card/map",
+    "exampleGerman": "Ich schreibe meinen Bekannten eine Karte aus dem Urlaub."
+  },
+  {
+    "id": "2a295552f7be",
+    "german": "(Kredit)-Karte, -n",
+    "korean": "신용카드",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "credit card/card",
+    "exampleGerman": "Kann ich auch mit Karte (be-) zahlen?"
+  },
+  {
+    "id": "bf4726ceb820",
+    "german": "die Kartoffel, -n",
+    "korean": "감자",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "potato",
+    "exampleGerman": "Für Pommes frites braucht man Kartoffeln."
+  },
+  {
+    "id": "16c61c24dea7",
+    "german": "die Kasse",
+    "korean": "계산대",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "checkout/cash register",
+    "exampleGerman": "Zahlen Sie bitte an der Kasse."
+  },
+  {
+    "id": "9da27e5a5539",
+    "german": "kaufen",
+    "korean": "사다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "buy",
+    "exampleGerman": "Tim kauft sich ein neues Auto."
+  },
+  {
+    "id": "a4dfa6896bc3",
+    "german": "kein",
+    "korean": "아무 ~도 아닌/~이 없는",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "no/not a",
+    "exampleGerman": "Es gibt keine Eintrittskarten mehr."
+  },
+  {
+    "id": "1499514ec90c",
+    "german": "kennen",
+    "korean": "알다/알고 지내다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "know/be acquainted with",
+    "exampleGerman": "Kennen Sie diese Frau? – Nein, leider nicht."
+  },
+  {
+    "id": "16ba4d47ce13",
+    "german": "kennenlernen",
+    "korean": "알게 되다/처음 만나다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "get to know/meet",
+    "exampleGerman": "Wir sind neu hier. Wir möchten Sie kennenlernen."
+  },
+  {
+    "id": "f4f1b055ce50",
+    "german": "das Kind, -er",
+    "korean": "아이",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "child/kid",
+    "exampleGerman": "Wie viele Kinder haben Sie?"
+  },
+  {
+    "id": "9d0460a40f19",
+    "german": "der Kindergarten",
+    "korean": "유치원",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "kindergarten",
+    "exampleGerman": "Die kleine Laura geht schon in den Kindergarten."
+  },
+  {
+    "id": "11529ee11841",
+    "german": "das Kino, -s",
+    "korean": "영화관",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "cinema/movie theater",
+    "exampleGerman": "Wir sehen heute Abend im Kino einen schönen Film."
+  },
+  {
+    "id": "307194bf1982",
+    "german": "der Kiosk",
+    "korean": "매점/가판점",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "kiosk/newsstand",
+    "exampleGerman": "Am Kiosk bekommen Sie Getränke, Zigaretten und Zeitungen."
+  },
+  {
+    "id": "2d293d366f09",
+    "german": "klar",
+    "korean": "분명한/알겠어",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "clear/sure",
+    "exampleGerman": "Kommst du mit? – Klar!"
+  },
+  {
+    "id": "98fbae835bc1",
+    "german": "die Klasse",
+    "korean": "학급/반",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "class",
+    "exampleGerman": "In unserer Klasse sind fünfundzwanzig Schüler."
+  },
+  {
+    "id": "63f67ece6283",
+    "german": "die Kleidung",
+    "korean": "옷/의류",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "clothing/clothes",
+    "exampleGerman": "Wo finde ich Kleidung? – Jacken im ersten, Jeans im zweiten Stock."
+  },
+  {
+    "id": "ac1ad65ace4f",
+    "german": "klein",
+    "korean": "작은",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "small/little",
+    "exampleGerman": "Eltville ist eine kleine Stadt am Rhein."
+  },
+  {
+    "id": "6f01d637412e",
+    "german": "kochen",
+    "korean": "요리하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "cook",
+    "exampleGerman": "Herr Georgi kann gut kochen."
+  },
+  {
+    "id": "2094dcacfcdc",
+    "german": "der Koffer, –",
+    "korean": "여행 가방",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "suitcase",
+    "exampleGerman": "Ist das Ihr Koffer?"
+  },
+  {
+    "id": "57bfa0a3bb72",
+    "german": "der Kollege, -n",
+    "korean": "남자 동료",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "male colleague/coworker",
+    "exampleGerman": "Wie heißt die neue Kollegin?"
+  },
+  {
+    "id": "a71908c3c2c9",
+    "german": "kommen",
+    "korean": "오다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "come",
+    "exampleGerman": "Woher kommen Sie? – Aus Frankreich."
+  },
+  {
+    "id": "76176d49ac31",
+    "german": "können",
+    "korean": "할 수 있다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "can/be able to",
+    "exampleGerman": "Ich kann Deutsch und Russisch."
+  },
+  {
+    "id": "19bc266f4b6a",
+    "german": "das Konto",
+    "korean": "계좌",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bank account/account",
+    "exampleGerman": "Das Geld überweisen wir am ersten März auf Ihr Konto."
+  },
+  {
+    "id": "14d9862d5053",
+    "german": "der Kopf",
+    "korean": "머리",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "head",
+    "exampleGerman": "Mein Kopf tut weh!"
+  },
+  {
+    "id": "ebe92c22295a",
+    "german": "kosten",
+    "korean": "비용이 들다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "cost",
+    "exampleGerman": "Wie viel kostet das? – 10 Euro."
+  },
+  {
+    "id": "253d4b1685cd",
+    "german": "krank",
+    "korean": "아픈",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "sick/ill",
+    "exampleGerman": "Ich kann heute nicht zur Arbeit kommen, ich bin krank und liege im Bett."
+  },
+  {
+    "id": "c2d8eb15e1f3",
+    "german": "kriegen",
+    "korean": "받다/얻다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "get/receive",
+    "exampleGerman": "Ich kriege 15 Euro in der Stunde für meine Arbeit."
+  },
+  {
+    "id": "16b268dc9e7d",
+    "german": "die Küche",
+    "korean": "부엌/주방",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "kitchen",
+    "exampleGerman": "Der neue Herd kommt in die Küche."
+  },
+  {
+    "id": "9f59ad686552",
+    "german": "der Kugelschreiber",
+    "korean": "볼펜",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "ballpoint pen",
+    "exampleGerman": "Hast du einen Kugelschreiber für mich?"
+  },
+  {
+    "id": "fabdcdfd1339",
+    "german": "der Kühlschrank",
+    "korean": "냉장고",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "refrigerator/fridge",
+    "exampleGerman": "Haben wir noch Milch? – Ja, im Kühlschrank."
+  },
+  {
+    "id": "61fc6dcac790",
+    "german": "kulturell",
+    "korean": "문화적인",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "cultural",
+    "exampleGerman": "Ich bin kulturell interessiert. Ich gehe oft ins Museum."
+  },
+  {
+    "id": "8c8f9862dc81",
+    "german": "sich kümmern",
+    "korean": "돌보다/신경 쓰다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "take care of/look after",
+    "exampleGerman": "Jede Mutter kümmert sich um ihre kleinen Kinder."
+  },
+  {
+    "id": "0cfea7465a62",
+    "german": "der Kunde, -n",
+    "korean": "남자 고객",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "male customer/client",
+    "exampleGerman": "Einen Moment, bitte. Ich habe eine Kundin."
+  },
+  {
+    "id": "5783b2eba8da",
+    "german": "der Kurs, -e",
+    "korean": "강좌/과정",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "course/class",
+    "exampleGerman": "Der Deutschkurs geht bis zum Sommer."
+  },
+  {
+    "id": "65caa18f6f33",
+    "german": "kurz",
+    "korean": "짧은",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "short",
+    "exampleGerman": "Ricardo hat kurzes Haar."
+  },
+  {
+    "id": "1397a43d849e",
+    "german": "lachen",
+    "korean": "웃다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "laugh",
+    "exampleGerman": "Die Kinder lachen viel."
+  },
+  {
+    "id": "65410327cfc3",
+    "german": "der Laden, -ä",
+    "korean": "가게",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "shop/store",
+    "exampleGerman": "Im Buchladen können Sie Bücher kaufen."
+  },
+  {
+    "id": "5039c2852c44",
+    "german": "das Land, -ä, er",
+    "korean": "나라/시골",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "country/countryside",
+    "exampleGerman": "Italien ist ein schönes Land."
+  },
+  {
+    "id": "7a2f85497548",
+    "german": "lang",
+    "korean": "긴",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "long",
+    "exampleGerman": "Die Jeans ist zu lang."
+  },
+  {
+    "id": "4f585e2a2417",
+    "german": "lange",
+    "korean": "오랫동안/오래",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "for a long time/long",
+    "exampleGerman": "Wie lange fährt der Zug von Hamburg nach Berlin?"
+  },
+  {
+    "id": "bb7537501a43",
+    "german": "langsam",
+    "korean": "느린/천천히",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "slow/slowly",
+    "exampleGerman": "Könnten Sie bitte etwas langsamer sprechen?"
+  },
+  {
+    "id": "d4fdb666246b",
+    "german": "laufen",
+    "korean": "달리다/걷다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "walk/run",
+    "exampleGerman": "Ich möchte nicht Auto fahren, ich möchte laufen."
+  },
+  {
+    "id": "d637808d0fa5",
+    "german": "laut",
+    "korean": "시끄러운/큰 소리로",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "loud/loudly",
+    "exampleGerman": "Nicht so laut! Das Baby schläft."
+  },
+  {
+    "id": "572201efbee2",
+    "german": "leben",
+    "korean": "살다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "live",
+    "exampleGerman": "Sie lebt bei ihrer Schwester."
+  },
+  {
+    "id": "0f52be5587cc",
+    "german": "das Leben",
+    "korean": "삶/생활",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "life",
+    "exampleGerman": "Das Leben in diesem Land ist teuer."
+  },
+  {
+    "id": "2307cf803d8b",
+    "german": "die Lebensmittel (pl.)",
+    "korean": "식료품",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "groceries/food",
+    "exampleGerman": "Lebensmittel bekommen Sie im Supermarkt."
+  },
+  {
+    "id": "7d72b130cc7c",
+    "german": "ledig",
+    "korean": "미혼인",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "single/unmarried",
+    "exampleGerman": "Sind Sie verheiratet? – Nein. Ledig."
+  },
+  {
+    "id": "4bc9cc8ce8f8",
+    "german": "legen",
+    "korean": "놓다/눕히다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "put/lay",
+    "exampleGerman": "Legen Sie das Buch auf den Tisch."
+  },
+  {
+    "id": "103588c44f1f",
+    "german": "der Lehrer, –",
+    "korean": "남자 교사",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "male teacher",
+    "exampleGerman": "Unsere Deutschlehrerin heißt Frau Müller."
+  },
+  {
+    "id": "3c371aa8bde1",
+    "german": "leicht",
+    "korean": "쉬운/가벼운",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "easy/light",
+    "exampleGerman": "Der Koffer ist leicht."
+  },
+  {
+    "id": "3d8c22eec7e5",
+    "german": "leider",
+    "korean": "유감스럽게도/안타깝게도",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "unfortunately/sadly",
+    "exampleGerman": "Leider kann ich nicht kommen. Ich muss zum Arzt."
+  },
+  {
+    "id": "1680a30b2054",
+    "german": "leise",
+    "korean": "조용한/작은 소리로",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "quiet/quietly",
+    "exampleGerman": "Seid leise. Die anderen schlafen schon."
+  },
+  {
+    "id": "195aec5bf794",
+    "german": "lernen",
+    "korean": "배우다/공부하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "learn/study",
+    "exampleGerman": "Wie lange lernen Sie schon Deutsch?"
+  },
+  {
+    "id": "0e2670291e40",
+    "german": "lesen",
+    "korean": "읽다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "read",
+    "exampleGerman": "Ich lese ein Buch von García Márquez."
+  },
+  {
+    "id": "486420c899ac",
+    "german": "letzt-",
+    "korean": "마지막의/지난",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "last/previous",
+    "exampleGerman": "Morgen ist der letzte Kurstag."
+  },
+  {
+    "id": "f1528a41da60",
+    "german": "die Leute (pl.)",
+    "korean": "사람들",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "people",
+    "exampleGerman": "In der Disko sind viele Leute."
+  },
+  {
+    "id": "9c2d00aa66e2",
+    "german": "das Licht",
+    "korean": "빛/전등",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "light",
+    "exampleGerman": "Wo macht man hier das Licht an?"
+  },
+  {
+    "id": "85a9890ccc17",
+    "german": "lieb-",
+    "korean": "사랑스러운/친절한",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "dear/kind",
+    "exampleGerman": "Liebe Susanne, lieber Hans,"
+  },
+  {
+    "id": "5b196d7fd908",
+    "german": "lieben",
+    "korean": "사랑하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "love",
+    "exampleGerman": "Ich liebe dich!"
+  },
+  {
+    "id": "391ef4b56410",
+    "german": "lieber",
+    "korean": "더 좋아하는/차라리",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "preferably/rather",
+    "exampleGerman": "Sie fährt lieber mit der Bahn."
+  },
+  {
+    "id": "ac29ebbf2975",
+    "german": "Lieblings-",
+    "korean": "가장 좋아하는",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "favorite",
+    "exampleGerman": "Mein Lieblingsfilm ist „Schwarze Augen“."
+  },
+  {
+    "id": "648c93384445",
+    "german": "das Lied, -er",
+    "korean": "노래",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "song",
+    "exampleGerman": "Welches ist dein Lieblingslied?"
+  },
+  {
+    "id": "f4f12d61b0a1",
+    "german": "liegen",
+    "korean": "놓여 있다/누워 있다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "lie/be located",
+    "exampleGerman": "Um neun Uhr liegt Judith noch im Bett."
+  },
+  {
+    "id": "379e75c850e1",
+    "german": "links",
+    "korean": "왼쪽에",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "on the left/to the left",
+    "exampleGerman": "Gehen Sie die nächste Straße links."
+  },
+  {
+    "id": "55dbdd9974e6",
+    "german": "der Lkw, -s",
+    "korean": "트럭",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "truck/lorry",
+    "exampleGerman": "Dieser Lastkraftwagen ist sehr groß."
+  },
+  {
+    "id": "d4b21f9aba2c",
+    "german": "das Lokal",
+    "korean": "식당/음식점",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "restaurant/pub",
+    "exampleGerman": "In unserer Straße gibt es ein neues Lokal."
+  },
+  {
+    "id": "d539cc32609d",
+    "german": "die Lösung, -en",
+    "korean": "해결책/정답",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "answer/solution",
+    "exampleGerman": "Die Lösung ist ganz einfach."
+  },
+  {
+    "id": "89543ee17a62",
+    "german": "lustig",
+    "korean": "재미있는/웃기는",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "funny/amusing",
+    "exampleGerman": "Frau Mertens ist lustig. Sie lacht immer."
+  },
+  {
+    "id": "6bc8186ed046",
+    "german": "machen",
+    "korean": "하다/만들다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "do/make",
+    "exampleGerman": "Was machst du heute Abend?"
+  },
+  {
+    "id": "0eacd169bae7",
+    "german": "das Mädchen, –",
+    "korean": "소녀/여자아이",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "girl",
+    "exampleGerman": "Familie Kurz bekommt ein Baby. – Junge oder Mädchen?"
+  },
+  {
+    "id": "8175e3c8753a",
+    "german": "man",
+    "korean": "사람들은/누군가",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "people/one",
+    "exampleGerman": "Hier darf man nicht rauchen."
+  },
+  {
+    "id": "5ffe1255466b",
+    "german": "der Mann, -ä, er",
+    "korean": "남자/남편",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "man/husband",
+    "exampleGerman": "Mein Mann arbeitet bei der Polizei."
+  },
+  {
+    "id": "221d26dc16fc",
+    "german": "männlich",
+    "korean": "남성의/남자인",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "male/masculine",
+    "exampleGerman": "Kreuzen Sie bitte an: „weiblich“ oder „männlich“."
+  },
+  {
+    "id": "cb23ef3b2fde",
+    "german": "die Maschine, -n",
+    "korean": "기계",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "machine",
+    "exampleGerman": "Die Waschmaschine ist günstig."
+  },
+  {
+    "id": "0aee8858d680",
+    "german": "das Meer",
+    "korean": "바다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "sea/ocean",
+    "exampleGerman": "Wir machen Urlaub am Meer."
+  },
+  {
+    "id": "1960ac5a2d44",
+    "german": "mehr",
+    "korean": "더 많이",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "more",
+    "exampleGerman": "Dieses Auto kostet 1.000 Euro mehr als das andere."
+  },
+  {
+    "id": "be34f0191a95",
+    "german": "mein",
+    "korean": "나의",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "my",
+    "exampleGerman": "Mein Vater ist Arzt."
+  },
+  {
+    "id": "44e1ad73c768",
+    "german": "meist-",
+    "korean": "대부분의/가장 많은",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "most",
+    "exampleGerman": "Die meisten Norddeutschen sind sehr groß."
+  },
+  {
+    "id": "6ffe6fa30409",
+    "german": "der Mensch, -en",
+    "korean": "사람/인간",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "person/human",
+    "exampleGerman": "Die Menschen sind hier anders als bei uns."
+  },
+  {
+    "id": "3ec707d9ae95",
+    "german": "mieten",
+    "korean": "빌리다/임차하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "rent/hire",
+    "exampleGerman": "Ich möchte ein Auto mieten."
+  },
+  {
+    "id": "71dd5b0aa66c",
+    "german": "die Miete",
+    "korean": "임대료/월세",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "rent",
+    "exampleGerman": "Die Miete für diese Wohnung ist 600 Euro."
+  },
+  {
+    "id": "554dd3ed85e2",
+    "german": "die Milch",
+    "korean": "우유",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "milk",
+    "exampleGerman": "Die Milch steht im Kühlschrank."
+  },
+  {
+    "id": "5977a55c75bb",
+    "german": "mit",
+    "korean": "~와 함께/~을 가지고",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "with/by",
+    "exampleGerman": "Trinken Sie den Kaffee mit Milch?"
+  },
+  {
+    "id": "4d864217a996",
+    "german": "mitbringen",
+    "korean": "가져오다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bring along",
+    "exampleGerman": "Ich gehe einkaufen. Soll ich dir was mitbringen?"
+  },
+  {
+    "id": "370671ce7885",
+    "german": "mitkommen",
+    "korean": "함께 오다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "come along",
+    "exampleGerman": "Ich gehe ins Kino. Kommst du mit?"
+  },
+  {
+    "id": "705328e4d845",
+    "german": "mitmachen",
+    "korean": "함께하다/참여하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "join in/participate",
+    "exampleGerman": "Warum macht ihr nicht mit?"
+  },
+  {
+    "id": "139ff0789131",
+    "german": "mitnehmen",
+    "korean": "가져가다/데려가다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "take along",
+    "exampleGerman": "Nehmen wir meine Schwester ins Kino mit?"
+  },
+  {
+    "id": "d2724f89d9ef",
+    "german": "die Mitte",
+    "korean": "가운데/중앙",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "middle/center",
+    "exampleGerman": "Der Lehrer steht in der Mitte des Klassenzimmers."
+  },
+  {
+    "id": "e560b992a8bf",
+    "german": "die Möbel (pl.)",
+    "korean": "가구",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "furniture",
+    "exampleGerman": "Sind die Möbel neu?"
+  },
+  {
+    "id": "62cf1e11cb97",
+    "german": "möchten",
+    "korean": "원하다/~하고 싶다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "would like/want",
+    "exampleGerman": "Was möchten Sie trinken?"
+  },
+  {
+    "id": "2861823241a8",
+    "german": "mögen",
+    "korean": "좋아하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "like",
+    "exampleGerman": "Magst du Kaffee oder Tee?"
+  },
+  {
+    "id": "3be70c27b299",
+    "german": "möglich",
+    "korean": "가능한",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "possible",
+    "exampleGerman": "Mit dieser Fahrkarte ist die Fahrt ab 9 Uhr möglich."
+  },
+  {
+    "id": "3ac6d0483a70",
+    "german": "der Moment",
+    "korean": "순간/잠시",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "moment",
+    "exampleGerman": "Moment mal bitte!"
+  },
+  {
+    "id": "e9f6b2a4a6c8",
+    "german": "morgen",
+    "korean": "내일",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "tomorrow/in the morning",
+    "exampleGerman": "Morgen beginnt die Schule um 10 Uhr."
+  },
+  {
+    "id": "9e70b3dc2a26",
+    "german": "müde",
+    "korean": "피곤한",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "tired",
+    "exampleGerman": "Ich bin müde. Ich gehe schlafen."
+  },
+  {
+    "id": "f541609d1888",
+    "german": "der Mund",
+    "korean": "입",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "mouth",
+    "exampleGerman": "Öffnen Sie den Mund."
+  },
+  {
+    "id": "f3be74a0a435",
+    "german": "müssen",
+    "korean": "~해야 하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "must/have to",
+    "exampleGerman": "Ich muss jeden Tag von 8 Uhr bis 18 Uhr arbeiten."
+  },
+  {
+    "id": "e1d7856d5ce7",
+    "german": "die Mutter, -ü",
+    "korean": "어머니",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "mother/mom",
+    "exampleGerman": "Frau Berghäuser ist die Mutter von Michaela."
+  },
+  {
+    "id": "852cb8486923",
+    "german": "nach",
+    "korean": "~로/~후에",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "to/after",
+    "exampleGerman": "Ich gehe jetzt nach Hause."
+  },
+  {
+    "id": "91ed4142fb6d",
+    "german": "nächst-",
+    "korean": "다음의/가장 가까운",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "next/nearest",
+    "exampleGerman": "Sehen wir uns nächste Woche?"
+  },
+  {
+    "id": "b13b343cd8aa",
+    "german": "der Name, -n",
+    "korean": "이름",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "name",
+    "exampleGerman": "Mein Name ist Thomas Schmidt."
+  },
+  {
+    "id": "44bfde47a7c8",
+    "german": "nehmen",
+    "korean": "가지다/집다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "take/have",
+    "exampleGerman": "Heute gibt es Hähnchen. Das nehme ich."
+  },
+  {
+    "id": "3e3a2bd4c146",
+    "german": "nein",
+    "korean": "아니요",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "no",
+    "exampleGerman": "Fährst du auch nach München? – Nein, ich habe keine Zeit."
+  },
+  {
+    "id": "b5f70ca6cbc0",
+    "german": "neu",
+    "korean": "새로운",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "new",
+    "exampleGerman": "Ich bin der neue Kollege."
+  },
+  {
+    "id": "7535160fba8a",
+    "german": "nicht",
+    "korean": "~아니다/~않다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "not",
+    "exampleGerman": "Das stimmt nicht."
+  },
+  {
+    "id": "9f2607769f79",
+    "german": "nichts",
+    "korean": "아무것도 ~않다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "nothing",
+    "exampleGerman": "Das macht nichts."
+  },
+  {
+    "id": "4d05f588ca7a",
+    "german": "noch",
+    "korean": "아직/더",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "still/more",
+    "exampleGerman": "Vielleicht kommt er noch."
+  },
+  {
+    "id": "9c2a6e4809ae",
+    "german": "normal",
+    "korean": "보통의/정상적인",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "normal/ordinary",
+    "exampleGerman": "75 kg. Sein Gewicht ist normal."
+  },
+  {
+    "id": "7676d7e620aa",
+    "german": "die Nummer, -n",
+    "korean": "번호",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "number",
+    "exampleGerman": "Sie haben Zimmer Nummer zwölf."
+  },
+  {
+    "id": "2216b5374d85",
+    "german": "nur",
+    "korean": "오직/단지",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "only/just",
+    "exampleGerman": "Ich möchte nur ein Glas Wasser."
+  },
+  {
+    "id": "4f989f59efd2",
+    "german": "oben",
+    "korean": "위에",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "above/upstairs",
+    "exampleGerman": "Ich wohne oben."
+  },
+  {
+    "id": "986e75cb881d",
+    "german": "das Obst",
+    "korean": "과일",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "fruit",
+    "exampleGerman": "Im Sommer ist das Obst billig."
+  },
+  {
+    "id": "4b937dbc6178",
+    "german": "oder",
+    "korean": "또는",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "or",
+    "exampleGerman": "Wann können Sie kommen – heute oder morgen?"
+  },
+  {
+    "id": "864dd987e4b0",
+    "german": "öffnen",
+    "korean": "열다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "open",
+    "exampleGerman": "Ich öffne die Tür."
+  },
+  {
+    "id": "5f2a4f168a96",
+    "german": "geöffnet",
+    "korean": "열려 있는",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "open",
+    "exampleGerman": "Der Laden ist samstags bis 16.00 Uhr geöffnet."
+  },
+  {
+    "id": "8528b539de63",
+    "german": "oft",
+    "korean": "자주",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "often",
+    "exampleGerman": "Petra treffe ich oft."
+  },
+  {
+    "id": "1e1342eea4c8",
+    "german": "ohne",
+    "korean": "~ 없이",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "without",
+    "exampleGerman": "Ohne Geld kann er nichts kaufen."
+  },
+  {
+    "id": "87604e242bd6",
+    "german": "das Öl",
+    "korean": "기름/식용유",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "oil",
+    "exampleGerman": "Den Salat machen wir ohne Öl."
+  },
+  {
+    "id": "0e1a6dd0e6ea",
+    "german": "die Oma, -s",
+    "korean": "할머니",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "grandma",
+    "exampleGerman": "Meine Oma ist schon tot."
+  },
+  {
+    "id": "7d343932b86a",
+    "german": "der Opa, -s",
+    "korean": "할아버지",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "grandpa",
+    "exampleGerman": "Mein Opa heißt Hans."
+  },
+  {
+    "id": "1e311eb505a7",
+    "german": "die Ordnung",
+    "korean": "질서/정리",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "order/tidiness",
+    "exampleGerman": "Das ist in Ordnung."
+  },
+  {
+    "id": "89c4c771f71b",
+    "german": "der Ort, -e",
+    "korean": "장소",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "place/location",
+    "exampleGerman": "Der Ort liegt am Meer."
+  },
+  {
+    "id": "50474e8a0621",
+    "german": "das Papier",
+    "korean": "종이",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "paper",
+    "exampleGerman": "Hier sind Papier und Bleistift."
+  },
+  {
+    "id": "db158a9c48b6",
+    "german": "die Papiere (pl.)",
+    "korean": "서류",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "documents/papers",
+    "exampleGerman": "Haben Sie Ihre Papiere dabei?"
+  },
+  {
+    "id": "4695b7fa009a",
+    "german": "der Partner, -/ die Partnerin, -nen",
+    "korean": "파트너/배우자",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "partner/companion",
+    "exampleGerman": "Sie ist meine Partnerin."
+  },
+  {
+    "id": "dae96bd006a6",
+    "german": "die Party",
+    "korean": "파티",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "party",
+    "exampleGerman": "Heute Abend machen wir eine Party."
+  },
+  {
+    "id": "6be6328390af",
+    "german": "der Pass, -ä, e",
+    "korean": "여권",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "passport",
+    "exampleGerman": "Im Hotel brauchst du deinen Pass."
+  },
+  {
+    "id": "497cfd1f9247",
+    "german": "die Pause, -n",
+    "korean": "휴식/쉬는 시간",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "break/rest",
+    "exampleGerman": "Von 12.00 bis 12.30 Uhr haben wir Mittagspause."
+  },
+  {
+    "id": "486e14c758c6",
+    "german": "der Plan, -ä, e",
+    "korean": "계획",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "plan",
+    "exampleGerman": "Ich kaufe mir einen Stadtplan."
+  },
+  {
+    "id": "8642a2a00e76",
+    "german": "der Platz, -ä, e",
+    "korean": "자리/광장",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "place/square",
+    "exampleGerman": "Tut mir leid, der Platz ist besetzt."
+  },
+  {
+    "id": "bba6ca0cd3c5",
+    "german": "die Polizei",
+    "korean": "경찰",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "police",
+    "exampleGerman": "Holen Sie die Polizei!"
+  },
+  {
+    "id": "d7bb088d1301",
+    "german": "die Pommes frites (pl.)",
+    "korean": "감자튀김",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "French fries",
+    "exampleGerman": "Die Kinder essen Hähnchen mit Pommes frites."
+  },
+  {
+    "id": "ff65c59de5e4",
+    "german": "die Post",
+    "korean": "우체국/우편",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "post office/mail",
+    "exampleGerman": "Wo ist die Post, bitte?"
+  },
+  {
+    "id": "a0aeea26bfad",
+    "german": "die Postleitzahl",
+    "korean": "우편번호",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "postal code/zip code",
+    "exampleGerman": "Wie ist Ihre Postleitzahl?"
+  },
+  {
+    "id": "19b1d916b9c6",
+    "german": "das Praktikum",
+    "korean": "인턴십/실습",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "internship/practical training",
+    "exampleGerman": "Ich mache ein Praktikum bei Siemens."
+  },
+  {
+    "id": "5b38d9e0409b",
+    "german": "die Praxis",
+    "korean": "병원/진료소",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "medical practice/clinic",
+    "exampleGerman": "Die Praxis ist ab acht Uhr geöffnet."
+  },
+  {
+    "id": "48ea9f8f2aa1",
+    "german": "der Preis, -e",
+    "korean": "가격",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "price/prize",
+    "exampleGerman": "Die Preise sind hoch."
+  },
+  {
+    "id": "7c97f742dedc",
+    "german": "das Problem, -e",
+    "korean": "문제",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "problem",
+    "exampleGerman": "Mein Problem ist die Sprache."
+  },
+  {
+    "id": "041528e251e8",
+    "german": "der Prospekt, -e",
+    "korean": "안내 책자/광고지",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "brochure/leaflet",
+    "exampleGerman": "Bitte schicken Sie mir einen Prospekt von Ihrem Hotel."
+  },
+  {
+    "id": "03407cd72c89",
+    "german": "die Prüfung",
+    "korean": "시험",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "exam/test",
+    "exampleGerman": "Die Prüfung ist am Montag um 8.00 Uhr."
+  },
+  {
+    "id": "2900d17e4bdf",
+    "german": "pünktlich",
+    "korean": "시간을 잘 지키는/정시에",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "punctual/on time",
+    "exampleGerman": "Der Bus fährt pünktlich um acht Uhr."
+  },
+  {
+    "id": "028572a951cc",
+    "german": "Rad fahren",
+    "korean": "자전거를 타다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "ride a bicycle/cycle",
+    "exampleGerman": "Das Kind kann schon Rad fahren."
+  },
+  {
+    "id": "54c3ba486d22",
+    "german": "rauchen",
+    "korean": "담배를 피우다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "smoke",
+    "exampleGerman": "Ich rauche nicht."
+  },
+  {
+    "id": "4eb7df743e6f",
+    "german": "der Raum, -ä, e",
+    "korean": "방/공간",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "room/space",
+    "exampleGerman": "Der Unterricht ist in Raum 332."
+  },
+  {
+    "id": "f88b24bba341",
+    "german": "die Rechnung, -en",
+    "korean": "계산서/청구서",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bill/invoice",
+    "exampleGerman": "Die Rechnung, bitte."
+  },
+  {
+    "id": "73d6715126ba",
+    "german": "rechts",
+    "korean": "오른쪽에",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "on the right/to the right",
+    "exampleGerman": "Die Schillerstraße ist hier rechts."
+  },
+  {
+    "id": "c5c6b9ac60d3",
+    "german": "regnen",
+    "korean": "비가 오다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "rain",
+    "exampleGerman": "Heute regnet es."
+  },
+  {
+    "id": "fcd649826ff3",
+    "german": "der Regen",
+    "korean": "비",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "rain",
+    "exampleGerman": "Bei diesem Regen gehe ich nicht raus."
+  },
+  {
+    "id": "e9169aaa7464",
+    "german": "der Reis",
+    "korean": "쌀/밥",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "rice",
+    "exampleGerman": "Ich esse gern Reis."
+  },
+  {
+    "id": "02deeead5c98",
+    "german": "reisen",
+    "korean": "여행하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "travel",
+    "exampleGerman": "Ich reise gern."
+  },
+  {
+    "id": "8ee0d0435d06",
+    "german": "die Reise",
+    "korean": "여행",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "trip/journey",
+    "exampleGerman": "Wir machen eine Reise nach Österreich."
+  },
+  {
+    "id": "dac983a8f7a4",
+    "german": "das Reisebüro, -s",
+    "korean": "여행사",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "travel agency",
+    "exampleGerman": "Mein Mann arbeitet im Reisebüro."
+  },
+  {
+    "id": "9566b5525ec7",
+    "german": "der Reiseführer",
+    "korean": "여행 안내서/여행 가이드",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "guidebook/tour guide",
+    "exampleGerman": "Ich kaufe mir einen Reiseführer von Berlin."
+  },
+  {
+    "id": "d1e463fbf498",
+    "german": "reparieren",
+    "korean": "수리하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "repair/fix",
+    "exampleGerman": "Er hat das Fahrrad repariert."
+  },
+  {
+    "id": "f2cda5b3d7d4",
+    "german": "die Reparatur",
+    "korean": "수리",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "repair",
+    "exampleGerman": "Die Reparatur ist sehr teuer."
+  },
+  {
+    "id": "032c7b745594",
+    "german": "das Restaurant, -s",
+    "korean": "식당",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "restaurant",
+    "exampleGerman": "Wir essen heute in einem Restaurant."
+  },
+  {
+    "id": "6525a833cce6",
+    "german": "die Rezeption",
+    "korean": "접수처/프런트",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "reception/front desk",
+    "exampleGerman": "Fragen Sie bitte im Hotel an der Rezeption."
+  },
+  {
+    "id": "81975f9a1f01",
+    "german": "richtig",
+    "korean": "맞는/올바른",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "correct/right",
+    "exampleGerman": "Habe ich das richtig verstanden?"
+  },
+  {
+    "id": "2fb3a5fc4cc0",
+    "german": "riechen",
+    "korean": "냄새가 나다/냄새를 맡다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "smell",
+    "exampleGerman": "Dieser Wein riecht gut."
+  },
+  {
+    "id": "1a1202ec6d4a",
+    "german": "ruhig",
+    "korean": "조용한/차분한",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "quiet/calm",
+    "exampleGerman": "Ich möchte ein ruhiges Zimmer."
+  },
+  {
+    "id": "0acb45518c7f",
+    "german": "der Saft",
+    "korean": "주스",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "juice",
+    "exampleGerman": "Möchtest du einen Apfelsaft?"
+  },
+  {
+    "id": "a646c46e6b21",
+    "german": "sagen",
+    "korean": "말하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "say/tell",
+    "exampleGerman": "Sag mal, wie geht es dir denn?"
+  },
+  {
+    "id": "30cfdd69a045",
+    "german": "der Salat",
+    "korean": "샐러드",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "salad",
+    "exampleGerman": "Wie schmeckt dir der Salat?"
+  },
+  {
+    "id": "97d24f614d7e",
+    "german": "das Salz",
+    "korean": "소금",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "salt",
+    "exampleGerman": "Herr Ober, kann ich bitte Salz haben?"
+  },
+  {
+    "id": "f6420934c023",
+    "german": "Satz, -ä, e",
+    "korean": "문장",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "sentence",
+    "exampleGerman": "Dieser Satz ist sehr einfach."
+  },
+  {
+    "id": "4d237da06a5b",
+    "german": "die S-Bahn",
+    "korean": "광역전철",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "suburban train",
+    "exampleGerman": "Ich nehme lieber die S-Bahn."
+  },
+  {
+    "id": "31dafaa384fc",
+    "german": "der Schalter",
+    "korean": "창구/스위치",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "counter/switch",
+    "exampleGerman": "Gehen Sie bitte zum Schalter drei!"
+  },
+  {
+    "id": "5ac6df67677f",
+    "german": "scheinen",
+    "korean": "빛나다/인 듯하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "shine/seem",
+    "exampleGerman": "Die Sonne scheint."
+  },
+  {
+    "id": "4410424b0a37",
+    "german": "schicken",
+    "korean": "보내다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "send",
+    "exampleGerman": "Bitte schicken Sie mir eine E-Mail."
+  },
+  {
+    "id": "5a9f6023588b",
+    "german": "das Schild, -er",
+    "korean": "표지판",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "sign",
+    "exampleGerman": "Haben Sie nicht das Schild gesehen?"
+  },
+  {
+    "id": "c98d281bbc6c",
+    "german": "der Schinken, –",
+    "korean": "햄",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "ham",
+    "exampleGerman": "Ich möchte gern ein Schinkenbrot."
+  },
+  {
+    "id": "dde402c7bcf8",
+    "german": "schlafen",
+    "korean": "자다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "sleep",
+    "exampleGerman": "Ich schlafe meistens acht Stunden."
+  },
+  {
+    "id": "a116f74da870",
+    "german": "schlecht",
+    "korean": "나쁜/못하는",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bad/poor",
+    "exampleGerman": "Mir ist schlecht!"
+  },
+  {
+    "id": "36f944b4e4dd",
+    "german": "schließen",
+    "korean": "닫다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "close",
+    "exampleGerman": "Bitte, schließen Sie die Tür."
+  },
+  {
+    "id": "944d96ecdf3b",
+    "german": "geschlossen",
+    "korean": "닫힌/영업이 끝난",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "closed",
+    "exampleGerman": "Die Bank hat am Samstag geschlossen."
+  },
+  {
+    "id": "187eed080354",
+    "german": "der Schluss",
+    "korean": "끝/마지막",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "end/finish",
+    "exampleGerman": "Ich muss jetzt Schluss machen."
+  },
+  {
+    "id": "ca470524a107",
+    "german": "der Schlüssel, –",
+    "korean": "열쇠",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "key",
+    "exampleGerman": "Ich gebe Ihnen noch den Zimmerschlüssel."
+  },
+  {
+    "id": "c320a50f4773",
+    "german": "schmecken",
+    "korean": "맛이 나다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "taste",
+    "exampleGerman": "Schmeckt das gut?"
+  },
+  {
+    "id": "5db660272fab",
+    "german": "schnell",
+    "korean": "빠른/빨리",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "fast/quickly",
+    "exampleGerman": "Er fährt schnell."
+  },
+  {
+    "id": "a581021a64e8",
+    "german": "schon",
+    "korean": "이미/벌써",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "already",
+    "exampleGerman": "Ist das Essen schon fertig?"
+  },
+  {
+    "id": "0cc795801c8a",
+    "german": "schön",
+    "korean": "아름다운/좋은",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "beautiful/nice",
+    "exampleGerman": "Schönen Urlaub!"
+  },
+  {
+    "id": "0a69ebc4d563",
+    "german": "der Schrank, -ä, e",
+    "korean": "장롱/수납장",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "wardrobe/cabinet",
+    "exampleGerman": "Die Gläser stehen im Schrank."
+  },
+  {
+    "id": "3dbccaf4aa64",
+    "german": "der Schuh, -e",
+    "korean": "신발",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "shoe",
+    "exampleGerman": "Zieh die Schuhe aus!"
+  },
+  {
+    "id": "defe4a469178",
+    "german": "die Schule",
+    "korean": "학교",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "school",
+    "exampleGerman": "Meine Tochter geht schon in die Schule."
+  },
+  {
+    "id": "6a64ae03a89a",
+    "german": "der Schüler, –",
+    "korean": "남학생/학생",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "schoolboy/student",
+    "exampleGerman": "In meinem Kurs sind acht Schülerinnen und fünf Schüler."
+  },
+  {
+    "id": "98a0407ec2da",
+    "german": "schwer",
+    "korean": "무거운/어려운",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "heavy/difficult",
+    "exampleGerman": "Ist Ihr Gepäck sehr schwer?"
+  },
+  {
+    "id": "f72de645cf9d",
+    "german": "die Schwester, -n",
+    "korean": "자매/간호사",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "sister/nurse",
+    "exampleGerman": "Meine Schwester kommt am Dienstag."
+  },
+  {
+    "id": "73719498e296",
+    "german": "schwimmen",
+    "korean": "수영하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "swim",
+    "exampleGerman": "Ich schwimme jeden Tag einen Kilometer."
+  },
+  {
+    "id": "f42a103313a7",
+    "german": "das Schwimmbad",
+    "korean": "수영장",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "swimming pool",
+    "exampleGerman": "Kommst du mit ins Schwimmbad?"
+  },
+  {
+    "id": "6d992adc81e3",
+    "german": "der See",
+    "korean": "호수",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "lake",
+    "exampleGerman": "Komm, wir fahren zum Starnberger See."
+  },
+  {
+    "id": "0bccbb543188",
+    "german": "sehen",
+    "korean": "보다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "see",
+    "exampleGerman": "Ich kann dich nicht sehen."
+  },
+  {
+    "id": "36c929a37def",
+    "german": "die Sehenswürdigkeit,",
+    "korean": "명소/볼거리",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "sight/attraction",
+    "exampleGerman": "Welche Sehenswürdigkeiten gibt es in Frankfurt?"
+  },
+  {
+    "id": "de989202ffc6",
+    "german": "sehr",
+    "korean": "매우",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "very",
+    "exampleGerman": "Danke sehr!"
+  },
+  {
+    "id": "acdc21e7d597",
+    "german": "sein",
+    "korean": "이다/있다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "be",
+    "exampleGerman": "Herr Müller ist in seinem Zimmer."
+  },
+  {
+    "id": "b4e6ca620e22",
+    "german": "weg sein",
+    "korean": "없어지다/자리에 없다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "be gone/be away",
+    "exampleGerman": "Herr Meier ist schon weg."
+  },
+  {
+    "id": "7131a67c1acc",
+    "german": "zu sein",
+    "korean": "문을 닫다/끝나다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "to be",
+    "exampleGerman": "Die Tür ist zu."
+  },
+  {
+    "id": "af1b4714651b",
+    "german": "seit",
+    "korean": "이래로/부터",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "since/for",
+    "exampleGerman": "Ich wohne seit drei Jahren in Köln."
+  },
+  {
+    "id": "06cb76dedb04",
+    "german": "selbstständig",
+    "korean": "자영업의/독립적인",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "self-employed/independent",
+    "exampleGerman": "Er ist selbstständig."
+  },
+  {
+    "id": "95e995b3016a",
+    "german": "sich",
+    "korean": "자기 자신을/서로",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "oneself/each other",
+    "exampleGerman": "Sie müssen sich erst anmelden."
+  },
+  {
+    "id": "8d78e8e14999",
+    "german": "sie",
+    "korean": "그녀/그들",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "she/they",
+    "exampleGerman": "Wie heißt sie?"
+  },
+  {
+    "id": "124e140ebb91",
+    "german": "sitzen",
+    "korean": "앉아 있다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "sit/be seated",
+    "exampleGerman": "Wo sitzen Sie?"
+  },
+  {
+    "id": "cd1b646ebd1f",
+    "german": "so",
+    "korean": "그렇게/그래서",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "so/like that",
+    "exampleGerman": "Sie müssen das so machen!"
+  },
+  {
+    "id": "141be5906c8b",
+    "german": "das Sofa",
+    "korean": "소파",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "sofa",
+    "exampleGerman": "Das Sofa ist neu."
+  },
+  {
+    "id": "c3db5669174e",
+    "german": "sofort",
+    "korean": "즉시/바로",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "immediately/right away",
+    "exampleGerman": "Bitte antworten Sie sofort."
+  },
+  {
+    "id": "85750b75b705",
+    "german": "der Sohn, -ö, e",
+    "korean": "아들",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "son",
+    "exampleGerman": "Das ist Hans, mein Sohn."
+  },
+  {
+    "id": "0d38b78606f7",
+    "german": "sollen",
+    "korean": "해야 한다/하는 게 좋다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "should/be supposed to",
+    "exampleGerman": "Soll ich kommen?"
+  },
+  {
+    "id": "fd90cb90cc71",
+    "german": "die Sonne",
+    "korean": "태양/햇빛",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "sun",
+    "exampleGerman": "Die Sonne scheint."
+  },
+  {
+    "id": "fed970a2cc26",
+    "german": "spät",
+    "korean": "늦은/늦게",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "late",
+    "exampleGerman": "Es ist schon spät, ich muss gehen."
+  },
+  {
+    "id": "9a11cec02553",
+    "german": "später",
+    "korean": "나중에",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "later",
+    "exampleGerman": "Das können wir später machen."
+  },
+  {
+    "id": "b037cbc91ac8",
+    "german": "die Speisekarte",
+    "korean": "메뉴판",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "menu",
+    "exampleGerman": "Bringen Sie mir die Speisekarte, bitte."
+  },
+  {
+    "id": "83b699c50c92",
+    "german": "spielen",
+    "korean": "놀다/연주하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "play",
+    "exampleGerman": "Die Kinder spielen draußen."
+  },
+  {
+    "id": "f457c3f867a8",
+    "german": "der Sport",
+    "korean": "운동/스포츠",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "sport/exercise",
+    "exampleGerman": "Ich mache viel Sport."
+  },
+  {
+    "id": "4608283c9eea",
+    "german": "die Sprache, -n",
+    "korean": "언어/말",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "language",
+    "exampleGerman": "Welche Sprachen sprichst du?"
+  },
+  {
+    "id": "6f43892e78f0",
+    "german": "sprechen",
+    "korean": "말하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "speak",
+    "exampleGerman": "Kann ich (mit) Herrn Klein sprechen?"
+  },
+  {
+    "id": "54624a07ecdc",
+    "german": "die Stadt, -ä, e",
+    "korean": "도시",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "city",
+    "exampleGerman": "Heidelberg ist eine alte Stadt."
+  },
+  {
+    "id": "3f3072042ca3",
+    "german": "stehen",
+    "korean": "서 있다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "stand",
+    "exampleGerman": "Ich glaube es nicht, aber es steht in der Zeitung."
+  },
+  {
+    "id": "a85c7c1f7233",
+    "german": "stellen",
+    "korean": "세우다/놓다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "put/place",
+    "exampleGerman": "Stell die Tasche rechts in die Ecke!"
+  },
+  {
+    "id": "0d617da6be2b",
+    "german": "der Stock",
+    "korean": "층",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "floor/storey",
+    "exampleGerman": "Unsere Wohnung liegt im ersten Stock."
+  },
+  {
+    "id": "4f0330a5aafa",
+    "german": "die Straße, -n",
+    "korean": "거리/도로",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "street/road",
+    "exampleGerman": "In welcher Straße wohnen Sie?"
+  },
+  {
+    "id": "162866979b04",
+    "german": "die Straßenbahn",
+    "korean": "노면전차/트램",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "tram/streetcar",
+    "exampleGerman": "Wo fährt die Straßenbahn ab?"
+  },
+  {
+    "id": "c430fdf421c0",
+    "german": "studieren",
+    "korean": "대학에서 공부하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "study at university",
+    "exampleGerman": "Ich studiere in Mainz."
+  },
+  {
+    "id": "19c92ee2c1cf",
+    "german": "das Studium",
+    "korean": "대학 공부",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "university studies/studies",
+    "exampleGerman": "Das Studium beginnt im Oktober."
+  },
+  {
+    "id": "897f781db1b9",
+    "german": "der Student, -en",
+    "korean": "남자 대학생",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "male student",
+    "exampleGerman": "Ich bin Studentin."
+  },
+  {
+    "id": "98a5e9b0b482",
+    "german": "die Stunde, -n",
+    "korean": "시간/수업 시간",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "hour/lesson",
+    "exampleGerman": "Ich bin in einer Stunde zurück."
+  },
+  {
+    "id": "09b6f5035f2e",
+    "german": "suchen",
+    "korean": "찾다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "look for/search",
+    "exampleGerman": "Suchst du etwas?"
+  },
+  {
+    "id": "a14a10362e57",
+    "german": "tanzen",
+    "korean": "춤추다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "dance",
+    "exampleGerman": "Tanzen Sie gern?"
+  },
+  {
+    "id": "c87686106b61",
+    "german": "die Tasche, -n",
+    "korean": "가방",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bag",
+    "exampleGerman": "Ich habe die Schlüssel in der Tasche."
+  },
+  {
+    "id": "a3a12f6d2abd",
+    "german": "das Taxi, -s",
+    "korean": "택시",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "taxi",
+    "exampleGerman": "Es gibt heute keinen Bus mehr. Er fährt mit dem Taxi."
+  },
+  {
+    "id": "b3bf51424c40",
+    "german": "der Tee",
+    "korean": "차",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "tea",
+    "exampleGerman": "Ich trinke morgens immer Tee."
+  },
+  {
+    "id": "8d477dab00c1",
+    "german": "der Teil, -e",
+    "korean": "부분",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "part",
+    "exampleGerman": "Lies bitte auch den zweiten Teil."
+  },
+  {
+    "id": "0a7fe3ed0fd4",
+    "german": "telefonieren",
+    "korean": "전화하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "phone/call",
+    "exampleGerman": "Darf ich mal telefonieren?"
+  },
+  {
+    "id": "00c47c2b65e9",
+    "german": "das Telefon",
+    "korean": "전화기",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "telephone/phone",
+    "exampleGerman": "Haben Sie Telefon?"
+  },
+  {
+    "id": "4ffc7c40a5a6",
+    "german": "der Termin, -e",
+    "korean": "약속/일정",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "appointment/date",
+    "exampleGerman": "Am besten machen wir sofort einen Termin."
+  },
+  {
+    "id": "ab2faf6628da",
+    "german": "der Test",
+    "korean": "시험/검사",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "test",
+    "exampleGerman": "Der Test war einfach."
+  },
+  {
+    "id": "c35aa33b79c9",
+    "german": "teuer",
+    "korean": "비싼",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "expensive",
+    "exampleGerman": "Das ist mir zu teuer."
+  },
+  {
+    "id": "e786eca6a446",
+    "german": "der Text, -e",
+    "korean": "글/텍스트",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "text",
+    "exampleGerman": "Lesen Sie bitte diesen Text."
+  },
+  {
+    "id": "57f845b885f4",
+    "german": "das Thema",
+    "korean": "주제",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "topic/theme",
+    "exampleGerman": "Wir sprechen heute über das Thema „Essen und Trinken“."
+  },
+  {
+    "id": "23b717254480",
+    "german": "das Ticket, -s",
+    "korean": "표/티켓",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "ticket",
+    "exampleGerman": "Wie viel kostet das Ticket?"
+  },
+  {
+    "id": "d7ca2d949c41",
+    "german": "der Tisch, -e",
+    "korean": "탁자",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "table",
+    "exampleGerman": "Die Fotos liegen auf dem Tisch."
+  },
+  {
+    "id": "32d106906f6a",
+    "german": "die Tochter, -ö",
+    "korean": "딸",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "daughter",
+    "exampleGerman": "Das ist meine Tochter Katharina."
+  },
+  {
+    "id": "8866450202dc",
+    "german": "die Toilette, -en",
+    "korean": "화장실",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "toilet/restroom",
+    "exampleGerman": "Wo ist die Toilette, bitte?"
+  },
+  {
+    "id": "f9194dbb0eb6",
+    "german": "die Tomate, -n",
+    "korean": "토마토",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "tomato",
+    "exampleGerman": "Die Tomate ist noch grün."
+  },
+  {
+    "id": "ac571013c2f2",
+    "german": "tot",
+    "korean": "죽은",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "dead",
+    "exampleGerman": "Sein Vater ist schon lange tot."
+  },
+  {
+    "id": "06b62f76192b",
+    "german": "(sich) treffen",
+    "korean": "만나다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "meet",
+    "exampleGerman": "Ich treffe in der Stadt einen Kollegen."
+  },
+  {
+    "id": "edee19b53293",
+    "german": "die Treppe, -n",
+    "korean": "계단",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "stairs/staircase",
+    "exampleGerman": "Die Toilette? Die Treppe hoch und dann links."
+  },
+  {
+    "id": "a78ac8354353",
+    "german": "trinken",
+    "korean": "마시다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "drink",
+    "exampleGerman": "Möchtest du etwas trinken?"
+  },
+  {
+    "id": "cd21f1542c7b",
+    "german": "tschüss",
+    "korean": "안녕/잘 가",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "bye/goodbye",
+    "exampleGerman": "Junge Leute sagen meistens „tschüss!“ und nicht „auf Wiedersehen“."
+  },
+  {
+    "id": "72fec05ee2db",
+    "german": "tun",
+    "korean": "하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "do",
+    "exampleGerman": "Ich habe noch etwas zu tun."
+  },
+  {
+    "id": "fcd10c808874",
+    "german": "über",
+    "korean": "위에/관하여",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "over/about",
+    "exampleGerman": "Gehen Sie hier über die Straße."
+  },
+  {
+    "id": "b00b5284e84c",
+    "german": "übernachten",
+    "korean": "숙박하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "stay overnight",
+    "exampleGerman": "Du kannst bei mir übernachten."
+  },
+  {
+    "id": "e262d9544139",
+    "german": "überweisen",
+    "korean": "송금하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "transfer money",
+    "exampleGerman": "Sie können das Geld auch überweisen."
+  },
+  {
+    "id": "700992871cc4",
+    "german": "die Uhr",
+    "korean": "시계/시각",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "clock/time",
+    "exampleGerman": "Es ist vier Uhr."
+  },
+  {
+    "id": "ec92b7430684",
+    "german": "um",
+    "korean": "~시에/~주위에",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "at/around",
+    "exampleGerman": "Er kommt um sieben Uhr."
+  },
+  {
+    "id": "01633f088bbd",
+    "german": "umziehen",
+    "korean": "이사하다/갈아입다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "move house",
+    "exampleGerman": "Nächsten Monat ziehen wir um."
+  },
+  {
+    "id": "7feef12d65f8",
+    "german": "unser-",
+    "korean": "우리의",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "our",
+    "exampleGerman": "Das ist unsere Lehrerin."
+  },
+  {
+    "id": "3cbd3b839b2f",
+    "german": "unten",
+    "korean": "아래에",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "below/downstairs",
+    "exampleGerman": "Er wohnt ganz unten im Haus."
+  },
+  {
+    "id": "6766177a0426",
+    "german": "unter",
+    "korean": "~아래에/~중에서",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "under/among",
+    "exampleGerman": "Unter uns wohnt eine Familie mit drei Kindern."
+  },
+  {
+    "id": "743dd8354580",
+    "german": "der Unterricht",
+    "korean": "수업",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "lesson/class",
+    "exampleGerman": "Wir haben Unterricht von 8.00 bis 12.00 Uhr."
+  },
+  {
+    "id": "a1657d261234",
+    "german": "unterschreiben",
+    "korean": "서명하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "sign",
+    "exampleGerman": "Wo muss ich unterschreiben?"
+  },
+  {
+    "id": "7bbc6e11a416",
+    "german": "die Unterschrift",
+    "korean": "서명",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "signature",
+    "exampleGerman": "Hier fehlt noch Ihre Unterschrift."
+  },
+  {
+    "id": "29029ade580d",
+    "german": "der Urlaub",
+    "korean": "휴가",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "vacation/holiday",
+    "exampleGerman": "Ich nehme im September Urlaub."
+  },
+  {
+    "id": "99e6e66b307d",
+    "german": "der Vater, -ä",
+    "korean": "아버지",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "father",
+    "exampleGerman": "Mein Vater ist Arbeiter."
+  },
+  {
+    "id": "bb6c525ffc15",
+    "german": "verboten",
+    "korean": "금지된",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "forbidden",
+    "exampleGerman": "Hier ist Rauchen verboten."
+  },
+  {
+    "id": "d15141d999d7",
+    "german": "verdienen",
+    "korean": "돈을 벌다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "earn",
+    "exampleGerman": "Ich verdiene 1.500 Euro im Monat."
+  },
+  {
+    "id": "aa536b39f6dd",
+    "german": "der Verein",
+    "korean": "협회/동호회",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "association/club",
+    "exampleGerman": "Es gibt einen neuen Sportverein in der Stadt."
+  },
+  {
+    "id": "88396723ffef",
+    "german": "verheiratet",
+    "korean": "결혼한",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "married",
+    "exampleGerman": "Ich bin verheiratet und habe drei Kinder."
+  },
+  {
+    "id": "01d4d45a3503",
+    "german": "verkaufen",
+    "korean": "팔다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "sell",
+    "exampleGerman": "Er verkauft sein altes Auto."
+  },
+  {
+    "id": "02a58abb7599",
+    "german": "der Verkäufer, –",
+    "korean": "판매원",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "salesman/seller",
+    "exampleGerman": "Meine Mutter ist Verkäuferin im Kaufhaus."
+  },
+  {
+    "id": "3e278508bce8",
+    "german": "vermieten",
+    "korean": "임대하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "rent out/let",
+    "exampleGerman": "Die Wohnung ist schon vermietet."
+  },
+  {
+    "id": "e6f07d0d4026",
+    "german": "der Vermieter",
+    "korean": "임대인/집주인",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "landlord/lessor",
+    "exampleGerman": "Unser Vermieter heißt Huber. Er wohnt auch hier."
+  },
+  {
+    "id": "08197a884924",
+    "german": "verstehen",
+    "korean": "이해하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "understand",
+    "exampleGerman": "Können Sie mich verstehen?"
+  },
+  {
+    "id": "239bf3d16f72",
+    "german": "der Verwandte, -n",
+    "korean": "친척",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "relative",
+    "exampleGerman": "Peter besucht seine Verwandten in Polen."
+  },
+  {
+    "id": "ea0c662de52b",
+    "german": "viel",
+    "korean": "많은/많이",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "much/many",
+    "exampleGerman": "Hier regnet es viel."
+  },
+  {
+    "id": "8d879226f5c9",
+    "german": "vielleicht",
+    "korean": "아마/어쩌면",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "perhaps/maybe",
+    "exampleGerman": "Ich komme vielleicht mit dem Bus."
+  },
+  {
+    "id": "445584edc4cc",
+    "german": "von",
+    "korean": "~에서/~의",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "from/of",
+    "exampleGerman": "Das Auto von Felix ist kaputt."
+  },
+  {
+    "id": "8e4fcaa39686",
+    "german": "vor",
+    "korean": "~앞에/~전에",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "in front of/before",
+    "exampleGerman": "Der Termin war vor einer Stunde."
+  },
+  {
+    "id": "f26728f58b9d",
+    "german": "der Vorname, -n",
+    "korean": "이름",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "first name/given name",
+    "exampleGerman": "Ich heiße Müller, mein Vorname ist Eva."
+  },
+  {
+    "id": "6bb1bd161645",
+    "german": "die Vorsicht",
+    "korean": "조심/주의",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "caution/care",
+    "exampleGerman": "Vorsicht! Da kommt ein Auto."
+  },
+  {
+    "id": "d4842e2c910e",
+    "german": "(sich) vorstellen",
+    "korean": "소개하다/상상하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "introduce/imagine",
+    "exampleGerman": "Wir wollen uns kennenlernen. Können Sie sich bitte vorstellen?"
+  },
+  {
+    "id": "e17905fdb0be",
+    "german": "die Vorwahl",
+    "korean": "지역번호",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "area code/country code",
+    "exampleGerman": "Wie ist die Vorwahl von München?"
+  },
+  {
+    "id": "fa1ea1b65faa",
+    "german": "wandern",
+    "korean": "하이킹하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "hike/walk",
+    "exampleGerman": "Wir wandern um den Chiemsee."
+  },
+  {
+    "id": "4189e7cec6e0",
+    "german": "wann",
+    "korean": "언제",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "when",
+    "exampleGerman": "Wann bist du fertig?"
+  },
+  {
+    "id": "56d375d11250",
+    "german": "warten",
+    "korean": "기다리다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "wait",
+    "exampleGerman": "Können Sie ein paar Minuten warten?"
+  },
+  {
+    "id": "31404f480ecb",
+    "german": "warum",
+    "korean": "왜",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "why",
+    "exampleGerman": "Warum kommt er nicht?"
+  },
+  {
+    "id": "3de521d36191",
+    "german": "was",
+    "korean": "무엇",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "what",
+    "exampleGerman": "Was ist das?"
+  },
+  {
+    "id": "41f6e8699389",
+    "german": "was für ein",
+    "korean": "어떤",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "what kind of",
+    "exampleGerman": "Was für eine Farbe möchten Sie?"
+  },
+  {
+    "id": "d4080f56f24c",
+    "german": "(sich) waschen",
+    "korean": "씻다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "wash",
+    "exampleGerman": "Wo kann ich mir die Hände waschen?"
+  },
+  {
+    "id": "e30004ef47bf",
+    "german": "das Wasser",
+    "korean": "물",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "water",
+    "exampleGerman": "Ein Glas Wasser, bitte."
+  },
+  {
+    "id": "b565c3e4f3e0",
+    "german": "weh tun",
+    "korean": "아프다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "hurt/ache",
+    "exampleGerman": "Ich muss zum Arzt. Mein Bein tut weh."
+  },
+  {
+    "id": "74c191235c37",
+    "german": "weiblich",
+    "korean": "여성의/여성",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "female",
+    "exampleGerman": "Kreuzen Sie bitte an: „weiblich“ oder „männlich“."
+  },
+  {
+    "id": "fa49a337ee9d",
+    "german": "der Wein",
+    "korean": "와인",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "wine",
+    "exampleGerman": "Nein danke, ich möchte keinen Wein."
+  },
+  {
+    "id": "63776a677fa3",
+    "german": "weiter",
+    "korean": "계속/더 나아가",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "on/further",
+    "exampleGerman": "Der Bus fährt nicht weiter."
+  },
+  {
+    "id": "19e180aa9c46",
+    "german": "welch-",
+    "korean": "어느/어떤",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "which/what",
+    "exampleGerman": "Welches Buch möchtest du?"
+  },
+  {
+    "id": "f24422cfea1c",
+    "german": "die Welt",
+    "korean": "세계",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "world",
+    "exampleGerman": "Es gibt viele Probleme auf der Welt."
+  },
+  {
+    "id": "9a1ca28b99c1",
+    "german": "wenig",
+    "korean": "적은/조금",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "little/few",
+    "exampleGerman": "Ich habe leider nur wenig verstanden."
+  },
+  {
+    "id": "e3eaee01f47f",
+    "german": "wer",
+    "korean": "누구",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "who",
+    "exampleGerman": "Wer ist das?"
+  },
+  {
+    "id": "493427aee9f9",
+    "german": "werden",
+    "korean": "되다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "become",
+    "exampleGerman": "Mein Sohn will Arzt werden."
+  },
+  {
+    "id": "3f91a0cf93c0",
+    "german": "das Wetter",
+    "korean": "날씨",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "weather",
+    "exampleGerman": "Wir hatten schlechtes Wetter."
+  },
+  {
+    "id": "d6e6b4a2a3e9",
+    "german": "wichtig",
+    "korean": "중요한",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "important",
+    "exampleGerman": "Dieses Formular ist sehr wichtig."
+  },
+  {
+    "id": "74ee6b3ace78",
+    "german": "wie",
+    "korean": "어떻게/얼마나",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "how/like",
+    "exampleGerman": "Wie heißt du?"
+  },
+  {
+    "id": "188857695081",
+    "german": "wiederholen",
+    "korean": "반복하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "repeat",
+    "exampleGerman": "Können Sie das bitte wiederholen?"
+  },
+  {
+    "id": "f731ebea5591",
+    "german": "das Wiederhören",
+    "korean": "다시 듣기",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "hearing again/goodbye",
+    "exampleGerman": "Wir müssen jetzt Schluss machen."
+  },
+  {
+    "id": "0918cbda1e7c",
+    "german": "das Wiedersehen",
+    "korean": "다시 만나기",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "seeing again/goodbye",
+    "exampleGerman": "Auf Wiedersehen!"
+  },
+  {
+    "id": "e1655333fed2",
+    "german": "wie viel",
+    "korean": "얼마/몇",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "how much/how many",
+    "exampleGerman": "Wie viel Milch nehmen Sie?"
+  },
+  {
+    "id": "6762480eebf1",
+    "german": "willkommen",
+    "korean": "환영받는",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "welcome",
+    "exampleGerman": "Herzlich willkommen!"
+  },
+  {
+    "id": "2aaf25a160b4",
+    "german": "der Wind",
+    "korean": "바람",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "wind",
+    "exampleGerman": "Der Wind kommt aus Osten."
+  },
+  {
+    "id": "13c6af1c2f7d",
+    "german": "wir",
+    "korean": "우리",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "we",
+    "exampleGerman": "Wir lernen Deutsch."
+  },
+  {
+    "id": "2346c27f9108",
+    "german": "wissen",
+    "korean": "알다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "know",
+    "exampleGerman": "Weißt du, wie er heißt?"
+  },
+  {
+    "id": "d29f180f1bb0",
+    "german": "wo",
+    "korean": "어디",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "where",
+    "exampleGerman": "Wo waren Sie im Urlaub?"
+  },
+  {
+    "id": "01323f88e8ec",
+    "german": "woher",
+    "korean": "어디에서",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "from where/where from",
+    "exampleGerman": "Woher kommen Sie?"
+  },
+  {
+    "id": "60d1e21e974a",
+    "german": "wohin",
+    "korean": "어디로",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "where to",
+    "exampleGerman": "Wohin fährt dieser Bus?"
+  },
+  {
+    "id": "5f75310ac631",
+    "german": "wohnen",
+    "korean": "살다/거주하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "live/reside",
+    "exampleGerman": "Ich wohne in München."
+  },
+  {
+    "id": "1c78c52c2109",
+    "german": "die Wohnung, -en",
+    "korean": "집/주택",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "home/apartment",
+    "exampleGerman": "Seit wann haben Sie diese Wohnung?"
+  },
+  {
+    "id": "1bb77711f05b",
+    "german": "wollen",
+    "korean": "원하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "want",
+    "exampleGerman": "Wollen Sie einen Kaffee trinken?"
+  },
+  {
+    "id": "389828d78347",
+    "german": "das Wort, -ö, er/-e",
+    "korean": "단어/말",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "word",
+    "exampleGerman": "Ich kenne das Wort nicht."
+  },
+  {
+    "id": "454a4750763c",
+    "german": "wunderbar",
+    "korean": "훌륭한/멋진",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "wonderful/great",
+    "exampleGerman": "Das Essen schmeckt wunderbar."
+  },
+  {
+    "id": "80e48b05c9b4",
+    "german": "zahlen",
+    "korean": "지불하다/계산하다",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "pay",
+    "exampleGerman": "Zahlen, bitte!"
+  },
+  {
+    "id": "80aee1ef7d56",
+    "german": "die Zeit",
+    "korean": "시간/때",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "time",
+    "exampleGerman": "Ich habe heute keine Zeit."
+  },
+  {
+    "id": "990e0fecc8f1",
+    "german": "zurzeit",
+    "korean": "현재/요즘",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "currently/at present",
+    "exampleGerman": "Zurzeit habe ich sehr viel zu tun."
+  },
+  {
+    "id": "d45cf6801e3b",
+    "german": "die Zeitung, -en",
+    "korean": "신문",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "newspaper",
+    "exampleGerman": "Ich lese gern Zeitung."
+  },
+  {
+    "id": "f47d0ed716f9",
+    "german": "die Zigarette, -n",
+    "korean": "담배",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "cigarette",
+    "exampleGerman": "Wie teuer sind die Zigaretten?"
+  },
+  {
+    "id": "5a4345cfad97",
+    "german": "das Zimmer, –",
+    "korean": "방",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "room",
+    "exampleGerman": "Das Zimmer ist groß."
+  },
+  {
+    "id": "02a0bb1875d6",
+    "german": "der Zoll",
+    "korean": "세관",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "customs",
+    "exampleGerman": "Wir müssen noch durch den Zoll."
+  },
+  {
+    "id": "e3abab127fc0",
+    "german": "zu",
+    "korean": "~로/~에게",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "to/at",
+    "exampleGerman": "Der Bus fährt zum Bahnhof."
+  },
+  {
+    "id": "cb454d920991",
+    "german": "zufrieden",
+    "korean": "만족한",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "satisfied/content",
+    "exampleGerman": "Ich bin mit der Wohnung zufrieden."
+  },
+  {
+    "id": "764a73b8c22b",
+    "german": "der Zug, -ü, e",
+    "korean": "기차",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "train",
+    "exampleGerman": "Ich fahre gern mit dem Zug."
+  },
+  {
+    "id": "c27aae4d9d9f",
+    "german": "zurück",
+    "korean": "뒤로/돌아가서",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "back",
+    "exampleGerman": "Einmal Frankfurt und zurück."
+  },
+  {
+    "id": "c341d8c38e24",
+    "german": "zusammen",
+    "korean": "함께",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "together",
+    "exampleGerman": "Sollen wir zusammen essen gehen?"
+  },
+  {
+    "id": "4bd939ed2e01",
+    "german": "zwischen",
+    "korean": "~사이에",
+    "source": "Goethe-Zertifikat A1 Start Deutsch 1 Wortliste",
+    "english": "between",
+    "exampleGerman": "Heidelberg liegt zwischen Frankfurt und Stuttgart."
+  }
+]

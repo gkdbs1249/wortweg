@@ -1,0 +1,9 @@
+dist/
+.DS_Store
+__pycache__/
+*.pyc
+.firebase/
+firebase-debug.log
+data/words-raw.json
+data/goethe-a1-wortliste.pdf
+data/goethe-a1-wortliste.txt
