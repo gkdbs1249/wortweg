@@ -15,6 +15,7 @@ let byId = new Map();
 let activeStorageKey = STORAGE_KEY;
 let state = loadState(activeStorageKey);
 let calendarCursor = null;
+let appReady = false;
 
 function loadState(storageKey = activeStorageKey) {
   try {
@@ -22,6 +23,7 @@ function loadState(storageKey = activeStorageKey) {
   } catch { return defaultState(); }
 }
 function switchLocalProfile(user) {
+  const previousStorageKey = activeStorageKey;
   const previousOwner = localStorage.getItem(STORAGE_OWNER_KEY);
   if (user) {
     const userStorageKey = `${STORAGE_KEY}:user:${user.uid}`;
@@ -35,7 +37,8 @@ function switchLocalProfile(user) {
     activeStorageKey = ANONYMOUS_STORAGE_KEY;
     state = loadState(activeStorageKey);
   }
-  if (words.length) renderDashboard();
+  const profileChanged = previousStorageKey !== activeStorageKey;
+  if (appReady && profileChanged && words.length) renderDashboard();
 }
 function defaultState() { return { dailyCount: 20, nextIndex: 0, carryIds: [], cohorts: [], totalAnswers: 0, correctAnswers: 0 }; }
 function saveState() {
@@ -684,7 +687,7 @@ function bindAuth() {
     applyMergedState: merged => {
       state = { ...defaultState(), ...merged };
       localStorage.setItem(activeStorageKey, JSON.stringify(state));
-      renderDashboard();
+      if (appReady) renderDashboard();
     },
     onUserChanged: user => {
       switchLocalProfile(user);
@@ -710,7 +713,21 @@ function bindSettings() {
   document.querySelector('#menuButton').onclick=()=>{document.querySelector('#dailyCountInput').value=state.dailyCount;settingsDialog.showModal()};
   document.querySelector('#saveSettingsButton').onclick=()=>{state.dailyCount=Math.max(5,Math.min(40,Number(document.querySelector('#dailyCountInput').value)||20));saveState();settingsDialog.close();renderDashboard()};
   document.querySelector('#exportButton').onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`wortweg-progress-${todayKst()}.json`;a.click();URL.revokeObjectURL(a.href)};
-  document.querySelector('#importInput').onchange=async event=>{const parsed=JSON.parse(await event.target.files[0].text());if(!Array.isArray(parsed.cohorts))throw new Error('올바른 진도 파일이 아닙니다.');state={...defaultState(),...parsed};saveState();settingsDialog.close();renderDashboard()};
+  document.querySelector('#importInput').onchange=async event=>{
+    try{
+      const file=event.target.files[0];
+      if(!file)return;
+      const parsed=JSON.parse(await file.text());
+      if(!parsed||!Array.isArray(parsed.cohorts))throw new Error('올바른 진도 파일이 아닙니다.');
+      state={...defaultState(),...parsed};
+      saveState();
+      settingsDialog.close();
+      renderDashboard();
+    }catch(error){
+      alert(`진도 파일을 가져오지 못했습니다. ${error.message||'파일 내용을 확인해 주세요.'}`);
+      event.target.value='';
+    }
+  };
   document.querySelector('#resetButton').onclick=()=>{if(confirm('모든 학습 진도를 지울까요?')){state=defaultState();saveState();settingsDialog.close();renderDashboard()}};
 }
 
@@ -719,7 +736,14 @@ async function init() {
   if(!response.ok) throw new Error('단어 데이터를 불러오지 못했습니다.');
   words=await response.json();
   if(words.some(item=>!item.korean||!item.english||!item.exampleGerman)) throw new Error('한국어·영어 뜻 또는 공식 예문 데이터가 아직 완성되지 않았습니다.');
-  byId=new Map(words.map(item=>[item.id,item])); bindGlobalNavigation(); bindPronunciation(); bindReverseKeyboard(); bindSettings(); renderDashboard(); bindAuth();
+  byId=new Map(words.map(item=>[item.id,item]));
+  bindGlobalNavigation();
+  bindPronunciation();
+  bindReverseKeyboard();
+  bindSettings();
+  await bindAuth();
+  appReady = true;
+  renderDashboard();
   if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
 }
 init().catch(error=>{app.innerHTML=`<section class="complete"><div class="celebrate">⚠️</div><h1>앱을 시작할 수 없어요</h1><p>${escapeHtml(error.message)}</p></section>`});

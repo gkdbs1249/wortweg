@@ -202,6 +202,32 @@ class MobileInputTests(unittest.TestCase):
         self.assertIn("addExtraWordsToday", app)
         self.assertRegex(styles, r"\.extra-word-controls\{[^}]*display:grid")
 
+    def test_initial_auth_settles_before_dashboard_accepts_learning_actions(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        cloud = (ROOT / "src" / "cloud-sync.mjs").read_text(encoding="utf-8")
+        self.assertIn("let appReady = false", app)
+        self.assertIn("if (appReady && profileChanged && words.length) renderDashboard()", app)
+        self.assertIn("await bindAuth()", app)
+        self.assertIn("appReady = true", app)
+        self.assertIn("initialAuthReady", cloud)
+        self.assertIn("await initialAuthReady", cloud)
+        self.assertIn("writeMergedProgress(hooks.getLocalState(), true)", cloud)
+        self.assertIn("if (applyMerged) hooks?.applyMergedState?.(mergedState)", cloud)
+        self.assertIn("if (appReady) renderDashboard()", app)
+
+    def test_invalid_progress_import_shows_a_message_instead_of_throwing(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        settings = app.split("function bindSettings()", 1)[1].split("async function init()", 1)[0]
+        self.assertIn("try{", settings)
+        self.assertIn("catch(error)", settings)
+        self.assertIn("진도 파일을 가져오지 못했습니다", settings)
+        self.assertIn("event.target.value=''", settings)
+
+    def test_disabled_learning_buttons_are_visually_distinct(self):
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn(".primary:disabled,.secondary:disabled", styles)
+        self.assertIn("cursor:not-allowed", styles)
+
     def test_extra_word_card_stays_compact_on_mobile(self):
         styles = (ROOT / "styles.css").read_text(encoding="utf-8")
         self.assertIn(".extra-word-task{display:grid;grid-template-columns:48px minmax(0,1fr)}", styles)

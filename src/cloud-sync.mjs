@@ -25,7 +25,7 @@ function reportStatus(status, message = '') {
   hooks?.onStatus?.({ status, message, user: currentUser });
 }
 
-async function writeMergedProgress(localState) {
+async function writeMergedProgress(localState, applyMerged = false) {
   if (!currentUser || !firestoreApi || !db || syncInFlight) return localState;
   syncInFlight = true;
   reportStatus('syncing', '진도를 동기화하는 중…');
@@ -44,8 +44,8 @@ async function writeMergedProgress(localState) {
         updatedAt: firestoreApi.serverTimestamp(),
       });
     });
-    hooks?.applyMergedState?.(mergedState);
-    pendingState = null;
+    if (applyMerged) hooks?.applyMergedState?.(mergedState);
+    if (pendingState === localState) pendingState = null;
     reportStatus('synced', '클라우드에 저장됨');
     return mergedState;
   } catch (error) {
@@ -55,6 +55,13 @@ async function writeMergedProgress(localState) {
     return localState;
   } finally {
     syncInFlight = false;
+    if (currentUser && pendingState && pendingState !== localState) {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        const nextState = pendingState;
+        if (nextState) writeMergedProgress(nextState);
+      }, 0);
+    }
   }
 }
 
@@ -107,20 +114,30 @@ export async function initializeCloudSync(options) {
     auth = authApi.getAuth(firebaseApp);
     db = firestoreApi.getFirestore(firebaseApp);
 
+    let settleInitialAuth;
+    const initialAuthReady = new Promise(resolve => { settleInitialAuth = resolve; });
     authApi.onAuthStateChanged(auth, async user => {
-      currentUser = user;
-      hooks?.onUserChanged?.(user);
-      if (!user) {
-        reportStatus('signed-out', '로그인하면 여러 기기에서 진도가 이어져요.');
-        return;
+      try {
+        currentUser = user;
+        hooks?.onUserChanged?.(user);
+        if (!user) {
+          reportStatus('signed-out', '로그인하면 여러 기기에서 진도가 이어져요.');
+          return;
+        }
+        reportStatus('syncing', '계정 진도를 불러오는 중…');
+        await writeMergedProgress(hooks.getLocalState(), true);
+      } finally {
+        if (settleInitialAuth) {
+          settleInitialAuth();
+          settleInitialAuth = null;
+        }
       }
-      reportStatus('syncing', '계정 진도를 불러오는 중…');
-      await writeMergedProgress(hooks.getLocalState());
     });
 
     window.addEventListener('online', () => {
       if (currentUser && pendingState) writeMergedProgress(pendingState);
     });
+    await initialAuthReady;
     return { configured: true };
   } catch (error) {
     reportStatus('error', 'Google 로그인 모듈을 불러오지 못했어요.');
