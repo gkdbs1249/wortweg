@@ -123,6 +123,27 @@ class MobileInputTests(unittest.TestCase):
         self.assertIn("const STUDY_START_DATE = '2026-08-25';", app)
         self.assertIn("8월 25일 이전", app)
 
+    def test_calendar_day_can_restudy_only_that_days_words_in_both_directions(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        detail = app.split("function showDayDetail(date)", 1)[1].split("function reverseAttemptsHtml", 1)[0]
+        self.assertIn('class="day-relearn-actions"', detail)
+        self.assertIn('id="reviewDayWords"', detail)
+        self.assertIn('id="reverseDayWords"', detail)
+        self.assertIn("단어 다시 보기", detail)
+        self.assertIn("거꾸로 학습", detail)
+        self.assertIn("shuffleCopy(cohort.wordIds)", detail)
+        self.assertIn("startReverseAttempt(cohort)", detail)
+        self.assertRegex(styles, r"\.day-relearn-actions\{[^}]*grid-template-columns:repeat\(2,1fr\)")
+
+    def test_past_calendar_replay_finishes_as_review_not_as_todays_new_lesson(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        overview = app.split("function renderLessonOverview", 1)[1].split("function renderReverseLearning", 1)[0]
+        self.assertIn("cohort.learnedDate !== todayKst()", overview)
+        self.assertIn("이날 배운 단어", overview)
+        self.assertIn("복습 마치기", overview)
+        self.assertIn("복습 완료!", overview)
+
     def test_reverse_session_ends_with_a_full_word_overview(self):
         app = (ROOT / "app.mjs").read_text(encoding="utf-8")
         self.assertIn("function renderReverseOverview(cohort, attempt)", app)

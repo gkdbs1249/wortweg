@@ -322,9 +322,19 @@ function showDayDetail(date) {
       return `<li><div><strong>${index+1}회차</strong><span>${score}</span></div><time>${times}</time></li>`;
     }).join('') : '<li class="empty-attempt">완료한 거꾸로 학습 기록이 없어요.</li>';
     const learnedWords = lessonOverview((cohort.wordIds || []).map(word).filter(Boolean)).map((item,index)=>`<li><span>${index+1}</span><div><strong>${escapeHtml(item.german)}</strong>${pronunciationButton(item.german, '듣기')}<small>${escapeHtml(item.meaning)}</small></div></li>`).join('');
-    content.innerHTML = `<div class="dialog-title"><div><p class="eyebrow">Tagesbericht(날짜 기록)</p><h2>${escapeHtml(formatStudyDate(date))}</h2></div><button type="button" id="closeDayDetail" class="icon-button" aria-label="닫기">×</button></div><div class="day-status ${summary.memorized?'done':''}">${mastery}</div><div class="day-stats"><div><strong>${summary.totalWords}</strong><span>학습 단어</span></div><div><strong>${summary.newCount}</strong><span>신규 단어</span></div><div><strong>${firstScore}</strong><span>첫 시도 점수</span></div><div><strong>${summary.totalAttempts}</strong><span>전체 시도</span></div></div><div class="review-status"><span class="${summary.learningDone?'done':''}">기본 학습 ${summary.learningDone?'완료':'미완료'}</span><span class="${summary.morningDone?'done':''}">아침 재시험 ${summary.morningDone?'완료':'미완료'}</span><span class="${summary.finalDone?'done':''}">최종시험 ${summary.finalDone?'완료':'미완료'}</span></div><details class="attempt-detail-fold"><summary>시도별 점수 · 완료 ${summary.completedAttempts}회</summary><ol class="day-attempts">${attemptRows}</ol></details><details class="learned-word-details"><summary>이날 학습한 단어 ${summary.totalWords}개 보기</summary><ol>${learnedWords}</ol></details>`;
+    content.innerHTML = `<div class="dialog-title"><div><p class="eyebrow">Tagesbericht(날짜 기록)</p><h2>${escapeHtml(formatStudyDate(date))}</h2></div><button type="button" id="closeDayDetail" class="icon-button" aria-label="닫기">×</button></div><div class="day-status ${summary.memorized?'done':''}">${mastery}</div><div class="day-stats"><div><strong>${summary.totalWords}</strong><span>학습 단어</span></div><div><strong>${summary.newCount}</strong><span>신규 단어</span></div><div><strong>${firstScore}</strong><span>첫 시도 점수</span></div><div><strong>${summary.totalAttempts}</strong><span>전체 시도</span></div></div><div class="review-status"><span class="${summary.learningDone?'done':''}">기본 학습 ${summary.learningDone?'완료':'미완료'}</span><span class="${summary.morningDone?'done':''}">아침 재시험 ${summary.morningDone?'완료':'미완료'}</span><span class="${summary.finalDone?'done':''}">최종시험 ${summary.finalDone?'완료':'미완료'}</span></div><div class="day-relearn-actions"><button type="button" id="reviewDayWords" class="secondary">단어 다시 보기</button><button type="button" id="reverseDayWords" class="primary">뜻 → 독일어 거꾸로 학습</button></div><details class="attempt-detail-fold"><summary>시도별 점수 · 완료 ${summary.completedAttempts}회</summary><ol class="day-attempts">${attemptRows}</ol></details><details class="learned-word-details"><summary>이날 학습한 단어 ${summary.totalWords}개 보기</summary><ol>${learnedWords}</ol></details>`;
   }
   document.querySelector('#closeDayDetail').onclick=()=>dayDetailDialog.close();
+  if (cohort) {
+    document.querySelector('#reviewDayWords').onclick=()=>{
+      dayDetailDialog.close();
+      renderLearning(cohort, shuffleCopy(cohort.wordIds), 0, false, 'forward');
+    };
+    document.querySelector('#reverseDayWords').onclick=()=>{
+      dayDetailDialog.close();
+      startReverseAttempt(cohort);
+    };
+  }
   if (dayDetailDialog.open) dayDetailDialog.close();
   dayDetailDialog.showModal();
 }
@@ -413,10 +423,15 @@ function renderLearning(cohort, sessionWordIds, index, revealed, direction) {
 
 function renderLessonOverview(cohort, sessionWordIds) {
   const items = lessonOverview(sessionWordIds.map(word).filter(Boolean));
+  const pastReview = cohort.learnedDate !== todayKst();
   const rows = items.map((item, index) => `<li><span class="overview-number">${index+1}</span><div><strong>${escapeHtml(item.german)}</strong>${pronunciationButton(item.german, '듣기')}<p>${escapeHtml(item.meaning)}</p></div></li>`).join('');
-  app.innerHTML = `<section class="lesson-overview"><div class="session-head"><div><p class="eyebrow">Übersicht(전체보기)</p><h1>오늘 배운 단어 ${items.length}개</h1></div><span class="pill">${items.length}개</span></div><p class="overview-intro">오늘 학습을 완료하기 전에 배운 단어를 한눈에 다시 확인해보세요.</p><ol class="overview-list">${rows}</ol><div class="overview-actions"><button id="home" class="secondary">나가기</button><button id="finishLearning" class="primary">오늘 학습 완료</button></div></section>`;
+  const title = pastReview ? `이날 배운 단어 ${items.length}개` : `오늘 배운 단어 ${items.length}개`;
+  const intro = pastReview ? `${formatStudyDate(cohort.learnedDate)}에 배운 단어를 다시 확인해보세요.` : '오늘 학습을 완료하기 전에 배운 단어를 한눈에 다시 확인해보세요.';
+  const finishLabel = pastReview ? '복습 마치기' : '오늘 학습 완료';
+  app.innerHTML = `<section class="lesson-overview"><div class="session-head"><div><p class="eyebrow">Übersicht(전체보기)</p><h1>${escapeHtml(title)}</h1></div><span class="pill">${items.length}개</span></div><p class="overview-intro">${escapeHtml(intro)}</p><ol class="overview-list">${rows}</ol><div class="overview-actions"><button id="home" class="secondary">나가기</button><button id="finishLearning" class="primary">${finishLabel}</button></div></section>`;
   document.querySelector('#home').onclick=renderDashboard;
   document.querySelector('#finishLearning').onclick=()=>{
+    if (pastReview) return renderComplete('📚','복습 완료!',`${formatStudyDate(cohort.learnedDate)}에 배운 단어 ${items.length}개를 다시 공부했어요.`);
     cohort.learningDone = true;
     saveState();
     renderComplete('🎉','오늘 학습 완료!',`신규 ${cohort.newCount}개${cohort.wordIds.length-cohort.newCount ? `와 이월 ${cohort.wordIds.length-cohort.newCount}개` : ''}를 학습했어요. 원하는 만큼 다시 학습할 수 있어요.`);
