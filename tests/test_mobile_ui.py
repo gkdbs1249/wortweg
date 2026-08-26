@@ -137,6 +137,13 @@ class MobileInputTests(unittest.TestCase):
         self.assertIn("startReverseAttempt(cohort)", detail)
         self.assertRegex(styles, r"\.day-relearn-actions\{[^}]*grid-template-columns:repeat\(2,1fr\)")
 
+    def test_past_calendar_reverse_mastery_marks_that_date_complete_after_three_perfect_rounds(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        overview = app.split("function renderReverseOverview(cohort, attempt)", 1)[1].split("function renderReverseResult(cohort, attempt)", 1)[0]
+        self.assertIn("cohort.learnedDate === todayKst() ? '오늘' : '이날'", overview)
+        self.assertIn("${masteryDayLabel} 암기 완료", overview)
+        self.assertIn("summary.memorized", overview)
+
     def test_past_calendar_replay_finishes_as_review_not_as_todays_new_lesson(self):
         app = (ROOT / "app.mjs").read_text(encoding="utf-8")
         overview = app.split("function renderLessonOverview", 1)[1].split("function renderReverseLearning", 1)[0]

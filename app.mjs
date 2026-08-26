@@ -495,8 +495,9 @@ function renderReverseOverview(cohort, attempt) {
   const summary = summarizeReverseAttempts(cohort.reverseAttempts, cohort.wordIds);
   const attemptWasFullPerfect = attempt.completed && attempt.totalCount === summary.totalWords && attempt.correctCount === summary.totalWords;
   const masteryJustCompleted = attemptWasFullPerfect && summary.perfectAttemptNumber === attempt.number;
-  const overviewTitle = masteryJustCompleted
-    ? '무오답 3/3회! 오늘 암기 완료!'
+  const masteryDayLabel = cohort.learnedDate === todayKst() ? '오늘' : '이날';
+  const overviewTitle = masteryJustCompleted && summary.memorized
+    ? `무오답 3/3회! ${masteryDayLabel} 암기 완료!`
     : attemptWasFullPerfect
       ? '한 번도 안 틀렸어요!'
       : '거꾸로 학습 전체 단어';
