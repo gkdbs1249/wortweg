@@ -132,7 +132,8 @@ class MobileInputTests(unittest.TestCase):
         self.assertIn('id="reverseDayWords"', detail)
         self.assertIn("단어 다시 보기", detail)
         self.assertIn("거꾸로 학습", detail)
-        self.assertIn("shuffleCopy(cohort.wordIds)", detail)
+        self.assertIn("[...cohort.wordIds]", detail)
+        self.assertNotIn("shuffleCopy(cohort.wordIds)", detail)
         self.assertIn("startReverseAttempt(cohort)", detail)
         self.assertRegex(styles, r"\.day-relearn-actions\{[^}]*grid-template-columns:repeat\(2,1fr\)")
 

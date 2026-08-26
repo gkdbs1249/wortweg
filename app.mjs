@@ -328,7 +328,7 @@ function showDayDetail(date) {
   if (cohort) {
     document.querySelector('#reviewDayWords').onclick=()=>{
       dayDetailDialog.close();
-      renderLearning(cohort, shuffleCopy(cohort.wordIds), 0, false, 'forward');
+      renderLearning(cohort, [...cohort.wordIds], 0, false, 'forward');
     };
     document.querySelector('#reverseDayWords').onclick=()=>{
       dayDetailDialog.close();
