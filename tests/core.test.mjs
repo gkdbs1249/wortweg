@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
+  accountCredentials,
   buildNightLesson,
   bilingualMeaning,
   calendarDayStatus,
@@ -447,4 +448,19 @@ test('reverse Enter submits before feedback and advances only after a fresh seco
 test('reverse Enter leaves other controls to their native behavior', () => {
   assert.equal(reverseEnterAction({ submitted: true, targetIsNext: false }), 'native');
   assert.equal(reverseEnterAction({ submitted: true, targetIsNext: true, isTextArea: true }), 'native');
+});
+
+test('simple account credentials normalize a learner ID and preserve its six-digit PIN', () => {
+  assert.deepEqual(accountCredentials('  HaYoon_28  ', '274193'), {
+    accountId: 'hayoon_28',
+    email: 'hayoon_28@users.wortweg.app',
+    password: '274193',
+  });
+});
+
+test('simple account credentials reject unsafe IDs and non-six-digit PINs', () => {
+  assert.throws(() => accountCredentials('ab', '274193'), /아이디/);
+  assert.throws(() => accountCredentials('hayoon!', '274193'), /아이디/);
+  assert.throws(() => accountCredentials('hayoon', '12345'), /6자리/);
+  assert.throws(() => accountCredentials('hayoon', '12345a'), /6자리/);
 });

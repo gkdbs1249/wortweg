@@ -19,8 +19,8 @@
       <div id="authControls" class="auth-controls">
         <span id="syncStatus" class="sync-status" data-status="local">기기에 저장됨</span>
         <span id="authUser" class="auth-user" hidden></span>
-        <button id="googleSignIn" type="button" class="auth-button">Google로 로그인</button>
-        <button id="googleSignOut" type="button" class="auth-button secondary" hidden>로그아웃</button>
+        <button id="accountButton" type="button" class="auth-button">로그인</button>
+        <button id="accountSignOut" type="button" class="auth-button secondary" hidden>로그아웃</button>
       </div>
       <button id="menuButton" class="icon-button" aria-label="설정 열기">☰</button>
     </div>
@@ -28,6 +28,24 @@
   <main id="app" class="shell" aria-live="polite">
     <section class="loading-card"><div class="spinner"></div><p>A1 단어를 불러오는 중…</p></section>
   </main>
+  <dialog id="accountDialog">
+    <form id="accountForm" class="settings-card account-card">
+      <div class="dialog-title"><h2>WortWeg 계정</h2><button id="closeAccountDialog" type="button" class="icon-button" aria-label="닫기">×</button></div>
+      <p class="account-intro">이메일 없이 아이디와 PIN 번호만으로 진도를 여러 기기에서 이어갈 수 있어요.</p>
+      <label>아이디
+        <input id="accountIdInput" type="text" minlength="4" maxlength="20" pattern="[A-Za-z0-9_]{4,20}" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="영문·숫자 4~20자" required>
+      </label>
+      <label>6자리 PIN
+        <input id="pinInput" type="password" inputmode="numeric" pattern="[0-9]{6}" minlength="6" maxlength="6" autocomplete="current-password" placeholder="숫자 6자리" required>
+      </label>
+      <p class="hint">PIN을 잊으면 복구할 수 없으니 따로 기억해 주세요.</p>
+      <p id="accountMessage" class="account-message" role="status" aria-live="polite"></p>
+      <div class="account-actions">
+        <button id="signInButton" type="submit" class="primary">로그인</button>
+        <button id="createAccountButton" type="button" class="secondary">처음 가입하기</button>
+      </div>
+    </form>
+  </dialog>
   <dialog id="settingsDialog">
     <form method="dialog" class="settings-card">
       <div class="dialog-title"><h2>학습 설정</h2><button class="icon-button" value="cancel" aria-label="닫기">×</button></div>

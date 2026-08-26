@@ -1,5 +1,5 @@
 import { FIREBASE_CONFIG } from '../firebase-config.mjs';
-import { mergeProgressStates } from './core.mjs';
+import { accountCredentials, mergeProgressStates } from './core.mjs';
 
 const FIREBASE_SDK_VERSION = '12.18.0';
 const SDK_BASE = `https://www.gstatic.com/firebasejs/${FIREBASE_SDK_VERSION}`;
@@ -68,14 +68,22 @@ export function queueCloudProgressSave(state) {
   }, 700);
 }
 
-export async function signInWithGoogle() {
+export async function createAccountWithPin(accountId, pin) {
   if (!auth || !authApi) throw new Error('Firebase 로그인이 아직 준비되지 않았어요.');
-  const provider = new authApi.GoogleAuthProvider();
-  provider.setCustomParameters({ prompt: 'select_account' });
-  await authApi.signInWithRedirect(auth, provider);
+  const credentials = accountCredentials(accountId, pin);
+  const result = await authApi.createUserWithEmailAndPassword(auth, credentials.email, credentials.password);
+  await authApi.updateProfile(result.user, { displayName: credentials.accountId });
+  return result.user;
 }
 
-export async function signOutFromGoogle() {
+export async function signInWithPin(accountId, pin) {
+  if (!auth || !authApi) throw new Error('Firebase 로그인이 아직 준비되지 않았어요.');
+  const credentials = accountCredentials(accountId, pin);
+  const result = await authApi.signInWithEmailAndPassword(auth, credentials.email, credentials.password);
+  return result.user;
+}
+
+export async function signOutFromAccount() {
   if (!auth || !authApi) return;
   await authApi.signOut(auth);
 }
@@ -98,7 +106,6 @@ export async function initializeCloudSync(options) {
     const firebaseApp = appModule.initializeApp(FIREBASE_CONFIG);
     auth = authApi.getAuth(firebaseApp);
     db = firestoreApi.getFirestore(firebaseApp);
-    await authApi.getRedirectResult(auth).catch(error => hooks?.onError?.(error));
 
     authApi.onAuthStateChanged(auth, async user => {
       currentUser = user;

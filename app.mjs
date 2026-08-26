@@ -1,5 +1,5 @@
 import { addDays, bilingualMeaning, buildNightLesson, calendarDayStatus, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, isExampleGapCorrect, isGermanHeadwordCorrect, learningCardSides, lessonOverview, monthCalendarDays, prioritizeReviewItems, pronounceableGerman, reverseEnterAction, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts } from './src/core.mjs';
-import { initializeCloudSync, queueCloudProgressSave, signInWithGoogle, signOutFromGoogle } from './src/cloud-sync.mjs';
+import { createAccountWithPin, initializeCloudSync, queueCloudProgressSave, signInWithPin, signOutFromAccount } from './src/cloud-sync.mjs';
 
 const STORAGE_KEY = 'wortweg-a1-progress-v1';
 const STORAGE_OWNER_KEY = `${STORAGE_KEY}:owner`;
@@ -604,18 +604,63 @@ function bindGlobalNavigation() {
   };
 }
 
+function authErrorMessage(error, mode) {
+  if (error?.code === 'auth/email-already-in-use') return '이미 사용 중인 아이디예요. 다른 아이디를 골라주세요.';
+  if (['auth/invalid-credential', 'auth/user-not-found', 'auth/wrong-password'].includes(error?.code)) return '아이디 또는 PIN 번호가 맞지 않아요.';
+  if (error?.code === 'auth/too-many-requests') return '로그인 시도가 너무 많아요. 잠시 후 다시 시도해 주세요.';
+  if (error?.code === 'auth/network-request-failed') return '인터넷 연결을 확인해 주세요.';
+  return error?.message?.includes('아이디') || error?.message?.includes('6자리')
+    ? error.message
+    : `${mode === 'create' ? '회원가입' : '로그인'}에 실패했어요. 잠시 후 다시 시도해 주세요.`;
+}
+
 function bindAuth() {
-  const signInButton = document.querySelector('#googleSignIn');
-  const signOutButton = document.querySelector('#googleSignOut');
+  const accountButton = document.querySelector('#accountButton');
+  const signOutButton = document.querySelector('#accountSignOut');
+  const accountDialog = document.querySelector('#accountDialog');
+  const accountForm = document.querySelector('#accountForm');
+  const accountIdInput = document.querySelector('#accountIdInput');
+  const pinInput = document.querySelector('#pinInput');
+  const createButton = document.querySelector('#createAccountButton');
+  const signInButton = document.querySelector('#signInButton');
+  const accountMessage = document.querySelector('#accountMessage');
   const userLabel = document.querySelector('#authUser');
   const syncStatus = document.querySelector('#syncStatus');
 
-  signInButton.onclick = () => signInWithGoogle().catch(error => {
-    console.error('Google sign-in failed', error);
-    syncStatus.textContent = '로그인 실패';
-  });
-  signOutButton.onclick = () => signOutFromGoogle().catch(error => {
-    console.error('Google sign-out failed', error);
+  accountButton.onclick = () => {
+    accountMessage.textContent = '';
+    accountDialog.showModal();
+    accountIdInput.focus();
+  };
+  document.querySelector('#closeAccountDialog').onclick = () => accountDialog.close();
+
+  const runAccountAction = async mode => {
+    if (!accountForm.reportValidity()) return;
+    accountMessage.dataset.status = 'working';
+    accountMessage.textContent = mode === 'create' ? '계정을 만드는 중…' : '로그인하는 중…';
+    createButton.disabled = true;
+    signInButton.disabled = true;
+    try {
+      const action = mode === 'create' ? createAccountWithPin : signInWithPin;
+      await action(accountIdInput.value, pinInput.value);
+      accountMessage.textContent = mode === 'create' ? '가입 완료! 진도를 연결하고 있어요.' : '로그인 완료! 진도를 불러오고 있어요.';
+    } catch (error) {
+      console.error(`WortWeg ${mode} failed`, error);
+      accountMessage.dataset.status = 'error';
+      accountMessage.textContent = authErrorMessage(error, mode);
+    } finally {
+      createButton.disabled = false;
+      signInButton.disabled = false;
+    }
+  };
+
+  accountForm.onsubmit = event => {
+    event.preventDefault();
+    runAccountAction('signin');
+  };
+  createButton.onclick = () => runAccountAction('create');
+  signOutButton.onclick = () => signOutFromAccount().catch(error => {
+    console.error('WortWeg sign-out failed', error);
     syncStatus.textContent = '로그아웃 실패';
   });
 
@@ -628,10 +673,15 @@ function bindAuth() {
     },
     onUserChanged: user => {
       switchLocalProfile(user);
-      signInButton.hidden = Boolean(user);
+      accountButton.hidden = Boolean(user);
       signOutButton.hidden = !user;
       userLabel.hidden = !user;
-      userLabel.textContent = user?.displayName || user?.email || '';
+      userLabel.textContent = user?.displayName || user?.email?.split('@')[0] || '';
+      if (user && accountDialog.open) accountDialog.close();
+      if (user) {
+        accountIdInput.value = '';
+        pinInput.value = '';
+      }
     },
     onStatus: ({ status, message }) => {
       syncStatus.dataset.status = status;

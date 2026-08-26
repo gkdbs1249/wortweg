@@ -387,6 +387,18 @@ export function summarizeLearningDay(cohort) {
   };
 }
 
+export function accountCredentials(rawAccountId, rawPin) {
+  const accountId = String(rawAccountId || '').trim().toLowerCase();
+  const password = String(rawPin || '').trim();
+  if (!/^[a-z0-9_]{4,20}$/.test(accountId)) {
+    throw new Error('아이디는 영문 소문자, 숫자, 밑줄로 4~20자여야 해요.');
+  }
+  if (!/^\d{6}$/.test(password)) {
+    throw new Error('PIN 번호는 숫자 6자리여야 해요.');
+  }
+  return { accountId, email: `${accountId}@users.wortweg.app`, password };
+}
+
 export function reverseEnterAction({ submitted, targetIsNext = false, isComposing = false, repeat = false, enterHeld = false, isTextArea = false }) {
   if (isTextArea) return 'native';
   if (isComposing || repeat || enterHeld) return 'ignore';
