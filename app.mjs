@@ -1,5 +1,6 @@
-import { addDays, bilingualMeaning, buildNightLesson, calendarDayStatus, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, isExampleGapCorrect, isGermanHeadwordCorrect, learningCardSides, lessonOverview, monthCalendarDays, prioritizeReviewItems, pronounceableGerman, reverseEnterAction, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts } from './src/core.mjs';
+import { addDays, bilingualMeaning, buildNightLesson, calendarDayStatus, calendarStatusLabel, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, isExampleGapCorrect, isGermanHeadwordCorrect, learningCardSides, learningTaskTitle, lessonOverview, monthCalendarDays, practiceGroupWords, practiceWordsForCount, prioritizeReviewItems, pronounceableGerman, reverseEnterAction, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts } from './src/core.mjs';
 import { createAccountWithPin, initializeCloudSync, queueCloudProgressSave, signInWithPin, signOutFromAccount } from './src/cloud-sync.mjs';
+import { ANTONYM_PAIRS, PREFIX_CARDS, ROOT_FAMILIES, TOPIC_GROUPS } from './src/practice-data.mjs';
 
 const STORAGE_KEY = 'wortweg-a1-progress-v1';
 const STORAGE_OWNER_KEY = `${STORAGE_KEY}:owner`;
@@ -12,6 +13,7 @@ const settingsDialog = document.querySelector('#settingsDialog');
 const dayDetailDialog = document.querySelector('#dayDetailDialog');
 let words = [];
 let byId = new Map();
+let byGerman = new Map();
 let activeStorageKey = STORAGE_KEY;
 let state = loadState(activeStorageKey);
 let calendarCursor = null;
@@ -78,7 +80,7 @@ function renderDashboard() {
     <section class="task-list">
       ${due.final.length ? taskHtml('🌙','최종 기억 시험',`${due.final[0].wordIds.length}개 · 두 번 이상 틀리면 오늘 학습으로 이월`,'final',false) : ''}
       ${due.morning.length ? taskHtml('☀️','아침 재시험',`${due.morning[0].wordIds.length}개 · 틀린 단어는 맞힐 때까지 반복`,'morning',false) : ''}
-      ${taskHtml('📚',todayCohort ? '오늘 단어 이어서 보기' : `신규 ${Math.min(state.dailyCount,words.length-state.nextIndex)}개${state.carryIds.length ? ` + 이월 ${state.carryIds.length}개` : ''}`,reviewFirst ? '최종시험을 먼저 마치면 오늘 학습이 열려요' : '독일어를 보고 한국어·영어 뜻을 익혀요','learn',reviewFirst)}
+      ${taskHtml('📚',todayCohort ? learningTaskTitle(todayCohort) : `신규 ${Math.min(state.dailyCount,words.length-state.nextIndex)}개${state.carryIds.length ? ` + 이월 ${state.carryIds.length}개` : ''}`,reviewFirst ? '최종시험을 먼저 마치면 오늘 학습이 열려요' : '독일어를 보고 한국어·영어 뜻을 익혀요','learn',reviewFirst)}
       <article class="task extra-word-task"><div class="task-icon">➕</div><div class="task-copy"><h3>오늘 단어 더 배우기</h3><p>${remainingFreshCount ? canAddExtraWords ? `남은 신규 단어 ${remainingFreshCount}개 중 원하는 만큼 추가할 수 있어요` : '오늘의 기본 학습을 완료하면 원하는 개수를 추가할 수 있어요' : '공식 A1 어휘 670개를 모두 추가했어요'}</p></div><form id="extraWordsForm" class="extra-word-controls"><label for="extraWordCount">추가 개수</label><input id="extraWordCount" type="number" min="1" max="${Math.min(50, remainingFreshCount || 1)}" value="${Math.min(5, remainingFreshCount || 1)}" inputmode="numeric" ${canAddExtraWords?'':'disabled'}><button class="primary" type="submit" ${canAddExtraWords?'':'disabled'}>더 배우기</button></form></article>
       <div class="reverse-task-group ${reverseHistory?'with-history':''}">
         ${taskHtml('🔄','거꾸로 학습',reviewFirst ? '최종시험을 먼저 마치면 거꾸로 학습이 열려요' : '한국어·영어 뜻을 보고 독일어를 떠올려요','reverse',reviewFirst)}
@@ -86,9 +88,9 @@ function renderDashboard() {
       </div>
       <article class="task example-cloze-task"><div class="task-icon">✍️</div><div class="task-copy"><h3>예문 빈칸 학습</h3><p>${exampleQuestions.length ? `오늘 배운 단어를 공식 Goethe A1 예문 ${exampleQuestions.length}개로 연습해요` : '기본 학습을 완료하면 오늘 단어의 공식 예문 문제가 열려요'}</p></div><button class="primary" data-action="example-cloze" ${exampleQuestions.length===0||reviewFirst?'disabled':''}>시작</button></article>
     </section>
-    <div class="section-title noun-practice-title"><h2>Nomen(명사) 관사 연습</h2><span>누적 ${nounQuestions.length}개</span></div>
-    <section class="task-list noun-practice-list">
-      <article class="task"><div class="task-icon">🧩</div><div class="task-copy"><h3>der · das · die 고르기</h3><p>${nounQuestions.length ? `지금까지 학습 완료한 명사 ${nounQuestions.length}개를 모두 복습해요` : '기본 학습을 완료하면 배운 명사가 여기에 누적돼요'}</p></div><button class="primary" data-action="noun-articles" ${nounQuestions.length === 0?'disabled':''}>시작</button></article>
+    <div class="section-title extra-practice-title"><h2>Zusatzübung(추가 연습)</h2><span>배운 단어 ${completedLearnedWordIds(state.cohorts).length}개</span></div>
+    <section class="task-list extra-practice-list">
+      <article class="task"><div class="task-icon">🧠</div><div class="task-copy"><h3>추가 연습 모아보기</h3><p>전체 단어 거꾸로 학습, 접두사, 주제별, 반대말과 관사 연습을 골라서 공부해요.</p></div><button class="primary" data-action="extra-practice">열기</button></article>
     </section>
     ${calendar}
     <p class="source">어휘 출처: <a href="${GOETHE_SOURCE}" target="_blank" rel="noreferrer">Goethe-Zertifikat A1 공식 Wortliste(단어 목록)</a> · 로그인하면 계정별 클라우드에, 로그아웃 상태에서는 현재 기기에 진도가 저장됩니다.</p>`;
@@ -96,7 +98,7 @@ function renderDashboard() {
     const action = button.dataset.action;
     if (action === 'learn') startLearning('forward');
     else if (action === 'reverse') startLearning('reverse');
-    else if (action === 'noun-articles') startNounArticleQuiz();
+    else if (action === 'extra-practice') renderExtraPracticeHub();
     else if (action === 'example-cloze') startExampleCloze();
     else startReview(action, action === 'final' ? due.final[0] : due.morning[0]);
   }));
@@ -183,6 +185,187 @@ function taskHtml(icon,title,description,action,disabled) {
   return `<article class="task"><div class="task-icon">${icon}</div><div class="task-copy"><h3>${title}</h3><p>${description}</p></div><button class="primary" data-action="${action}" ${disabled?'disabled':''}>시작</button></article>`;
 }
 
+function resolvedPracticeItems(group, learnedOnly = true) {
+  const learnedIds = new Set(completedLearnedWordIds(state.cohorts));
+  const itemIds = (group.words || []).map(german => byGerman.get(german)?.id).filter(Boolean);
+  const availableIds = learnedOnly ? practiceGroupWords({ wordIds:itemIds }, learnedIds) : itemIds;
+  return availableIds.map(word).filter(Boolean);
+}
+
+function practiceHubCard(icon, title, description, practice, disabled = false) {
+  return `<button type="button" class="practice-hub-card" data-practice="${practice}" ${disabled?'disabled':''}><span>${icon}</span><div><strong>${title}</strong><small>${description}</small></div><b>›</b></button>`;
+}
+
+function resetPracticeScroll() {
+  window.scrollTo({ top:0, left:0, behavior:'auto' });
+}
+
+function renderExtraPracticeHub() {
+  resetPracticeScroll();
+  const learnedCount = completedLearnedWordIds(state.cohorts).length;
+  const nounCount = cumulativeNounQuestions(state.cohorts, words).length;
+  const rootCount = ROOT_FAMILIES.filter(group => resolvedPracticeItems(group).length >= 2).length;
+  const topicCount = TOPIC_GROUPS.filter(group => resolvedPracticeItems(group).length > 0).length;
+  const learnedIds = new Set(completedLearnedWordIds(state.cohorts));
+  const antonymCount = ANTONYM_PAIRS.filter(pair => pair.words.every(german => learnedIds.has(byGerman.get(german)?.id))).length;
+  app.innerHTML = `<section class="practice-hub"><div class="session-head"><div><p class="eyebrow">Zusatzübung(추가 연습)</p><h1>원하는 방식으로 더 연습해요</h1></div><span class="pill">배운 단어 ${learnedCount}개</span></div><p class="practice-intro">추가 연습 결과는 학습 캘린더와 암기 완료 기록에 영향을 주지 않아요.</p><div class="practice-hub-grid">${practiceHubCard('🔄','전체 단어 학습','배운 단어 중 문제 수를 골라 무작위 거꾸로 학습','all-words',learnedCount===0)}${practiceHubCard('🧩','접두사 변형 연습',`${rootCount}개 어근 그룹 · 독일어와 뜻 매칭`,'root-family',rootCount===0)}${practiceHubCard('🗂️','접두사 연습',`${PREFIX_CARDS.length}개 접두사 카드와 예시`,'prefix-cards')}${practiceHubCard('🏷️','주제별 연습',`${topicCount}개 주제에서 배운 단어 복습`,'topics',topicCount===0)}${practiceHubCard('↔️','반대말 연습',`${antonymCount}쌍 학습 가능`,'antonyms',antonymCount===0)}${practiceHubCard('🧠','Nomen(명사) 관사 연습',`누적 명사 ${nounCount}개 · der/das/die`,'noun-articles',nounCount===0)}</div><button id="practiceHome" class="secondary practice-back">홈으로</button></section>`;
+  document.querySelector('#practiceHome').onclick=renderDashboard;
+  app.querySelectorAll('[data-practice]').forEach(button => button.onclick=()=>{
+    const mode = button.dataset.practice;
+    if (mode === 'all-words') renderAllWordsPracticeSetup();
+    else if (mode === 'root-family') renderRootFamilyHub();
+    else if (mode === 'prefix-cards') renderPrefixCards();
+    else if (mode === 'topics') renderTopicPracticeHub();
+    else if (mode === 'antonyms') startAntonymPractice();
+    else if (mode === 'noun-articles') startNounArticleQuiz();
+  });
+}
+
+function renderAllWordsPracticeSetup() {
+  resetPracticeScroll();
+  const learnedCount = completedLearnedWordIds(state.cohorts).length;
+  const options = [10,20,50].map(count => `<button class="count-choice" data-practice-count="${count}" ${learnedCount<count?'disabled':''}>${count}개</button>`).join('');
+  app.innerHTML = `<section class="practice-setup"><div class="session-head"><div><p class="eyebrow">전체 단어 학습</p><h1>몇 개를 풀까요?</h1></div><span class="pill">총 ${learnedCount}개</span></div><p class="practice-intro">배운 순서와 관계없이 매번 무작위로 출제해요.</p><div class="count-choice-grid">${options}<button class="count-choice primary" data-practice-count="all">전체 ${learnedCount}개</button></div><button id="backToPractice" class="secondary practice-back">추가 연습으로</button></section>`;
+  document.querySelector('#backToPractice').onclick=renderExtraPracticeHub;
+  document.querySelectorAll('[data-practice-count]').forEach(button => button.onclick=()=>{
+    const selected = button.dataset.practiceCount;
+    const items = practiceWordsForCount(state.cohorts, words, selected === 'all' ? 'all' : Number(selected));
+    renderIndependentReversePractice(items, 0, 0, '전체 단어 거꾸로 학습');
+  });
+}
+
+function renderIndependentReversePractice(items, index = 0, correctCount = 0, title = '거꾸로 학습', submittedAnswer = null) {
+  resetPracticeScroll();
+  if (index >= items.length) {
+    app.innerHTML = `<section class="complete practice-result"><div class="celebrate">🎯</div><p class="eyebrow">추가 연습 결과</p><h1>${correctCount}/${items.length} 정답</h1><p>이 결과는 달력의 암기 완료 기록과 별도로 유지돼요.</p><div class="result-actions"><button id="backToPractice" class="secondary">추가 연습으로</button><button id="retryPractice" class="primary">같은 단어 다시 풀기</button></div></section>`;
+    document.querySelector('#backToPractice').onclick=renderExtraPracticeHub;
+    document.querySelector('#retryPractice').onclick=()=>renderIndependentReversePractice(shuffleCopy(items),0,0,title);
+    return;
+  }
+  const item = items[index];
+  const submitted = submittedAnswer !== null;
+  const correct = submitted && isGermanHeadwordCorrect(submittedAnswer, item.german);
+  app.innerHTML = `<section class="session independent-reverse-session"><div class="session-head"><div><p class="eyebrow">Zusatzübung(추가 연습)</p><h1>${escapeHtml(title)}</h1></div><span class="pill">${index+1} / ${items.length}</span></div><div class="progress-track"><div class="progress-bar" style="width:${(index/items.length)*100}%"></div></div><article class="flashcard"><div class="word">${escapeHtml(bilingualMeaning(item))}</div><div class="meta">뜻에 맞는 독일어를 직접 입력하세요. 명사는 관사까지 써보세요.</div><form id="practiceReverseForm" class="answer-form"><input class="practice-answer-input" id="practiceAnswer" type="text" value="${escapeHtml(submittedAnswer ?? '')}" placeholder="독일어를 입력하세요" autocomplete="off" autocapitalize="none" spellcheck="false" ${submitted?'disabled':'required'}><button class="primary" type="submit" ${submitted?'disabled':''}>제출</button></form>${submitted?`<div class="feedback ${correct?'correct-text':'wrong-text'}">${correct?'Richtig(정답)!':'Noch nicht(아직 아니에요).'}</div><div class="meaning">정답: ${escapeHtml(item.german)}</div>${pronunciationButton(item.german)}`:''}</article><div class="card-actions"><button id="backToPractice" class="secondary">나가기</button>${submitted?`<button id="nextPractice" class="primary">${index===items.length-1?'결과 보기':'다음 문제'}</button>`:''}</div></section>`;
+  document.querySelector('#backToPractice').onclick=renderExtraPracticeHub;
+  if (submitted) {
+    const nextButton = document.querySelector('#nextPractice');
+    nextButton.onclick=()=>renderIndependentReversePractice(items,index+1,correctCount+(correct?1:0),title);
+    nextButton.focus();
+  } else {
+    const input = document.querySelector('#practiceAnswer');
+    input.focus();
+    document.querySelector('#practiceReverseForm').onsubmit=event=>{
+      event.preventDefault();
+      const answer = input.value.trim();
+      if (answer) renderIndependentReversePractice(items,index,correctCount,title,answer);
+    };
+  }
+}
+
+function renderRootFamilyHub() {
+  resetPracticeScroll();
+  const groups = ROOT_FAMILIES.map(group => ({ group, items:resolvedPracticeItems(group) })).filter(entry => entry.items.length >= 2);
+  const cards = groups.map(({group,items})=>`<button class="group-choice" data-root-family="${group.id}"><strong>${escapeHtml(group.label)}</strong><span>${items.length}개 단어 매칭</span><small>${items.map(item=>escapeHtml(pronounceableGerman(item.german))).join(' · ')}</small></button>`).join('');
+  app.innerHTML = `<section class="practice-group-hub"><div class="session-head"><div><p class="eyebrow">접두사 변형 연습</p><h1>공통 어근을 골라보세요</h1></div><span class="pill">${groups.length}개 그룹</span></div><p class="practice-intro">한 화면에 최대 5개씩 독일어와 뜻을 짝지어요.</p><div class="group-choice-grid">${cards}</div><button id="backToPractice" class="secondary practice-back">추가 연습으로</button></section>`;
+  document.querySelector('#backToPractice').onclick=renderExtraPracticeHub;
+  document.querySelectorAll('[data-root-family]').forEach(button => button.onclick=()=>{
+    const entry = groups.find(candidate => candidate.group.id === button.dataset.rootFamily);
+    renderRootMatchingRound(entry.group, shuffleCopy(entry.items), 0, 0);
+  });
+}
+
+function renderRootMatchingRound(group, items, offset = 0, matchedTotal = 0) {
+  resetPracticeScroll();
+  if (offset >= items.length) {
+    app.innerHTML = `<section class="complete matching-result"><div class="celebrate">🧩</div><h1>${escapeHtml(group.label)} 매칭 완료!</h1><p>${matchedTotal}개 단어의 뜻을 연결했어요.</p><div class="result-actions"><button id="backToPractice" class="secondary">추가 연습으로</button><button id="retryMatching" class="primary">다시 매칭하기</button></div></section>`;
+    document.querySelector('#backToPractice').onclick=renderExtraPracticeHub;
+    document.querySelector('#retryMatching').onclick=()=>renderRootMatchingRound(group,shuffleCopy(items),0,0);
+    return;
+  }
+  const batch = items.slice(offset, offset+5);
+  const meanings = shuffleCopy(batch);
+  app.innerHTML = `<section class="session root-matching-session"><div class="session-head"><div><p class="eyebrow">접두사 변형 매칭</p><h1>${escapeHtml(group.label)}</h1></div><span class="pill">${offset+1}–${offset+batch.length} / ${items.length}</span></div><p class="practice-intro">왼쪽 독일어 하나와 오른쪽 뜻 하나를 차례로 누르세요.</p><div class="matching-board"><div class="matching-column">${batch.map(item=>`<button data-match-word="${item.id}">${escapeHtml(pronounceableGerman(item.german))}</button>`).join('')}</div><div class="matching-column meanings">${meanings.map(item=>`<button data-match-meaning="${item.id}">${escapeHtml(item.korean)}</button>`).join('')}</div></div><p id="matchingFeedback" class="matching-feedback" aria-live="polite">짝을 선택해보세요.</p><div class="card-actions"><button id="backToPractice" class="secondary">나가기</button><button id="nextMatchingRound" class="primary" disabled>${offset+batch.length>=items.length?'결과 보기':'다음 5개'}</button></div></section>`;
+  document.querySelector('#backToPractice').onclick=renderExtraPracticeHub;
+  const matched = new Set();
+  let selectedWord = null;
+  let selectedMeaning = null;
+  const feedback = document.querySelector('#matchingFeedback');
+  const nextButton = document.querySelector('#nextMatchingRound');
+  const checkPair = () => {
+    if (!selectedWord || !selectedMeaning) return;
+    if (selectedWord.dataset.matchWord === selectedMeaning.dataset.matchMeaning) {
+      matched.add(selectedWord.dataset.matchWord);
+      selectedWord.classList.add('matched'); selectedMeaning.classList.add('matched');
+      selectedWord.disabled=true; selectedMeaning.disabled=true;
+      feedback.textContent='Richtig(정답)! 다음 짝을 연결하세요.';
+      if (matched.size === batch.length) nextButton.disabled=false;
+    } else {
+      const wrongWord = selectedWord;
+      const wrongMeaning = selectedMeaning;
+      wrongWord.classList.add('wrong'); wrongMeaning.classList.add('wrong');
+      feedback.textContent='다른 짝이에요. 다시 연결해보세요.';
+      setTimeout(()=>{wrongWord.classList.remove('wrong');wrongMeaning.classList.remove('wrong');},350);
+    }
+    selectedWord?.classList.remove('selected'); selectedMeaning?.classList.remove('selected');
+    selectedWord=null; selectedMeaning=null;
+  };
+  document.querySelectorAll('[data-match-word]').forEach(button=>button.onclick=()=>{selectedWord?.classList.remove('selected');selectedWord=button;button.classList.add('selected');checkPair()});
+  document.querySelectorAll('[data-match-meaning]').forEach(button=>button.onclick=()=>{selectedMeaning?.classList.remove('selected');selectedMeaning=button;button.classList.add('selected');checkPair()});
+  nextButton.onclick=()=>renderRootMatchingRound(group,items,offset+batch.length,matchedTotal+batch.length);
+}
+
+function renderPrefixCards(index = 0, revealed = false) {
+  resetPracticeScroll();
+  if (index >= PREFIX_CARDS.length) index = 0;
+  const card = PREFIX_CARDS[index];
+  const officialExamples = card.examples.map(german=>byGerman.get(german)).filter(Boolean);
+  const examples = [...officialExamples, ...(card.extraExamples || [])];
+  app.innerHTML = `<section class="session prefix-card-session"><div class="session-head"><div><p class="eyebrow">접두사 카드</p><h1>접두사의 느낌과 예시를 익혀요</h1></div><span class="pill">${index+1} / ${PREFIX_CARDS.length}</span></div><div class="progress-track"><div class="progress-bar" style="width:${(index/PREFIX_CARDS.length)*100}%"></div></div><article class="flashcard prefix-study-card"><div class="word">${escapeHtml(card.prefix)}</div>${revealed?`<div class="prefix-card-detail"><h2>${escapeHtml(card.meaning)}</h2><p>${escapeHtml(card.note)}</p><ul>${examples.map(item=>`<li><strong>${escapeHtml(item.german)}</strong>${pronunciationButton(item.german,'듣기')}<span>${escapeHtml(bilingualMeaning(item))}</span></li>`).join('')}</ul></div>`:`<div class="meta">먼저 이 접두사가 주는 느낌을 떠올려보세요.</div>`}</article><div class="card-actions"><button id="backToPractice" class="secondary">나가기</button><button id="nextPrefixCard" class="primary">${revealed?(index===PREFIX_CARDS.length-1?'처음부터':'다음 카드'):'뜻과 예시 보기'}</button></div></section>`;
+  document.querySelector('#backToPractice').onclick=renderExtraPracticeHub;
+  document.querySelector('#nextPrefixCard').onclick=()=>revealed?renderPrefixCards(index+1,false):renderPrefixCards(index,true);
+}
+
+function renderTopicPracticeHub() {
+  resetPracticeScroll();
+  const groups = TOPIC_GROUPS.map(group=>({group,items:resolvedPracticeItems(group)}));
+  const cards = groups.map(({group,items})=>`<button class="group-choice topic-choice" data-topic="${group.id}" ${items.length?'':'disabled'}><strong>${group.icon} ${escapeHtml(group.label)}</strong><span>배운 단어 ${items.length}개</span><small>${items.length?'누르면 무작위 거꾸로 학습을 시작해요.':'이 주제의 단어를 배우면 열려요.'}</small></button>`).join('');
+  app.innerHTML = `<section class="practice-group-hub"><div class="session-head"><div><p class="eyebrow">주제별 연습</p><h1>공부할 주제를 골라보세요</h1></div><span class="pill">${groups.filter(entry=>entry.items.length).length}개 열림</span></div><div class="group-choice-grid topic-grid">${cards}</div><button id="backToPractice" class="secondary practice-back">추가 연습으로</button></section>`;
+  document.querySelector('#backToPractice').onclick=renderExtraPracticeHub;
+  document.querySelectorAll('[data-topic]').forEach(button=>button.onclick=()=>{
+    const entry=groups.find(candidate=>candidate.group.id===button.dataset.topic);
+    renderIndependentReversePractice(shuffleCopy(entry.items),0,0,`${entry.group.label} 거꾸로 학습`);
+  });
+}
+
+function startAntonymPractice(pairs = null, index = 0, correctCount = 0, submittedAnswers = null) {
+  resetPracticeScroll();
+  if (!pairs) {
+    const learned = new Set(completedLearnedWordIds(state.cohorts));
+    pairs = shuffleCopy(ANTONYM_PAIRS.filter(pair=>pair.words.every(german=>learned.has(byGerman.get(german)?.id))));
+  }
+  if (!pairs.length) return renderExtraPracticeHub();
+  if (index >= pairs.length) {
+    app.innerHTML = `<section class="complete antonym-result"><div class="celebrate">↔️</div><h1>${correctCount}/${pairs.length}쌍 정답</h1><p>두 뜻에 맞는 반대말을 순서대로 입력했어요.</p><div class="result-actions"><button id="backToPractice" class="secondary">추가 연습으로</button><button id="retryAntonyms" class="primary">다시 풀기</button></div></section>`;
+    document.querySelector('#backToPractice').onclick=renderExtraPracticeHub;
+    document.querySelector('#retryAntonyms').onclick=()=>startAntonymPractice(shuffleCopy(pairs));
+    return;
+  }
+  const pair = pairs[index];
+  const submitted = Array.isArray(submittedAnswers);
+  const correct = submitted && pair.words.every((german,answerIndex)=>isGermanHeadwordCorrect(submittedAnswers[answerIndex],german));
+  app.innerHTML = `<section class="session antonym-session"><div class="session-head"><div><p class="eyebrow">반대말 연습</p><h1>${escapeHtml(pair.prompts[0])} ↔ ${escapeHtml(pair.prompts[1])}</h1></div><span class="pill">${index+1} / ${pairs.length}</span></div><article class="flashcard antonym-card"><form id="antonymForm" class="antonym-form">${pair.prompts.map((prompt,inputIndex)=>`<label><span>${escapeHtml(prompt)}</span><input class="practice-answer-input" data-antonym-answer="${inputIndex}" type="text" value="${escapeHtml(submittedAnswers?.[inputIndex] ?? '')}" placeholder="독일어 입력" autocomplete="off" autocapitalize="none" spellcheck="false" ${submitted?'disabled':'required'}></label>`).join('')}<button class="primary" type="submit" ${submitted?'disabled':''}>두 단어 확인</button></form>${submitted?`<div class="feedback ${correct?'correct-text':'wrong-text'}">${correct?'Richtig(정답)!':'Noch nicht(아직 아니에요).'}</div><div class="antonym-answer"><strong>${escapeHtml(pair.words[0])} ↔ ${escapeHtml(pair.words[1])}</strong><div>${pronunciationButton(pair.words[0],'첫 단어 듣기')}${pronunciationButton(pair.words[1],'둘째 단어 듣기')}</div></div>`:''}</article><div class="card-actions"><button id="backToPractice" class="secondary">나가기</button>${submitted?`<button id="nextAntonym" class="primary">${index===pairs.length-1?'결과 보기':'다음 문제'}</button>`:''}</div></section>`;
+  document.querySelector('#backToPractice').onclick=renderExtraPracticeHub;
+  if (submitted) {
+    const next=document.querySelector('#nextAntonym');
+    next.onclick=()=>startAntonymPractice(pairs,index+1,correctCount+(correct?1:0));
+    next.focus();
+  } else {
+    const inputs=[...document.querySelectorAll('[data-antonym-answer]')];
+    inputs[0].focus();
+    document.querySelector('#antonymForm').onsubmit=event=>{event.preventDefault();startAntonymPractice(pairs,index,correctCount,inputs.map(input=>input.value.trim()))};
+  }
+}
+
 function exampleFormExplanationHtml(explanation) {
   if (!explanation) return '';
   return `<section class="example-form-explanation"><p class="eyebrow">왜 이렇게 바뀌나요?</p><h3>${escapeHtml(explanation.title)}</h3><p>${escapeHtml(explanation.body)}</p><strong>${escapeHtml(explanation.pattern)}</strong>${explanation.note ? `<small>${escapeHtml(explanation.note)}</small>` : ''}</section>`;
@@ -237,14 +420,14 @@ function renderExampleClozeQuestion(questions, index, correctCount, submittedAns
 
 function startNounArticleQuiz() {
   const questions = shuffleCopy(cumulativeNounQuestions(state.cohorts, words));
-  if (!questions.length) return renderDashboard();
+  if (!questions.length) return renderExtraPracticeHub();
   renderNounArticleQuestion(questions, 0, 0);
 }
 
 function renderNounArticleQuestion(questions, index, correctCount, selectedArticle = null) {
   if (index >= questions.length) {
-    app.innerHTML = `<section class="complete noun-article-result"><div class="celebrate">🧩</div><p class="eyebrow">Nomen(명사) 관사 연습</p><h1>${correctCount}/${questions.length} 정답</h1><p>지금까지 학습 완료한 명사 ${questions.length}개의 관사를 모두 확인했어요.</p><div class="result-actions"><button id="backHome" class="secondary">홈으로</button><button id="retryNounArticles" class="primary">다시 풀기</button></div></section>`;
-    document.querySelector('#backHome').onclick=renderDashboard;
+    app.innerHTML = `<section class="complete noun-article-result"><div class="celebrate">🧩</div><p class="eyebrow">Nomen(명사) 관사 연습</p><h1>${correctCount}/${questions.length} 정답</h1><p>지금까지 학습 완료한 명사 ${questions.length}개의 관사를 모두 확인했어요.</p><div class="result-actions"><button id="backHome" class="secondary">추가 연습으로</button><button id="retryNounArticles" class="primary">다시 풀기</button></div></section>`;
+    document.querySelector('#backHome').onclick=renderExtraPracticeHub;
     document.querySelector('#retryNounArticles').onclick=startNounArticleQuiz;
     return;
   }
@@ -254,7 +437,7 @@ function renderNounArticleQuestion(questions, index, correctCount, selectedArtic
   const articleClass = article => answered ? article === question.article ? 'correct' : article === selectedArticle ? 'wrong' : '' : '';
   const articleDisabled = answered ? 'disabled' : '';
   app.innerHTML = `<section class="session noun-article-session"><div class="session-head"><div><p class="eyebrow">Nomen(명사) 관사 연습</p><h1>알맞은 관사를 고르세요</h1></div><span class="pill">${index+1} / ${questions.length}</span></div><div class="progress-track"><div class="progress-bar" style="width:${(index/questions.length)*100}%"></div></div><article class="flashcard"><div class="noun-article-prompt"><span class="article-blank">___</span> <strong>${escapeHtml(question.noun)}</strong></div><div class="article-choices"><button class="choice article-choice ${articleClass('der')}" data-article="der" ${articleDisabled}>der</button><button class="choice article-choice ${articleClass('das')}" data-article="das" ${articleDisabled}>das</button><button class="choice article-choice ${articleClass('die')}" data-article="die" ${articleDisabled}>die</button></div>${answered?`<div class="feedback ${correct?'correct-text':'wrong-text'}">${correct?'Richtig(정답)!':'Noch nicht(아직 아니에요).'}</div><div class="meaning">정답: ${question.article} ${escapeHtml(question.noun)}<small>${escapeHtml(question.meaning)}</small></div>${pronunciationButton(`${question.article} ${question.noun}`)}`:''}</article><div class="card-actions"><button id="home" class="secondary">나가기</button>${answered?`<button id="nextNounArticle" class="primary">${index === questions.length-1?'결과 보기':'다음 문제'}</button>`:''}</div></section>`;
-  document.querySelector('#home').onclick=renderDashboard;
+  document.querySelector('#home').onclick=renderExtraPracticeHub;
   if (answered) {
     document.querySelector('#nextNounArticle').onclick=()=>renderNounArticleQuestion(questions, index+1, correctCount+(correct?1:0));
   } else {
@@ -272,7 +455,7 @@ function calendarHtml(today) {
     const summary = cohort ? summarizeLearningDay(cohort) : null;
     const statusClass = calendarDayStatus(date, today, STUDY_START_DATE, Boolean(cohort), Boolean(summary?.memorized));
     const inactive = statusClass === 'inactive';
-    const statusLabel = statusClass === 'mastered' ? '암기 완료' : statusClass === 'studied' ? '학습함' : statusClass === 'missed' ? '미학습' : statusClass === 'open' ? '오늘' : '';
+    const statusLabel = calendarStatusLabel(statusClass, summary);
     return `<button type="button" class="calendar-day ${statusClass} ${date===today?'today':''}" data-calendar-date="${date}" aria-label="${date} ${inactive?'학습 시작 전':statusLabel||'기록 보기'}" ${inactive?'disabled':''}><span class="calendar-number">${Number(date.slice(-2))}</span>${statusLabel?`<small>${statusLabel}</small>`:''}</button>`;
   }).join('');
   return `<section class="calendar-panel"><div class="calendar-heading"><div><p class="eyebrow">Lernkalender(학습 캘린더)</p><h2>${year}년 ${monthIndex+1}월</h2></div><div class="calendar-nav"><button type="button" id="calendarPrev" aria-label="이전 달">‹</button><button type="button" id="calendarToday">오늘</button><button type="button" id="calendarNext" aria-label="다음 달">›</button></div></div><div class="calendar-legend"><span><i class="legend-dot mastered"></i>암기 완료</span><span><i class="legend-dot studied"></i>학습함</span><span><i class="legend-dot missed"></i>미학습</span><span><i class="legend-dot inactive"></i>8월 25일 이전</span></div><div class="calendar-weekdays"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div><div class="calendar-grid">${cells}</div><p class="calendar-hint">날짜를 누르면 단어 수, 시도별 점수와 무오답 완료 3회까지의 과정을 볼 수 있어요.</p></section>`;
@@ -738,6 +921,7 @@ async function init() {
   words=await response.json();
   if(words.some(item=>!item.korean||!item.english||!item.exampleGerman)) throw new Error('한국어·영어 뜻 또는 공식 예문 데이터가 아직 완성되지 않았습니다.');
   byId=new Map(words.map(item=>[item.id,item]));
+  byGerman=new Map(words.map(item=>[item.german,item]));
   bindGlobalNavigation();
   bindPronunciation();
   bindReverseKeyboard();

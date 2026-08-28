@@ -33,7 +33,7 @@ class MobileInputTests(unittest.TestCase):
         styles = (ROOT / "styles.css").read_text(encoding="utf-8")
         dashboard = app.split("app.innerHTML = `", 1)[1].split("app.querySelectorAll('[data-action]')", 1)[0]
         self.assertIn('class="reverse-task-group', dashboard)
-        self.assertLess(dashboard.index("${reverseHistory}"), dashboard.index("noun-practice-title"))
+        self.assertLess(dashboard.index("${reverseHistory}"), dashboard.index("extra-practice-title"))
         self.assertIn('class="attempt-panel reverse-attempt-compact"', app)
         self.assertNotIn('<p class="eyebrow">Versuche(시도 기록)</p>', app)
         self.assertRegex(styles, r"\.reverse-task-group\.with-history \.task\{[^}]*border-radius:20px 20px 0 0")
@@ -96,12 +96,18 @@ class MobileInputTests(unittest.TestCase):
         self.assertNotIn("voices[0]", app)
         self.assertRegex(styles, r"\.pronunciation-button\{[^}]*min-height:44px")
 
-    def test_cumulative_noun_article_quiz_is_separate_from_today_tasks(self):
+    def test_noun_article_quiz_moves_inside_the_extra_practice_hub(self):
         app = (ROOT / "app.mjs").read_text(encoding="utf-8")
         styles = (ROOT / "styles.css").read_text(encoding="utf-8")
-        self.assertIn('class="section-title noun-practice-title"', app)
-        self.assertIn("Nomen(명사) 관사 연습", app)
-        self.assertIn("data-action=\"noun-articles\"", app)
+        dashboard = app.split("function renderDashboard()", 1)[1].split("let availableGermanVoices", 1)[0]
+        hub = app.split("function renderExtraPracticeHub()", 1)[1].split("function renderAllWordsPracticeSetup", 1)[0]
+        self.assertIn('class="section-title extra-practice-title"', dashboard)
+        self.assertIn("추가 연습", dashboard)
+        self.assertIn('data-action="extra-practice"', dashboard)
+        self.assertNotIn('class="section-title noun-practice-title"', dashboard)
+        self.assertIn("Nomen(명사) 관사 연습", hub)
+        self.assertIn("'Nomen(명사) 관사 연습'", hub)
+        self.assertIn("'noun-articles'", hub)
         self.assertIn("function startNounArticleQuiz()", app)
         self.assertIn("function renderNounArticleQuestion", app)
         self.assertIn('data-article="der"', app)
@@ -110,6 +116,39 @@ class MobileInputTests(unittest.TestCase):
         self.assertIn('class="article-blank"', app)
         self.assertRegex(styles, r"\.article-choices\{[^}]*grid-template-columns:repeat\(3,1fr\)")
         self.assertRegex(styles, r"\.article-choice\{[^}]*min-height:64px")
+
+    def test_extra_practice_modes_are_independent_from_calendar_progress(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn("function renderAllWordsPracticeSetup", app)
+        self.assertIn("function renderIndependentReversePractice", app)
+        self.assertIn("function renderRootFamilyHub", app)
+        self.assertIn("function renderRootMatchingRound", app)
+        self.assertIn("function renderPrefixCards", app)
+        self.assertIn("function renderTopicPracticeHub", app)
+        self.assertIn("function startAntonymPractice", app)
+        self.assertIn("data-practice-count=\"all\"", app)
+        self.assertIn("shuffleCopy", app)
+        independent = app.split("function renderIndependentReversePractice", 1)[1].split("function renderRootFamilyHub", 1)[0]
+        self.assertNotIn("saveState()", independent)
+        self.assertIn("function resetPracticeScroll()", app)
+        self.assertIn("resetPracticeScroll();", app.split("function renderExtraPracticeHub()", 1)[1].split("function renderAllWordsPracticeSetup", 1)[0])
+        self.assertNotIn("reverseAttempts", independent)
+        self.assertRegex(styles, r"\.practice-answer-input\{[^}]*font-size:20px")
+        self.assertRegex(styles, r"\.practice-hub-grid\{[^}]*display:grid")
+
+    def test_root_prefix_matching_uses_up_to_five_korean_meaning_pairs(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        self.assertIn("items.slice(offset, offset+5)", app)
+        self.assertIn("data-match-word", app)
+        self.assertIn("data-match-meaning", app)
+        self.assertIn("escapeHtml(item.korean)", app)
+        self.assertIn("matched.size === batch.length", app)
+
+    def test_calendar_mastered_label_includes_that_days_completed_word_count(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        self.assertIn("calendarStatusLabel(statusClass, summary)", app)
+        self.assertIn("암기완료/", (ROOT / "src" / "core.mjs").read_text(encoding="utf-8"))
 
     def test_calendar_swaps_mastered_to_pink_and_studied_to_green(self):
         styles = (ROOT / "styles.css").read_text(encoding="utf-8")
@@ -254,6 +293,15 @@ class MobileInputTests(unittest.TestCase):
         worker = (ROOT / "sw.js").read_text(encoding="utf-8")
         self.assertIn("self.skipWaiting()", worker)
         self.assertIn("self.clients.claim()", worker)
+
+    def test_service_worker_precaches_extra_practice_module(self):
+        worker = (ROOT / "sw.js").read_text(encoding="utf-8")
+        self.assertIn("./src/practice-data.mjs", worker)
+
+    def test_pages_build_deploys_and_tests_extra_practice_module(self):
+        workflow = (ROOT / ".github/workflows/pages.yml").read_text(encoding="utf-8")
+        self.assertIn("node --test tests/*.test.mjs", workflow)
+        self.assertIn("src/practice-data.mjs", workflow)
 
 
 if __name__ == "__main__":

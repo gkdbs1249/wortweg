@@ -1,5 +1,5 @@
-const CACHE='wortweg-v41';
-const ASSETS=['./','./index.html','./styles.css','./app.mjs','./firebase-config.mjs','./src/core.mjs','./src/cloud-sync.mjs','./data/words.json','./manifest.webmanifest'];
+const CACHE='wortweg-v42';
+const ASSETS=['./','./index.html','./styles.css','./app.mjs','./firebase-config.mjs','./src/core.mjs','./src/cloud-sync.mjs','./src/practice-data.mjs','./data/words.json','./manifest.webmanifest'];
 
 self.addEventListener('install',event=>event.waitUntil((async()=>{
   const cache=await caches.open(CACHE);

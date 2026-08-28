@@ -5,6 +5,8 @@ import {
   buildNightLesson,
   bilingualMeaning,
   calendarDayStatus,
+  calendarStatusLabel,
+  completedLearnedWordIds,
   cumulativeNounQuestions,
   dueReviews,
   extendCohortWithWords,
@@ -17,12 +19,15 @@ import {
   isExampleGapCorrect,
   isGermanHeadwordCorrect,
   learningCardSides,
+  learningTaskTitle,
   lessonOverview,
   mergeProgressStates,
   monthCalendarDays,
   normalizeAnswer,
   nounArticleQuestion,
   prioritizeReviewItems,
+  practiceGroupWords,
+  practiceWordsForCount,
   pronounceableGerman,
   reverseEnterAction,
   shuffleCopy,
@@ -220,6 +225,12 @@ test('word meanings show Korean together with English', () => {
   assert.equal(bilingualMeaning({ korean: '집', english: 'house/home' }), '집 · house/home');
 });
 
+test('completed daily lesson is clearly labeled as a randomized repeat', () => {
+  assert.equal(learningTaskTitle(null), null);
+  assert.equal(learningTaskTitle({ learningDone: false }), '오늘 단어 이어서 보기');
+  assert.equal(learningTaskTitle({ learningDone: true }), '오늘 단어 랜덤으로 다시 보기');
+});
+
 test('learning cards support both German-to-meaning and meaning-to-German directions', () => {
   const word = { german: 'das Haus', korean: '집', english: 'house/home' };
   assert.deepEqual(learningCardSides(word, 'forward'), {
@@ -263,6 +274,29 @@ test('calendar days before the study start date are inactive', () => {
   assert.equal(calendarDayStatus('2026-08-24', '2026-08-25', '2026-08-25', false, false), 'inactive');
   assert.equal(calendarDayStatus('2026-08-25', '2026-08-25', '2026-08-25', true, true), 'mastered');
   assert.equal(calendarDayStatus('2026-08-26', '2026-08-25', '2026-08-25', false, false), 'future');
+});
+
+test('mastered calendar label includes that cohort word count', () => {
+  assert.equal(calendarStatusLabel('mastered', { totalWords: 23 }), '암기완료/23');
+  assert.equal(calendarStatusLabel('studied', { totalWords: 23 }), '학습함');
+});
+
+test('extra practice includes unique words only from completed daily cohorts', () => {
+  const cohorts = [
+    { learningDone: true, wordIds: ['a', 'b', 'a'] },
+    { learningDone: false, wordIds: ['c'] },
+    { learningDone: true, wordIds: ['d'] },
+  ];
+  assert.deepEqual(completedLearnedWordIds(cohorts), ['a', 'b', 'd']);
+  const items = ['a', 'b', 'c', 'd'].map(id => ({ id }));
+  assert.deepEqual(practiceWordsForCount(cohorts, items, 2, () => 0).map(item => item.id), ['b', 'd']);
+  assert.deepEqual(practiceWordsForCount(cohorts, items, 'all', () => 0).map(item => item.id), ['b', 'd', 'a']);
+});
+
+test('root and topic groups unlock progressively as learned words grow', () => {
+  const group = { id: 'kommen', wordIds: ['base', 'an', 'be', 'mit'] };
+  assert.deepEqual(practiceGroupWords(group, ['base', 'be']), ['base', 'be']);
+  assert.deepEqual(practiceGroupWords(group, ['base', 'be', 'mit']), ['base', 'be', 'mit']);
 });
 
 test('each study session can shuffle a copy without changing the saved word order', () => {

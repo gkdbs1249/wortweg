@@ -23,6 +23,11 @@ export function bilingualMeaning(item) {
   return `${item.korean} · ${item.english}`;
 }
 
+export function learningTaskTitle(cohort) {
+  if (!cohort) return null;
+  return cohort.learningDone ? '오늘 단어 랜덤으로 다시 보기' : '오늘 단어 이어서 보기';
+}
+
 export function pronounceableGerman(value) {
   let text = String(value ?? '').trim();
   if (!text) return '';
@@ -304,6 +309,41 @@ export function calendarDayStatus(date, today, studyStartDate, studied, memorize
   if (date > today) return 'future';
   if (date === today) return 'open';
   return 'missed';
+}
+
+export function calendarStatusLabel(statusClass, summary = null) {
+  if (statusClass === 'mastered') return `암기완료/${summary?.totalWords || 0}`;
+  if (statusClass === 'studied') return '학습함';
+  if (statusClass === 'missed') return '미학습';
+  if (statusClass === 'open') return '오늘';
+  return '';
+}
+
+export function completedLearnedWordIds(cohorts = []) {
+  const learned = [];
+  const seen = new Set();
+  for (const cohort of cohorts) {
+    if (!cohort?.learningDone) continue;
+    for (const wordId of cohort.wordIds || []) {
+      if (!wordId || seen.has(wordId)) continue;
+      seen.add(wordId);
+      learned.push(wordId);
+    }
+  }
+  return learned;
+}
+
+export function practiceWordsForCount(cohorts, items, requestedCount = 'all', random = Math.random) {
+  const learnedIds = new Set(completedLearnedWordIds(cohorts));
+  const shuffled = shuffleCopy((items || []).filter(item => learnedIds.has(item.id)), random);
+  if (requestedCount === 'all') return shuffled;
+  const count = Math.max(1, Math.floor(Number(requestedCount) || 1));
+  return shuffled.slice(0, count);
+}
+
+export function practiceGroupWords(group, learnedWordIds) {
+  const learned = learnedWordIds instanceof Set ? learnedWordIds : new Set(learnedWordIds || []);
+  return (group?.wordIds || []).filter(wordId => learned.has(wordId));
 }
 
 export function shuffleCopy(items, random = Math.random) {
