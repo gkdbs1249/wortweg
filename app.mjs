@@ -1,6 +1,6 @@
-import { addDays, bilingualMeaning, calendarDayStatus, calendarStatusLabel, cohortLearningWordIds, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, isExampleGapCorrect, isGermanHeadwordCorrect, isPerfectReverseAttempt, learningCardSides, learningTaskTitle, lessonOverview, monthCalendarDays, practiceGroupWords, practiceWordsForCount, prioritizeReviewItems, pronounceableGerman, reverseAttemptWordIds, reverseEnterAction, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts } from './src/core.mjs';
+import { addDays, bilingualMeaning, calendarDayStatus, calendarStatusLabel, cohortLearningWordIds, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, isExampleGapCorrect, isGermanHeadwordCorrect, isPerfectReverseAttempt, learningCardSides, learningTaskTitle, lessonOverview, monthCalendarDays, practiceGroupWords, practiceWordsForCount, prioritizeReviewItems, pronounceableGerman, reverseAttemptWordIds, reverseEnterAction, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts, validPracticeCount } from './src/core.mjs';
 import { createAccountWithPin, initializeCloudSync, queueCloudProgressSave, signInWithPin, signOutFromAccount } from './src/cloud-sync.mjs';
-import { ANTONYM_PAIRS, PREFIX_CARDS, ROOT_FAMILIES, TOPIC_GROUPS } from './src/practice-data.mjs';
+import { ANTONYM_PAIRS, PREFIX_CARDS, ROOT_FAMILIES, SUPPLEMENTAL_PRACTICE_WORDS, TOPIC_GROUPS } from './src/practice-data.mjs';
 
 const STORAGE_KEY = 'wortweg-a1-progress-v1';
 const STORAGE_OWNER_KEY = `${STORAGE_KEY}:owner`;
@@ -14,6 +14,7 @@ const dayDetailDialog = document.querySelector('#dayDetailDialog');
 let words = [];
 let byId = new Map();
 let byGerman = new Map();
+const supplementalPracticeByGerman = new Map(SUPPLEMENTAL_PRACTICE_WORDS.map(item => [item.german, item]));
 let activeStorageKey = STORAGE_KEY;
 let state = loadState(activeStorageKey);
 let calendarCursor = null;
@@ -212,9 +213,10 @@ function taskHtml(icon,title,description,action,disabled) {
 
 function resolvedPracticeItems(group, learnedOnly = true) {
   const learnedIds = new Set(completedLearnedWordIds(state.cohorts));
-  const itemIds = (group.words || []).map(german => byGerman.get(german)?.id).filter(Boolean);
-  const availableIds = learnedOnly ? practiceGroupWords({ wordIds:itemIds }, learnedIds) : itemIds;
-  return availableIds.map(word).filter(Boolean);
+  const items = (group.words || []).map(german => byGerman.get(german) || supplementalPracticeByGerman.get(german)).filter(Boolean);
+  if (!learnedOnly) return items;
+  const availableIds = new Set(practiceGroupWords({ wordIds:items.map(item => item.id) }, learnedIds));
+  return items.filter(item => availableIds.has(item.id));
 }
 
 function practiceHubCard(icon, title, description, practice, disabled = false) {
@@ -229,11 +231,10 @@ function renderExtraPracticeHub() {
   resetPracticeScroll();
   const learnedCount = completedLearnedWordIds(state.cohorts).length;
   const nounCount = cumulativeNounQuestions(state.cohorts, words).length;
-  const rootCount = ROOT_FAMILIES.filter(group => resolvedPracticeItems(group).length >= 2).length;
+  const rootCount = ROOT_FAMILIES.filter(group => resolvedPracticeItems(group, false).length >= 2).length;
   const topicCount = TOPIC_GROUPS.filter(group => resolvedPracticeItems(group).length > 0).length;
-  const learnedIds = new Set(completedLearnedWordIds(state.cohorts));
-  const antonymCount = ANTONYM_PAIRS.filter(pair => pair.words.every(german => learnedIds.has(byGerman.get(german)?.id))).length;
-  app.innerHTML = `<section class="practice-hub"><div class="session-head"><div><p class="eyebrow">Zusatzübung(추가 연습)</p><h1>원하는 방식으로 더 연습해요</h1></div><span class="pill">배운 단어 ${learnedCount}개</span></div><p class="practice-intro">추가 연습 결과는 학습 캘린더와 암기 완료 기록에 영향을 주지 않아요.</p><div class="practice-hub-grid">${practiceHubCard('🔄','전체 단어 학습','배운 단어 중 문제 수를 골라 무작위 거꾸로 학습','all-words',learnedCount===0)}${practiceHubCard('🧩','접두사 변형 연습',`${rootCount}개 어근 그룹 · 독일어와 뜻 매칭`,'root-family',rootCount===0)}${practiceHubCard('🗂️','접두사 연습',`${PREFIX_CARDS.length}개 접두사 카드와 예시`,'prefix-cards')}${practiceHubCard('🏷️','주제별 연습',`${topicCount}개 주제에서 배운 단어 복습`,'topics',topicCount===0)}${practiceHubCard('↔️','반대말 연습',`${antonymCount}쌍 학습 가능`,'antonyms',antonymCount===0)}${practiceHubCard('🧠','Nomen(명사) 관사 연습',`누적 명사 ${nounCount}개 · der/das/die`,'noun-articles',nounCount===0)}</div><button id="practiceHome" class="secondary practice-back">홈으로</button></section>`;
+  const antonymCount = ANTONYM_PAIRS.length;
+  app.innerHTML = `<section class="practice-hub"><div class="session-head"><div><p class="eyebrow">Zusatzübung(추가 연습)</p><h1>원하는 방식으로 더 연습해요</h1></div><span class="pill">배운 단어 ${learnedCount}개</span></div><p class="practice-intro">추가 연습 결과는 학습 캘린더와 암기 완료 기록에 영향을 주지 않아요.</p><div class="practice-hub-grid">${practiceHubCard('🔄','전체 단어 학습','배운 단어 중 원하는 문제 수로 무작위 거꾸로 학습','all-words',learnedCount===0)}${practiceHubCard('🧩','접두사 변형 연습',`${rootCount}개 어근 그룹 · 미학습 추천 단어 포함`,'root-family',rootCount===0)}${practiceHubCard('🗂️','접두사 연습',`${PREFIX_CARDS.length}개 접두사 카드와 예시`,'prefix-cards')}${practiceHubCard('🏷️','주제별 연습',`${topicCount}개 주제에서 배운 단어 복습`,'topics',topicCount===0)}${practiceHubCard('↔️','반대말 연습',`${antonymCount}쌍 · 미학습 추천 단어 포함`,'antonyms',antonymCount===0)}${practiceHubCard('🧠','Nomen(명사) 관사 연습',`누적 명사 ${nounCount}개 · der/das/die`,'noun-articles',nounCount===0)}</div><button id="practiceHome" class="secondary practice-back">홈으로</button></section>`;
   document.querySelector('#practiceHome').onclick=renderDashboard;
   app.querySelectorAll('[data-practice]').forEach(button => button.onclick=()=>{
     const mode = button.dataset.practice;
@@ -250,13 +251,28 @@ function renderAllWordsPracticeSetup() {
   resetPracticeScroll();
   const learnedCount = completedLearnedWordIds(state.cohorts).length;
   const options = [10,20,50].map(count => `<button class="count-choice" data-practice-count="${count}" ${learnedCount<count?'disabled':''}>${count}개</button>`).join('');
-  app.innerHTML = `<section class="practice-setup"><div class="session-head"><div><p class="eyebrow">전체 단어 학습</p><h1>몇 개를 풀까요?</h1></div><span class="pill">총 ${learnedCount}개</span></div><p class="practice-intro">배운 순서와 관계없이 매번 무작위로 출제해요.</p><div class="count-choice-grid">${options}<button class="count-choice primary" data-practice-count="all">전체 ${learnedCount}개</button></div><button id="backToPractice" class="secondary practice-back">추가 연습으로</button></section>`;
+  app.innerHTML = `<section class="practice-setup"><div class="session-head"><div><p class="eyebrow">전체 단어 학습</p><h1>몇 개를 풀까요?</h1></div><span class="pill">총 ${learnedCount}개</span></div><p class="practice-intro">배운 순서와 관계없이 매번 무작위로 출제해요.</p><div class="count-choice-grid">${options}<button class="count-choice primary" data-practice-count="all">전체 ${learnedCount}개</button></div><form id="customPracticeCountForm" class="custom-practice-count"><label for="customPracticeCount">원하는 개수 직접 입력</label><div><input id="customPracticeCount" type="number" min="1" max="${learnedCount}" step="1" inputmode="numeric" value="${Math.min(30,learnedCount)}" required><button class="primary" type="submit">시작</button></div><small>1개부터 배운 단어 ${learnedCount}개까지 입력할 수 있어요.</small></form><button id="backToPractice" class="secondary practice-back">추가 연습으로</button></section>`;
   document.querySelector('#backToPractice').onclick=renderExtraPracticeHub;
   document.querySelectorAll('[data-practice-count]').forEach(button => button.onclick=()=>{
     const selected = button.dataset.practiceCount;
     const items = practiceWordsForCount(state.cohorts, words, selected === 'all' ? 'all' : Number(selected));
     renderIndependentReversePractice(items, 0, 0, '전체 단어 거꾸로 학습');
   });
+  const customPracticeCountInput = document.querySelector('#customPracticeCount');
+  customPracticeCountInput.oninput=()=>customPracticeCountInput.setCustomValidity('');
+  document.querySelector('#customPracticeCountForm').onsubmit=event=>{
+    event.preventDefault();
+    const input = customPracticeCountInput;
+    input.setCustomValidity('');
+    const requestedCount = validPracticeCount(input.value, learnedCount);
+    if (requestedCount === null) {
+      input.setCustomValidity(`1부터 ${learnedCount} 사이의 정수를 입력해 주세요.`);
+      input.reportValidity();
+      return;
+    }
+    const items = practiceWordsForCount(state.cohorts, words, requestedCount);
+    renderIndependentReversePractice(items, 0, 0, '전체 단어 거꾸로 학습');
+  };
 }
 
 function renderIndependentReversePractice(items, index = 0, correctCount = 0, title = '거꾸로 학습', submittedAnswer = null) {
@@ -289,9 +305,9 @@ function renderIndependentReversePractice(items, index = 0, correctCount = 0, ti
 
 function renderRootFamilyHub() {
   resetPracticeScroll();
-  const groups = ROOT_FAMILIES.map(group => ({ group, items:resolvedPracticeItems(group) })).filter(entry => entry.items.length >= 2);
+  const groups = ROOT_FAMILIES.map(group => ({ group, items:resolvedPracticeItems(group, false) })).filter(entry => entry.items.length >= 2);
   const cards = groups.map(({group,items})=>`<button class="group-choice" data-root-family="${group.id}"><strong>${escapeHtml(group.label)}</strong><span>${items.length}개 단어 매칭</span><small>${items.map(item=>escapeHtml(pronounceableGerman(item.german))).join(' · ')}</small></button>`).join('');
-  app.innerHTML = `<section class="practice-group-hub"><div class="session-head"><div><p class="eyebrow">접두사 변형 연습</p><h1>공통 어근을 골라보세요</h1></div><span class="pill">${groups.length}개 그룹</span></div><p class="practice-intro">한 화면에 최대 5개씩 독일어와 뜻을 짝지어요.</p><div class="group-choice-grid">${cards}</div><button id="backToPractice" class="secondary practice-back">추가 연습으로</button></section>`;
+  app.innerHTML = `<section class="practice-group-hub"><div class="session-head"><div><p class="eyebrow">접두사 변형 연습</p><h1>공통 어근을 골라보세요</h1></div><span class="pill">${groups.length}개 그룹</span></div><p class="practice-intro">아직 배우지 않은 추천 단어도 포함해 한 화면에 최대 5개씩 독일어와 뜻을 짝지어요.</p><div class="group-choice-grid">${cards}</div><button id="backToPractice" class="secondary practice-back">추가 연습으로</button></section>`;
   document.querySelector('#backToPractice').onclick=renderExtraPracticeHub;
   document.querySelectorAll('[data-root-family]').forEach(button => button.onclick=()=>{
     const entry = groups.find(candidate => candidate.group.id === button.dataset.rootFamily);
@@ -365,8 +381,7 @@ function renderTopicPracticeHub() {
 function startAntonymPractice(pairs = null, index = 0, correctCount = 0, submittedAnswers = null) {
   resetPracticeScroll();
   if (!pairs) {
-    const learned = new Set(completedLearnedWordIds(state.cohorts));
-    pairs = shuffleCopy(ANTONYM_PAIRS.filter(pair=>pair.words.every(german=>learned.has(byGerman.get(german)?.id))));
+    pairs = shuffleCopy(ANTONYM_PAIRS);
   }
   if (!pairs.length) return renderExtraPracticeHub();
   if (index >= pairs.length) {

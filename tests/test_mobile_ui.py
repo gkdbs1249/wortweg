@@ -303,7 +303,7 @@ class MobileInputTests(unittest.TestCase):
         manifest = (ROOT / "manifest.webmanifest").read_text(encoding="utf-8")
         worker = (ROOT / "sw.js").read_text(encoding="utf-8")
         workflow = (ROOT / ".github/workflows/pages.yml").read_text(encoding="utf-8")
-        self.assertIn("wortweg-v47", worker)
+        self.assertIn("wortweg-v48", worker)
         self.assertIn("wortweg-cache=${encodeURIComponent(CACHE)}", worker)
         self.assertIn("const responses=await Promise.all(ASSETS.map", worker)
         self.assertIn("cache.put(asset,responses[index])", worker)
@@ -323,6 +323,15 @@ class MobileInputTests(unittest.TestCase):
         self.assertTrue((ROOT / "favicon.ico").is_file())
         for filename in ["wortweg-icon.svg", "wortweg-icon-32.png", "wortweg-icon-180.png", "wortweg-icon-192.png", "wortweg-icon-512.png"]:
             self.assertTrue((ROOT / "icons" / filename).is_file(), filename)
+
+    def test_all_words_practice_accepts_a_custom_question_count(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn('id="customPracticeCount"', app)
+        self.assertIn('id="customPracticeCountForm"', app)
+        self.assertIn("practiceWordsForCount(state.cohorts, words, requestedCount)", app)
+        self.assertIn(".custom-practice-count", styles)
+        self.assertIn("font-size:16px", styles)
 
     def test_pages_build_deploys_and_tests_extra_practice_module(self):
         workflow = (ROOT / ".github/workflows/pages.yml").read_text(encoding="utf-8")

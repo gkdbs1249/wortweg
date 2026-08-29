@@ -35,6 +35,7 @@ import {
   shuffleCopy,
   summarizeLearningDay,
   summarizeReverseAttempts,
+  validPracticeCount,
 } from '../src/core.mjs';
 
 
@@ -286,6 +287,16 @@ test('extra practice includes unique words only from completed daily cohorts', (
   const items = ['a', 'b', 'c', 'd'].map(id => ({ id }));
   assert.deepEqual(practiceWordsForCount(cohorts, items, 2, () => 0).map(item => item.id), ['b', 'd']);
   assert.deepEqual(practiceWordsForCount(cohorts, items, 'all', () => 0).map(item => item.id), ['b', 'd', 'a']);
+});
+
+test('custom all-words practice count accepts only whole numbers within the learned pool', () => {
+  assert.equal(validPracticeCount('1', 60), 1);
+  assert.equal(validPracticeCount('37', 60), 37);
+  assert.equal(validPracticeCount('60', 60), 60);
+  for (const invalid of ['', '0', '-1', '1.5', '1e1', 'abc', '61']) {
+    assert.equal(validPracticeCount(invalid, 60), null, invalid);
+  }
+  assert.equal(validPracticeCount('1', 0), null);
 });
 
 test('daily learning and reverse recall exclude words already learned on another date', () => {

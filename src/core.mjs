@@ -349,6 +349,14 @@ export function completedLearnedWordIds(cohorts = []) {
   return learned;
 }
 
+export function validPracticeCount(requestedCount, availableCount) {
+  const raw = String(requestedCount ?? '').trim();
+  const available = Math.max(0, Math.floor(Number(availableCount) || 0));
+  if (!/^\d+$/.test(raw)) return null;
+  const count = Number(raw);
+  return Number.isSafeInteger(count) && count >= 1 && count <= available ? count : null;
+}
+
 export function practiceWordsForCount(cohorts, items, requestedCount = 'all', random = Math.random) {
   const learnedIds = new Set(completedLearnedWordIds(cohorts));
   const shuffled = shuffleCopy((items || []).filter(item => learnedIds.has(item.id)), random);
