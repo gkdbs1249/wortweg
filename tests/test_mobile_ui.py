@@ -298,6 +298,32 @@ class MobileInputTests(unittest.TestCase):
         worker = (ROOT / "sw.js").read_text(encoding="utf-8")
         self.assertIn("./src/practice-data.mjs", worker)
 
+    def test_wortweg_favicon_and_install_icons_replace_the_browser_default(self):
+        index = (ROOT / "index.html").read_text(encoding="utf-8")
+        manifest = (ROOT / "manifest.webmanifest").read_text(encoding="utf-8")
+        worker = (ROOT / "sw.js").read_text(encoding="utf-8")
+        workflow = (ROOT / ".github/workflows/pages.yml").read_text(encoding="utf-8")
+        self.assertIn("wortweg-v46", worker)
+        self.assertIn("wortweg-cache=${encodeURIComponent(CACHE)}", worker)
+        self.assertIn("const responses=await Promise.all(ASSETS.map", worker)
+        self.assertIn("cache.put(asset,responses[index])", worker)
+        self.assertIn("await caches.delete(CACHE)", worker)
+        self.assertIn("key.startsWith('wortweg-v')&&key!==CACHE", worker)
+        self.assertIn("caches.open(CACHE).then(cache=>cache.match(event.request))", worker)
+        self.assertIn('rel="icon" type="image/svg+xml" href="icons/wortweg-icon.svg"', index)
+        self.assertIn('rel="icon" type="image/png" sizes="32x32" href="icons/wortweg-icon-32.png"', index)
+        self.assertIn('rel="shortcut icon" href="favicon.ico"', index)
+        self.assertIn('rel="apple-touch-icon" sizes="180x180" href="icons/wortweg-icon-180.png"', index)
+        self.assertIn('"src": "icons/wortweg-icon-192.png"', manifest)
+        self.assertIn('"src": "icons/wortweg-icon-512.png"', manifest)
+        for asset in ["./favicon.ico", "./icons/wortweg-icon.svg", "./icons/wortweg-icon-32.png", "./icons/wortweg-icon-180.png", "./icons/wortweg-icon-192.png", "./icons/wortweg-icon-512.png"]:
+            self.assertIn(asset, worker)
+        self.assertIn("cp favicon.ico _site/", workflow)
+        self.assertIn("cp -R icons _site/", workflow)
+        self.assertTrue((ROOT / "favicon.ico").is_file())
+        for filename in ["wortweg-icon.svg", "wortweg-icon-32.png", "wortweg-icon-180.png", "wortweg-icon-192.png", "wortweg-icon-512.png"]:
+            self.assertTrue((ROOT / "icons" / filename).is_file(), filename)
+
     def test_pages_build_deploys_and_tests_extra_practice_module(self):
         workflow = (ROOT / ".github/workflows/pages.yml").read_text(encoding="utf-8")
         self.assertIn("node --test tests/*.test.mjs", workflow)

@@ -2,10 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   accountCredentials,
-  buildNightLesson,
   bilingualMeaning,
   calendarDayStatus,
   calendarStatusLabel,
+  cohortLearningWordIds,
   completedLearnedWordIds,
   cumulativeNounQuestions,
   dueReviews,
@@ -18,6 +18,7 @@ import {
   isCorrect,
   isExampleGapCorrect,
   isGermanHeadwordCorrect,
+  isPerfectReverseAttempt,
   learningCardSides,
   learningTaskTitle,
   lessonOverview,
@@ -35,15 +36,8 @@ import {
   summarizeReverseAttempts,
 } from '../src/core.mjs';
 
-test('night lesson contains 20 new words plus carried failures without duplicates', () => {
-  const fresh = Array.from({ length: 25 }, (_, i) => ({ id: `n${i}` }));
-  const carry = [{ id: 'c1' }, { id: 'c2' }, { id: 'n3' }];
-  const lesson = buildNightLesson(fresh, carry, 20);
-  assert.equal(lesson.length, 22);
-  assert.deepEqual(lesson.slice(-2).map(w => w.id), ['c1', 'c2']);
-});
 
-test('only words missed at least twice in final night test are carried', () => {
+test('final review identifies words missed at least twice', () => {
   const attempts = { a: 0, b: 1, c: 2, d: 4 };
   assert.deepEqual(finalFailures(attempts), ['c', 'd']);
 });
@@ -293,6 +287,67 @@ test('extra practice includes unique words only from completed daily cohorts', (
   assert.deepEqual(practiceWordsForCount(cohorts, items, 'all', () => 0).map(item => item.id), ['b', 'd', 'a']);
 });
 
+test('daily learning and reverse recall exclude words already learned on another date', () => {
+  const cohorts = [
+    { id:'day-1', learnedDate:'2026-08-27', wordIds:['old-1','old-2'], newCount:2, learningDone:true },
+    { id:'day-2', learnedDate:'2026-08-28', wordIds:['new-1','new-2','old-1','new-3'], newCount:3, learningDone:true },
+  ];
+  assert.deepEqual(cohortLearningWordIds(cohorts[1], cohorts), ['new-1','new-2','new-3']);
+  assert.equal(cohortLearningWordIds(cohorts[1], cohorts).length, cohorts[1].newCount);
+  assert.deepEqual(completedLearnedWordIds(cohorts), ['old-1','old-2','new-1','new-2','new-3']);
+});
+
+test('explicit daily new-word IDs prevent cloud merge from restoring legacy carry-over words', () => {
+  const local = {
+    updatedAt:'2026-08-28T12:00:00.000Z',
+    cohorts:[
+      { id:'cohort-2026-08-27', learnedDate:'2026-08-27', wordIds:['old-1'], newWordIds:['old-1'], newCount:1 },
+      { id:'cohort-2026-08-28', learnedDate:'2026-08-28', wordIds:['new-1','new-2'], newWordIds:['new-1','new-2'], newCount:2 },
+    ],
+  };
+  const remote = {
+    updatedAt:'2026-08-28T11:00:00.000Z',
+    cohorts:[
+      { id:'cohort-2026-08-27', learnedDate:'2026-08-27', wordIds:['old-1'], newCount:1 },
+      { id:'cohort-2026-08-28', learnedDate:'2026-08-28', wordIds:['new-1','new-2','old-1'], newCount:2 },
+    ],
+  };
+  const merged = mergeProgressStates(local, remote);
+  assert.deepEqual(merged.cohorts[1].wordIds, ['new-1','new-2']);
+  assert.deepEqual(merged.cohorts[1].newWordIds, ['new-1','new-2']);
+  assert.equal(merged.cohorts[1].newCount, 2);
+});
+
+test('cloud merge collapses different cohort IDs that represent the same study date', () => {
+  const merged = mergeProgressStates(
+    { cohorts:[
+      { id:'local-id', learnedDate:'2026-08-28', wordIds:['new-1'], newWordIds:['new-1'], newCount:1, learningDone:true },
+    ] },
+    { cohorts:[
+      { id:'remote-id', learnedDate:'2026-08-28', wordIds:['new-2'], newWordIds:['new-2'], newCount:1, learningDone:true },
+    ] },
+  );
+  assert.equal(merged.cohorts.length, 1);
+  assert.deepEqual(merged.cohorts[0].wordIds, ['new-1','new-2']);
+  assert.deepEqual(merged.cohorts[0].newWordIds, ['new-1','new-2']);
+  assert.equal(merged.cohorts[0].newCount, 2);
+});
+
+test('mixed-version cloud merge preserves fresh words learned on a legacy client', () => {
+  const local = { cohorts: [
+    { id:'past', learnedDate:'2026-08-27', wordIds:['old-1'], newWordIds:['old-1'], newCount:1, learningDone:true },
+    { id:'today', learnedDate:'2026-08-28', wordIds:['new-1'], newWordIds:['new-1'], newCount:1, learningDone:true },
+  ] };
+  const remote = { cohorts: [
+    { id:'past', learnedDate:'2026-08-27', wordIds:['old-1'], newCount:1, learningDone:true },
+    { id:'today', learnedDate:'2026-08-28', wordIds:['new-1','new-2','old-1'], newCount:2, learningDone:true },
+  ] };
+  const merged = mergeProgressStates(local, remote);
+  const today = merged.cohorts.find(cohort => cohort.id === 'today');
+  assert.deepEqual(today.newWordIds, ['new-1','new-2']);
+  assert.deepEqual(cohortLearningWordIds(today, merged.cohorts), ['new-1','new-2']);
+});
+
 test('root and topic groups unlock progressively as learned words grow', () => {
   const group = { id: 'kommen', wordIds: ['base', 'an', 'be', 'mit'] };
   assert.deepEqual(practiceGroupWords(group, ['base', 'be']), ['base', 'be']);
@@ -345,6 +400,40 @@ test('reverse attempt summary tracks wrong-word retries until every daily word i
       { number: 3, correctCount: 1, totalCount: 1 },
     ],
   });
+});
+
+test('legacy perfect attempts still count after a carry-over word is removed from the daily target', () => {
+  const attempts = [1,2,3].map(number => ({
+    id:`legacy-${number}`,
+    completed:true,
+    correctCount:3,
+    totalCount:3,
+    wordIds:['new-1','new-2','old-1'],
+    results:[],
+  }));
+  const summary = summarizeReverseAttempts(attempts, ['new-1','new-2']);
+  assert.equal(summary.perfectFullCount, 3);
+  assert.equal(summary.memorized, true);
+  assert.equal(summary.coverageComplete, true);
+  assert.equal(summary.coverageAttemptNumber, 1);
+  assert.equal(summary.masteredCount, 2);
+});
+
+test('perfect reverse scoring requires evidence for every current target word', () => {
+  assert.equal(isPerfectReverseAttempt({
+    completed:true,
+    correctCount:2,
+    totalCount:2,
+    wordIds:['new-1','old-1'],
+    results:[{wordId:'new-1',correct:true},{wordId:'old-1',correct:true}],
+  }, ['new-1','new-2']), false);
+  assert.equal(isPerfectReverseAttempt({
+    completed:true,
+    correctCount:3,
+    totalCount:3,
+    wordIds:['new-1','new-2','old-1'],
+    results:[],
+  }, ['new-1','new-2']), true);
 });
 
 test('calendar mastery requires three error-free full-cohort completions', () => {
@@ -439,7 +528,7 @@ test('cloud progress merge preserves both devices without duplicating cohorts or
   const merged = mergeProgressStates(local, remote);
   assert.equal(merged.dailyCount, 30);
   assert.equal(merged.nextIndex, 40);
-  assert.deepEqual(merged.carryIds, ['w1', 'w2']);
+  assert.deepEqual(merged.carryIds, []);
   assert.equal(merged.totalAnswers, 12);
   assert.equal(merged.correctAnswers, 10);
   assert.equal(merged.updatedAt, '2026-08-25T11:00:00.000Z');
@@ -466,6 +555,7 @@ test('learner can add a chosen number of fresh words to today without duplicates
   const result = extendCohortWithWords(cohort, [{ id: 'w2' }, { id: 'w3' }, { id: 'w4' }, { id: 'w5' }], 2);
   assert.deepEqual(result.addedIds, ['w3', 'w4']);
   assert.deepEqual(result.cohort.wordIds, ['w1', 'w2', 'w3', 'w4']);
+  assert.deepEqual(result.cohort.newWordIds, ['w1', 'w2', 'w3', 'w4']);
   assert.equal(result.cohort.newCount, 4);
   assert.equal(result.cohort.learningDone, false);
   assert.deepEqual(cohort.wordIds, ['w1', 'w2']);

@@ -36,6 +36,8 @@ jobs:
         run: |
           mkdir -p _site/src _site/data
           cp index.html styles.css app.mjs firebase-config.mjs manifest.webmanifest sw.js _site/
+          cp favicon.ico _site/
+          cp -R icons _site/
           cp src/core.mjs src/cloud-sync.mjs src/practice-data.mjs _site/src/
           cp data/words.json _site/data/
           touch _site/.nojekyll

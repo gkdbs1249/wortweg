@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">WortWeg 로고</title>
+  <desc id="desc">빨간 원 안에 흰색 대문자 W</desc>
+  <circle cx="256" cy="256" r="240" fill="#ff385c"/>
+  <text x="256" y="362" text-anchor="middle" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="306" font-weight="700">W</text>
+</svg>

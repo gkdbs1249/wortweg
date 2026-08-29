@@ -1,4 +1,4 @@
-import { addDays, bilingualMeaning, buildNightLesson, calendarDayStatus, calendarStatusLabel, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, isExampleGapCorrect, isGermanHeadwordCorrect, learningCardSides, learningTaskTitle, lessonOverview, monthCalendarDays, practiceGroupWords, practiceWordsForCount, prioritizeReviewItems, pronounceableGerman, reverseEnterAction, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts } from './src/core.mjs';
+import { addDays, bilingualMeaning, calendarDayStatus, calendarStatusLabel, cohortLearningWordIds, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, isExampleGapCorrect, isGermanHeadwordCorrect, isPerfectReverseAttempt, learningCardSides, learningTaskTitle, lessonOverview, monthCalendarDays, practiceGroupWords, practiceWordsForCount, prioritizeReviewItems, pronounceableGerman, reverseEnterAction, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts } from './src/core.mjs';
 import { createAccountWithPin, initializeCloudSync, queueCloudProgressSave, signInWithPin, signOutFromAccount } from './src/cloud-sync.mjs';
 import { ANTONYM_PAIRS, PREFIX_CARDS, ROOT_FAMILIES, TOPIC_GROUPS } from './src/practice-data.mjs';
 
@@ -39,6 +39,9 @@ function switchLocalProfile(user) {
     activeStorageKey = ANONYMOUS_STORAGE_KEY;
     state = loadState(activeStorageKey);
   }
+  if (words.length && normalizeDailyLearningCohorts()) {
+    localStorage.setItem(activeStorageKey, JSON.stringify(state));
+  }
   const profileChanged = previousStorageKey !== activeStorageKey;
   if (appReady && profileChanged && words.length) renderDashboard();
 }
@@ -52,13 +55,35 @@ function todayKst() { return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seo
 function examDays() { return Math.max(0, Math.ceil((Date.parse(`${EXAM_DATE}T00:00:00+09:00`) - Date.parse(`${todayKst()}T00:00:00+09:00`)) / 86400000)); }
 function escapeHtml(value) { return String(value).replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char])); }
 function word(id) { return byId.get(id); }
+function learningWordIds(cohort) { return cohort ? cohortLearningWordIds(cohort, state.cohorts).filter(id => byId.has(id)) : []; }
+function normalizeDailyLearningCohorts() {
+  let changed = false;
+  for (const cohort of state.cohorts || []) {
+    const normalizedIds = learningWordIds(cohort);
+    const storedIds = Array.isArray(cohort.wordIds) ? cohort.wordIds : [];
+    const explicitIds = Array.isArray(cohort.newWordIds) ? cohort.newWordIds : [];
+    if (JSON.stringify(storedIds) !== JSON.stringify(normalizedIds)
+      || JSON.stringify(explicitIds) !== JSON.stringify(normalizedIds)
+      || Number(cohort.newCount) !== normalizedIds.length) {
+      cohort.wordIds = [...normalizedIds];
+      cohort.newWordIds = [...normalizedIds];
+      cohort.newCount = normalizedIds.length;
+      changed = true;
+    }
+  }
+  if ((state.carryIds || []).length) {
+    state.carryIds = [];
+    changed = true;
+  }
+  return changed;
+}
 
 function renderDashboard() {
   const today = todayKst();
   const due = dueReviews(state.cohorts, today);
   const todayCohort = state.cohorts.find(cohort => cohort.learnedDate === today);
   const reverseSummary = summarizeReverseAttempts(todayCohort?.reverseAttempts || [], todayCohort?.wordIds || []);
-  const reverseHistory = reverseAttemptsHtml(todayCohort?.reverseAttempts || [], reverseSummary);
+  const reverseHistory = reverseAttemptsHtml(todayCohort?.reverseAttempts || [], reverseSummary, todayCohort?.wordIds || []);
   const accuracy = state.totalAnswers ? Math.round(state.correctAnswers / state.totalAnswers * 100) : 0;
   const progress = Math.round(state.nextIndex / words.length * 100);
   const reviewFirst = due.final.length > 0;
@@ -75,12 +100,12 @@ function renderDashboard() {
   const calendar = calendarHtml(today);
   app.innerHTML = `
     <section class="hero"><div><p class="eyebrow">Goethe-Zertifikat A1 · 10월 20일</p><h1>매일 조금씩,<br>두 번 더 기억하기.</h1><p>공식 A1 어휘 ${words.length}개를 학습하고 다음 날 아침과 이틀 뒤 밤에 다시 확인해요.</p><div class="progress-track"><div class="progress-bar" style="width:${progress}%"></div></div></div><div class="countdown"><strong>D-${examDays()}</strong><span>A1 시험까지</span></div></section>
-    <section class="stats"><div class="stat"><strong>${state.nextIndex}</strong><span>신규 학습 단어</span></div><div class="stat"><strong>${state.carryIds.length}</strong><span>오늘 이월 단어</span></div><div class="stat"><strong>${accuracy}%</strong><span>누적 정답률</span></div><div class="stat"><strong>${progress}%</strong><span>A1 어휘 진도</span></div></section>
+    <section class="stats"><div class="stat"><strong>${state.nextIndex}</strong><span>누적 신규 단어</span></div><div class="stat"><strong>${todayCohort ? learningWordIds(todayCohort).length : Math.min(state.dailyCount,remainingFreshCount)}</strong><span>오늘 학습 단어</span></div><div class="stat"><strong>${accuracy}%</strong><span>누적 정답률</span></div><div class="stat"><strong>${progress}%</strong><span>A1 어휘 진도</span></div></section>
     <div class="section-title"><h2>Heute(오늘)의 학습</h2><span>${today}</span></div>
     <section class="task-list">
-      ${due.final.length ? taskHtml('🌙','최종 기억 시험',`${due.final[0].wordIds.length}개 · 두 번 이상 틀리면 오늘 학습으로 이월`,'final',false) : ''}
+      ${due.final.length ? taskHtml('🌙','최종 기억 시험',`${learningWordIds(due.final[0]).length}개 · 오답은 이 시험 안에서 다시 확인해요`,'final',false) : ''}
       ${due.morning.length ? taskHtml('☀️','아침 재시험',`${due.morning[0].wordIds.length}개 · 틀린 단어는 맞힐 때까지 반복`,'morning',false) : ''}
-      ${taskHtml('📚',todayCohort ? learningTaskTitle(todayCohort) : `신규 ${Math.min(state.dailyCount,words.length-state.nextIndex)}개${state.carryIds.length ? ` + 이월 ${state.carryIds.length}개` : ''}`,reviewFirst ? '최종시험을 먼저 마치면 오늘 학습이 열려요' : '독일어를 보고 한국어·영어 뜻을 익혀요','learn',reviewFirst)}
+      ${taskHtml('📚',todayCohort ? learningTaskTitle(todayCohort) : `신규 ${Math.min(state.dailyCount,words.length-state.nextIndex)}개`,reviewFirst ? '최종시험을 먼저 마치면 오늘 학습이 열려요' : '독일어를 보고 한국어·영어 뜻을 익혀요','learn',reviewFirst)}
       <article class="task extra-word-task"><div class="task-icon">➕</div><div class="task-copy"><h3>오늘 단어 더 배우기</h3><p>${remainingFreshCount ? canAddExtraWords ? `남은 신규 단어 ${remainingFreshCount}개 중 원하는 만큼 추가할 수 있어요` : '오늘의 기본 학습을 완료하면 원하는 개수를 추가할 수 있어요' : '공식 A1 어휘 670개를 모두 추가했어요'}</p></div><form id="extraWordsForm" class="extra-word-controls"><label for="extraWordCount">추가 개수</label><input id="extraWordCount" type="number" min="1" max="${Math.min(50, remainingFreshCount || 1)}" value="${Math.min(5, remainingFreshCount || 1)}" inputmode="numeric" ${canAddExtraWords?'':'disabled'}><button class="primary" type="submit" ${canAddExtraWords?'':'disabled'}>더 배우기</button></form></article>
       <div class="reverse-task-group ${reverseHistory?'with-history':''}">
         ${taskHtml('🔄','거꾸로 학습',reviewFirst ? '최종시험을 먼저 마치면 거꾸로 학습이 열려요' : '한국어·영어 뜻을 보고 독일어를 떠올려요','reverse',reviewFirst)}
@@ -525,7 +550,7 @@ function showDayDetail(date) {
   dayDetailDialog.showModal();
 }
 
-function reverseAttemptsHtml(attempts, summary) {
+function reverseAttemptsHtml(attempts, summary, targetWordIds) {
   const completedAttempts = attempts.filter(attempt => attempt.completed);
   if (!completedAttempts.length) return '';
   const status = summary.memorized
@@ -535,7 +560,7 @@ function reverseAttemptsHtml(attempts, summary) {
       : `${summary.masteredCount}/${summary.totalWords}개 정답 경험`;
   const rows = completedAttempts.map((attempt, index) => {
     const score = `${attempt.correctCount}/${attempt.totalCount}`;
-    const perfect = attempt.totalCount === summary.totalWords && attempt.correctCount === summary.totalWords;
+    const perfect = isPerfectReverseAttempt(attempt, targetWordIds);
     return `<li class="${perfect?'perfect':''}"><strong>${index+1}회</strong><span>${score}</span></li>`;
   }).join('');
   const badge = summary.memorized ? '✓ 암기 완료' : summary.coverageComplete ? `무오답 ${summary.perfectFullCount}/3` : '도전 중';
@@ -560,25 +585,19 @@ function startLearning(direction = 'forward') {
   let cohort = state.cohorts.find(item => item.learnedDate === today);
   if (!cohort) {
     const fresh = words.slice(state.nextIndex, state.nextIndex + state.dailyCount);
-    const carried = state.carryIds.map(word).filter(Boolean);
-    const lesson = buildNightLesson(fresh, carried, state.dailyCount);
-    cohort = { id:`cohort-${today}`, learnedDate:today, wordIds:lesson.map(item=>item.id), newCount:fresh.length, learningDone:false, morningDone:false, finalDone:false, finalMisses:{}, reverseAttempts:[] };
+    const freshIds = fresh.map(item => item.id);
+    cohort = { id:`cohort-${today}`, learnedDate:today, wordIds:freshIds, newWordIds:[...freshIds], newCount:fresh.length, learningDone:false, morningDone:false, finalDone:false, finalMisses:{}, reverseAttempts:[] };
     state.cohorts.push(cohort); state.nextIndex += fresh.length; state.carryIds = []; saveState();
   }
-  if (direction === 'reverse') return startReverseAttempt(cohort);
-  renderLearning(cohort, shuffleCopy(cohort.wordIds), 0, false, direction);
+  const sessionIds = learningWordIds(cohort);
+  if (direction === 'reverse') return startReverseAttempt(cohort, sessionIds);
+  renderLearning(cohort, shuffleCopy(sessionIds), 0, false, direction);
 }
 
-function startReverseAttempt(cohort) {
+function startReverseAttempt(cohort, targetWordIds = learningWordIds(cohort)) {
   cohort.reverseAttempts ||= [];
-  const summary = summarizeReverseAttempts(cohort.reverseAttempts, cohort.wordIds);
-  const masteredIds = new Set(
-    cohort.reverseAttempts
-      .filter(attempt => attempt.completed)
-      .flatMap(attempt => (attempt.results || []).filter(result => result.correct).map(result => result.wordId))
-  );
-  const remainingIds = cohort.wordIds.filter(id => !masteredIds.has(id));
-  const attemptWordIds = summary.coverageComplete ? [...cohort.wordIds] : remainingIds;
+  const summary = summarizeReverseAttempts(cohort.reverseAttempts, targetWordIds);
+  const attemptWordIds = [...targetWordIds];
   const attempt = {
     id: `reverse-${cohort.learnedDate}-${Date.now()}`,
     number: summary.completedCount + 1,
@@ -676,7 +695,7 @@ function renderReverseLearning(cohort, sessionWordIds, index, attemptId, submitt
 function renderReverseOverview(cohort, attempt) {
   const resultByWord = new Map((attempt.results || []).map(result => [result.wordId, result]));
   const summary = summarizeReverseAttempts(cohort.reverseAttempts, cohort.wordIds);
-  const attemptWasFullPerfect = attempt.completed && attempt.totalCount === summary.totalWords && attempt.correctCount === summary.totalWords;
+  const attemptWasFullPerfect = isPerfectReverseAttempt(attempt, cohort.wordIds);
   const masteryJustCompleted = attemptWasFullPerfect && summary.perfectAttemptNumber === attempt.number;
   const masteryDayLabel = cohort.learnedDate === todayKst() ? '오늘' : '이날';
   const overviewTitle = masteryJustCompleted && summary.memorized
@@ -710,7 +729,7 @@ function renderReverseResult(cohort, attempt) {
   const summary = summarizeReverseAttempts(cohort.reverseAttempts, cohort.wordIds);
   const coverageComplete = summary.coverageComplete;
   const remainingCount = summary.totalWords - summary.masteredCount;
-  const attemptWasFullPerfect = attempt.completed && attempt.totalCount === summary.totalWords && attempt.correctCount === summary.totalWords;
+  const attemptWasFullPerfect = isPerfectReverseAttempt(attempt, cohort.wordIds);
   const masteryJustCompleted = attemptWasFullPerfect && summary.perfectAttemptNumber === attempt.number;
   const resultMessage = masteryJustCompleted
     ? `Perfekt(완벽해요)! 전체 단어를 한 번도 틀리지 않고 세 번째로 완료해 오늘 암기 완료가 됐어요! 정말 잘했어요!`
@@ -722,12 +741,13 @@ function renderReverseResult(cohort, attempt) {
         ? `이번 전체 학습은 ${attempt.correctCount}/${attempt.totalCount}점이에요. 무오답 완료 ${summary.perfectFullCount}/3회 기록은 유지됩니다.`
         : coverageComplete
           ? `오늘 단어를 모두 한 번 이상 맞혔어요. 이제 전체 단어 무오답 완료에 3번 도전하세요.`
-          : `이번에 틀린 단어만 다시 풀면 돼요. 아직 ${remainingCount}개를 한 번 이상 맞혀야 해요.`;
-  const scoreHistory = summary.scores.map(score => {
-    const fullPerfect = score.totalCount === summary.totalWords && score.correctCount === summary.totalWords;
+          : `다음 도전에서도 오늘 전체 ${summary.totalWords}개를 다시 풀어요. 아직 ${remainingCount}개를 한 번 이상 맞혀야 해요.`;
+  const completedAttempts = cohort.reverseAttempts.filter(item => item.completed);
+  const scoreHistory = summary.scores.map((score, index) => {
+    const fullPerfect = isPerfectReverseAttempt(completedAttempts[index], cohort.wordIds);
     return `<span class="score-chip ${fullPerfect?'perfect':''}">${score.number}회차 ${score.correctCount}/${score.totalCount}</span>`;
   }).join('');
-  app.innerHTML = `<section class="complete"><div class="celebrate">🎯</div><h1>${attempt.number}회차 결과: ${attempt.correctCount}/${attempt.totalCount}</h1><p>${resultMessage}</p><div class="score-history">${scoreHistory}</div><div class="result-actions"><button id="backHome" class="secondary">홈으로</button><button id="retryReverse" class="primary">${coverageComplete?'전체 무오답 도전':'오답 다시 풀기'}</button></div></section>`;
+  app.innerHTML = `<section class="complete"><div class="celebrate">🎯</div><h1>${attempt.number}회차 결과: ${attempt.correctCount}/${attempt.totalCount}</h1><p>${resultMessage}</p><div class="score-history">${scoreHistory}</div><div class="result-actions"><button id="backHome" class="secondary">홈으로</button><button id="retryReverse" class="primary">${coverageComplete?'전체 무오답 도전':'전체 단어 다시 풀기'}</button></div></section>`;
   document.querySelector('#backHome').onclick=renderDashboard;
   document.querySelector('#retryReverse').onclick=()=>startReverseAttempt(cohort);
 }
@@ -743,11 +763,11 @@ function renderQuestion(type, cohort, queue, misses, completed) {
     if (type === 'morning') cohort.morningDone = true;
     else {
       cohort.finalDone = true; cohort.finalMisses = misses;
-      state.carryIds = [...new Set([...state.carryIds, ...finalFailures(misses)])];
+      state.carryIds = [];
     }
     saveState();
     const failed = type === 'final' ? finalFailures(misses).length : 0;
-    return renderComplete(type==='morning'?'☀️':'🌙',type==='morning'?'아침 재시험 완료!':'최종시험 완료!',failed?`${failed}개가 오늘 밤 학습에 자동으로 추가됐어요.`:'모든 단어를 안정적으로 기억했어요.');
+    return renderComplete(type==='morning'?'☀️':'🌙',type==='morning'?'아침 재시험 완료!':'최종시험 완료!',failed?`${failed}개는 이 시험에서 다시 확인했어요. 오늘 신규 학습에는 추가되지 않아요.`:'모든 단어를 안정적으로 기억했어요.');
   }
   const id = queue.shift(), item = word(id), germanPrompt = type === 'morning';
   const options = makeChoices(item, germanPrompt ? 'korean' : 'german');
@@ -870,7 +890,8 @@ function bindAuth() {
     getLocalState: () => structuredClone(state),
     applyMergedState: merged => {
       state = { ...defaultState(), ...merged };
-      localStorage.setItem(activeStorageKey, JSON.stringify(state));
+      normalizeDailyLearningCohorts();
+      saveState();
       if (appReady) renderDashboard();
     },
     onUserChanged: user => {
@@ -904,6 +925,7 @@ function bindSettings() {
       const parsed=JSON.parse(await file.text());
       if(!parsed||!Array.isArray(parsed.cohorts))throw new Error('올바른 진도 파일이 아닙니다.');
       state={...defaultState(),...parsed};
+      normalizeDailyLearningCohorts();
       saveState();
       settingsDialog.close();
       renderDashboard();
@@ -922,6 +944,7 @@ async function init() {
   if(words.some(item=>!item.korean||!item.english||!item.exampleGerman)) throw new Error('한국어·영어 뜻 또는 공식 예문 데이터가 아직 완성되지 않았습니다.');
   byId=new Map(words.map(item=>[item.id,item]));
   byGerman=new Map(words.map(item=>[item.german,item]));
+  if (normalizeDailyLearningCohorts()) localStorage.setItem(activeStorageKey, JSON.stringify(state));
   bindGlobalNavigation();
   bindPronunciation();
   bindReverseKeyboard();

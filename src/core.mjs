@@ -270,7 +270,7 @@ export function cumulativeNounQuestions(cohorts = [], items = []) {
   const questions = [];
   for (const cohort of cohorts) {
     if (!cohort.learningDone) continue;
-    for (const id of cohort.wordIds || []) {
+    for (const id of cohortLearningWordIds(cohort, cohorts)) {
       if (seen.has(id)) continue;
       seen.add(id);
       const question = nounArticleQuestion(itemById.get(id));
@@ -319,12 +319,28 @@ export function calendarStatusLabel(statusClass, summary = null) {
   return '';
 }
 
+export function cohortLearningWordIds(cohort, cohorts = []) {
+  const storedIds = uniqueValues(cohort?.wordIds || []);
+  const explicitIds = Array.isArray(cohort?.newWordIds)
+    ? uniqueValues(cohort.newWordIds).filter(id => storedIds.includes(id))
+    : null;
+  const candidates = explicitIds || storedIds;
+  const earlierIds = new Set(
+    (cohorts || [])
+      .filter(item => item && item !== cohort && item.learnedDate && cohort?.learnedDate && item.learnedDate < cohort.learnedDate)
+      .flatMap(item => item.newWordIds || item.wordIds || [])
+  );
+  const freshIds = candidates.filter(id => !earlierIds.has(id));
+  const expectedCount = Math.max(0, Number(cohort?.newCount) || candidates.length);
+  return freshIds.slice(0, expectedCount);
+}
+
 export function completedLearnedWordIds(cohorts = []) {
   const learned = [];
   const seen = new Set();
   for (const cohort of cohorts) {
     if (!cohort?.learningDone) continue;
-    for (const wordId of cohort.wordIds || []) {
+    for (const wordId of cohortLearningWordIds(cohort, cohorts)) {
       if (!wordId || seen.has(wordId)) continue;
       seen.add(wordId);
       learned.push(wordId);
@@ -355,6 +371,22 @@ export function shuffleCopy(items, random = Math.random) {
   return shuffled;
 }
 
+export function isPerfectReverseAttempt(attempt, lessonWordIds = []) {
+  if (!attempt?.completed) return false;
+  const targetIds = new Set(lessonWordIds);
+  if (!targetIds.size) return false;
+  const results = attempt.results || [];
+  if (results.length) {
+    const targetResults = results.filter(result => targetIds.has(result.wordId));
+    const correctTargetIds = new Set(targetResults.filter(result => result.correct).map(result => result.wordId));
+    return correctTargetIds.size === targetIds.size && targetResults.every(result => result.correct);
+  }
+  const attemptedIds = new Set(attempt.wordIds || []);
+  return attempt.totalCount >= targetIds.size
+    && attempt.correctCount === attempt.totalCount
+    && [...targetIds].every(wordId => attemptedIds.has(wordId));
+}
+
 export function summarizeReverseAttempts(attempts = [], lessonWordIds = []) {
   const completed = attempts.filter(attempt => attempt.completed);
   const targetIds = new Set(lessonWordIds);
@@ -367,18 +399,15 @@ export function summarizeReverseAttempts(attempts = [], lessonWordIds = []) {
     for (const result of attempt.results || []) {
       if (result.correct && (!targetIds.size || targetIds.has(result.wordId))) masteredIds.add(result.wordId);
     }
+    const legacyAggregatePerfect = !(attempt.results || []).length
+      && isPerfectReverseAttempt(attempt, lessonWordIds);
+    if (legacyAggregatePerfect) {
+      for (const wordId of targetIds) masteredIds.add(wordId);
+    }
     if (targetIds.size && masteredIds.size === targetIds.size && coverageAttemptNumber === null) {
       coverageAttemptNumber = completedNumber;
     }
-    const correctTargetIds = new Set(
-      (attempt.results || [])
-        .filter(result => result.correct && targetIds.has(result.wordId))
-        .map(result => result.wordId)
-    );
-    const isPerfectFullCompletion = targetIds.size > 0
-      && attempt.totalCount === targetIds.size
-      && attempt.correctCount === targetIds.size
-      && correctTargetIds.size === targetIds.size;
+    const isPerfectFullCompletion = isPerfectReverseAttempt(attempt, lessonWordIds);
     if (isPerfectFullCompletion) {
       perfectFullCount += 1;
       if (perfectFullCount === 3) perfectAttemptNumber = completedNumber;
@@ -446,17 +475,6 @@ export function reverseEnterAction({ submitted, targetIsNext = false, isComposin
   return targetIsNext ? 'next' : 'native';
 }
 
-export function buildNightLesson(freshWords, carriedWords, dailyCount = 20) {
-  const selected = freshWords.slice(0, dailyCount);
-  const ids = new Set(selected.map(word => word.id));
-  for (const word of carriedWords) {
-    if (!ids.has(word.id)) {
-      selected.push(word);
-      ids.add(word.id);
-    }
-  }
-  return selected;
-}
 
 export function extendCohortWithWords(cohort, candidates, requestedCount) {
   const existingIds = new Set(cohort.wordIds || []);
@@ -471,6 +489,7 @@ export function extendCohortWithWords(cohort, candidates, requestedCount) {
   const nextCohort = {
     ...cohort,
     wordIds: [...(cohort.wordIds || []), ...addedIds],
+    newWordIds: [...(cohort.newWordIds || cohort.wordIds || []), ...addedIds],
     newCount: (Number(cohort.newCount) || 0) + addedIds.length,
     learningDone: addedIds.length ? false : Boolean(cohort.learningDone),
     memorized: addedIds.length ? false : Boolean(cohort.memorized),
@@ -569,17 +588,19 @@ function mergeCohort(left = {}, right = {}) {
   const rightIsNewer = recordTime(right) >= recordTime(left);
   const newer = rightIsNewer ? right : left;
   const older = rightIsNewer ? left : right;
+  const mergedLearningIds = uniqueValues(left.wordIds || [], right.wordIds || []);
   return {
     ...older,
     ...newer,
     id: newer.id || older.id,
     learnedDate: newer.learnedDate || older.learnedDate,
-    wordIds: uniqueValues(left.wordIds || [], right.wordIds || []),
+    wordIds: mergedLearningIds,
+    newWordIds: undefined,
     learningDone: Boolean(left.learningDone || right.learningDone),
     morningDone: Boolean(left.morningDone || right.morningDone),
     finalDone: Boolean(left.finalDone || right.finalDone),
     memorized: Boolean(left.memorized || right.memorized),
-    newCount: Math.max(Number(left.newCount) || 0, Number(right.newCount) || 0),
+    newCount: mergedLearningIds.length,
     finalMisses: mergeNumberMap(left.finalMisses, right.finalMisses),
     reverseAttempts: mergeAttempts(left.reverseAttempts, right.reverseAttempts),
   };
@@ -592,24 +613,28 @@ export function mergeProgressStates(local = {}, remote = {}) {
   const older = newer === local ? remote : local;
   const localCohorts = Array.isArray(local.cohorts) ? local.cohorts : [];
   const remoteCohorts = Array.isArray(remote.cohorts) ? remote.cohorts : [];
-  const cohortOrder = uniqueValues(
-    localCohorts.map(item => item?.id || item?.learnedDate),
-    remoteCohorts.map(item => item?.id || item?.learnedDate),
-  );
-  const localById = new Map(localCohorts.map(item => [item.id || item.learnedDate, item]));
-  const remoteById = new Map(remoteCohorts.map(item => [item.id || item.learnedDate, item]));
-  const cohorts = cohortOrder.map(id => {
-    const left = localById.get(id);
-    const right = remoteById.get(id);
-    if (left && right) return mergeCohort(left, right);
-    return { ...(left || right) };
+  const cohortOrder = [];
+  const mergedByKey = new Map();
+  let anonymousIndex = 0;
+  for (const cohort of [...localCohorts, ...remoteCohorts]) {
+    if (!cohort) continue;
+    const key = cohort.learnedDate
+      ? `date:${cohort.learnedDate}`
+      : cohort.id ? `id:${cohort.id}` : `anonymous:${anonymousIndex++}`;
+    if (!mergedByKey.has(key)) cohortOrder.push(key);
+    mergedByKey.set(key, mergedByKey.has(key) ? mergeCohort(mergedByKey.get(key), cohort) : { ...cohort });
+  }
+  const mergedCohorts = cohortOrder.map(key => mergedByKey.get(key));
+  const cohorts = mergedCohorts.map(cohort => {
+    const newWordIds = cohortLearningWordIds(cohort, mergedCohorts);
+    return { ...cohort, wordIds: newWordIds, newWordIds, newCount: newWordIds.length };
   });
   return {
     ...older,
     ...newer,
     dailyCount: Number(newer.dailyCount ?? older.dailyCount ?? 20),
     nextIndex: Math.max(Number(local.nextIndex) || 0, Number(remote.nextIndex) || 0),
-    carryIds: uniqueValues(local.carryIds || [], remote.carryIds || []),
+    carryIds: [],
     cohorts,
     totalAnswers: Math.max(Number(local.totalAnswers) || 0, Number(remote.totalAnswers) || 0),
     correctAnswers: Math.max(Number(local.correctAnswers) || 0, Number(remote.correctAnswers) || 0),
