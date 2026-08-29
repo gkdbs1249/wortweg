@@ -387,6 +387,23 @@ export function isPerfectReverseAttempt(attempt, lessonWordIds = []) {
     && [...targetIds].every(wordId => attemptedIds.has(wordId));
 }
 
+export function reverseAttemptWordIds(attempts = [], lessonWordIds = []) {
+  const targetWordIds = uniqueValues(lessonWordIds);
+  const targetIds = new Set(targetWordIds);
+  const masteredIds = new Set();
+  for (const attempt of attempts.filter(item => item.completed)) {
+    const results = attempt.results || [];
+    for (const result of results) {
+      if (result.correct && targetIds.has(result.wordId)) masteredIds.add(result.wordId);
+    }
+    if (!results.length && isPerfectReverseAttempt(attempt, targetWordIds)) {
+      for (const wordId of targetWordIds) masteredIds.add(wordId);
+    }
+  }
+  if (targetWordIds.length && masteredIds.size === targetWordIds.length) return targetWordIds;
+  return targetWordIds.filter(wordId => !masteredIds.has(wordId));
+}
+
 export function summarizeReverseAttempts(attempts = [], lessonWordIds = []) {
   const completed = attempts.filter(attempt => attempt.completed);
   const targetIds = new Set(lessonWordIds);

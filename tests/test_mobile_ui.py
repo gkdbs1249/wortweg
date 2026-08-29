@@ -303,7 +303,7 @@ class MobileInputTests(unittest.TestCase):
         manifest = (ROOT / "manifest.webmanifest").read_text(encoding="utf-8")
         worker = (ROOT / "sw.js").read_text(encoding="utf-8")
         workflow = (ROOT / ".github/workflows/pages.yml").read_text(encoding="utf-8")
-        self.assertIn("wortweg-v46", worker)
+        self.assertIn("wortweg-v47", worker)
         self.assertIn("wortweg-cache=${encodeURIComponent(CACHE)}", worker)
         self.assertIn("const responses=await Promise.all(ASSETS.map", worker)
         self.assertIn("cache.put(asset,responses[index])", worker)

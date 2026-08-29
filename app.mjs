@@ -1,4 +1,4 @@
-import { addDays, bilingualMeaning, calendarDayStatus, calendarStatusLabel, cohortLearningWordIds, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, isExampleGapCorrect, isGermanHeadwordCorrect, isPerfectReverseAttempt, learningCardSides, learningTaskTitle, lessonOverview, monthCalendarDays, practiceGroupWords, practiceWordsForCount, prioritizeReviewItems, pronounceableGerman, reverseEnterAction, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts } from './src/core.mjs';
+import { addDays, bilingualMeaning, calendarDayStatus, calendarStatusLabel, cohortLearningWordIds, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, isExampleGapCorrect, isGermanHeadwordCorrect, isPerfectReverseAttempt, learningCardSides, learningTaskTitle, lessonOverview, monthCalendarDays, practiceGroupWords, practiceWordsForCount, prioritizeReviewItems, pronounceableGerman, reverseAttemptWordIds, reverseEnterAction, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts } from './src/core.mjs';
 import { createAccountWithPin, initializeCloudSync, queueCloudProgressSave, signInWithPin, signOutFromAccount } from './src/cloud-sync.mjs';
 import { ANTONYM_PAIRS, PREFIX_CARDS, ROOT_FAMILIES, TOPIC_GROUPS } from './src/practice-data.mjs';
 
@@ -597,7 +597,7 @@ function startLearning(direction = 'forward') {
 function startReverseAttempt(cohort, targetWordIds = learningWordIds(cohort)) {
   cohort.reverseAttempts ||= [];
   const summary = summarizeReverseAttempts(cohort.reverseAttempts, targetWordIds);
-  const attemptWordIds = [...targetWordIds];
+  const attemptWordIds = reverseAttemptWordIds(cohort.reverseAttempts, targetWordIds);
   const attempt = {
     id: `reverse-${cohort.learnedDate}-${Date.now()}`,
     number: summary.completedCount + 1,
@@ -741,13 +741,13 @@ function renderReverseResult(cohort, attempt) {
         ? `이번 전체 학습은 ${attempt.correctCount}/${attempt.totalCount}점이에요. 무오답 완료 ${summary.perfectFullCount}/3회 기록은 유지됩니다.`
         : coverageComplete
           ? `오늘 단어를 모두 한 번 이상 맞혔어요. 이제 전체 단어 무오답 완료에 3번 도전하세요.`
-          : `다음 도전에서도 오늘 전체 ${summary.totalWords}개를 다시 풀어요. 아직 ${remainingCount}개를 한 번 이상 맞혀야 해요.`;
+          : `아직 맞히지 못한 ${remainingCount}개만 다음 회차에서 풀어요. 남은 단어를 모두 한 번 이상 맞혀보세요.`;
   const completedAttempts = cohort.reverseAttempts.filter(item => item.completed);
   const scoreHistory = summary.scores.map((score, index) => {
     const fullPerfect = isPerfectReverseAttempt(completedAttempts[index], cohort.wordIds);
     return `<span class="score-chip ${fullPerfect?'perfect':''}">${score.number}회차 ${score.correctCount}/${score.totalCount}</span>`;
   }).join('');
-  app.innerHTML = `<section class="complete"><div class="celebrate">🎯</div><h1>${attempt.number}회차 결과: ${attempt.correctCount}/${attempt.totalCount}</h1><p>${resultMessage}</p><div class="score-history">${scoreHistory}</div><div class="result-actions"><button id="backHome" class="secondary">홈으로</button><button id="retryReverse" class="primary">${coverageComplete?'전체 무오답 도전':'전체 단어 다시 풀기'}</button></div></section>`;
+  app.innerHTML = `<section class="complete"><div class="celebrate">🎯</div><h1>${attempt.number}회차 결과: ${attempt.correctCount}/${attempt.totalCount}</h1><p>${resultMessage}</p><div class="score-history">${scoreHistory}</div><div class="result-actions"><button id="backHome" class="secondary">홈으로</button><button id="retryReverse" class="primary">${coverageComplete?'전체 무오답 도전':`남은 ${remainingCount}개 도전`}</button></div></section>`;
   document.querySelector('#backHome').onclick=renderDashboard;
   document.querySelector('#retryReverse').onclick=()=>startReverseAttempt(cohort);
 }

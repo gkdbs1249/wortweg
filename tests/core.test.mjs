@@ -31,6 +31,7 @@ import {
   practiceWordsForCount,
   pronounceableGerman,
   reverseEnterAction,
+  reverseAttemptWordIds,
   shuffleCopy,
   summarizeLearningDay,
   summarizeReverseAttempts,
@@ -362,6 +363,33 @@ test('each study session can shuffle a copy without changing the saved word orde
 
   assert.deepEqual(original, ['a', 'b', 'c', 'd']);
   assert.deepEqual(shuffled, ['b', 'd', 'c', 'a']);
+});
+
+test('reverse retries shrink to uncovered words, then return to the full cohort', () => {
+  const targetIds = Array.from({ length:20 }, (_, index) => `word-${index+1}`);
+  const attempts = [];
+  assert.deepEqual(reverseAttemptWordIds(attempts, targetIds), targetIds);
+
+  attempts.push({
+    completed:true,
+    wordIds:[...targetIds],
+    results:targetIds.map((wordId, index) => ({ wordId, correct:index < 3 })),
+  });
+  assert.deepEqual(reverseAttemptWordIds(attempts, targetIds), targetIds.slice(3));
+
+  attempts.push({
+    completed:true,
+    wordIds:targetIds.slice(3),
+    results:targetIds.slice(3).map((wordId, index) => ({ wordId, correct:index < 7 })),
+  });
+  assert.deepEqual(reverseAttemptWordIds(attempts, targetIds), targetIds.slice(10));
+
+  attempts.push({
+    completed:true,
+    wordIds:targetIds.slice(10),
+    results:targetIds.slice(10).map(wordId => ({ wordId, correct:true })),
+  });
+  assert.deepEqual(reverseAttemptWordIds(attempts, targetIds), targetIds);
 });
 
 test('reverse attempt summary tracks wrong-word retries until every daily word is eventually correct', () => {
