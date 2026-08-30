@@ -1,4 +1,4 @@
-import { addDays, bilingualMeaning, calendarDayStatus, calendarStatusLabel, cohortLearningWordIds, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, isExampleGapCorrect, isGermanHeadwordCorrect, isPerfectReverseAttempt, learningCardSides, learningTaskTitle, lessonOverview, monthCalendarDays, practiceGroupWords, practiceWordsForCount, prioritizeReviewItems, pronounceableGerman, reverseAttemptWordIds, reverseEnterAction, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts, validPracticeCount } from './src/core.mjs';
+import { addDays, bilingualMeaning, calendarDayStatus, calendarStatusLabel, cohortLearningWordIds, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, isExampleGapCorrect, isGermanHeadwordCorrect, isPerfectReverseAttempt, learningCardSides, learningTaskTitle, lessonOverview, mergeProgressStates, monthCalendarDays, practiceGroupWords, practiceWordsForCount, prioritizeReviewItems, pronounceableGerman, reverseAttemptWordIds, reverseEnterAction, reviewChoicePool, sanitizeProgressState, shouldDeferCloudMerge, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts, validPracticeCount } from './src/core.mjs';
 import { createAccountWithPin, initializeCloudSync, queueCloudProgressSave, signInWithPin, signOutFromAccount } from './src/cloud-sync.mjs';
 import { ANTONYM_PAIRS, PREFIX_CARDS, ROOT_FAMILIES, SUPPLEMENTAL_PRACTICE_WORDS, TOPIC_GROUPS } from './src/practice-data.mjs';
 
@@ -19,10 +19,12 @@ let activeStorageKey = STORAGE_KEY;
 let state = loadState(activeStorageKey);
 let calendarCursor = null;
 let appReady = false;
+let pendingCloudMerge = null;
+let reviewTransitionTimer = null;
 
 function loadState(storageKey = activeStorageKey) {
   try {
-    return { ...defaultState(), ...JSON.parse(localStorage.getItem(storageKey) || '{}') };
+    return sanitizeProgressState(JSON.parse(localStorage.getItem(storageKey) || '{}'));
   } catch { return defaultState(); }
 }
 function switchLocalProfile(user) {
@@ -44,6 +46,7 @@ function switchLocalProfile(user) {
     localStorage.setItem(activeStorageKey, JSON.stringify(state));
   }
   const profileChanged = previousStorageKey !== activeStorageKey;
+  if (profileChanged) pendingCloudMerge = null;
   if (appReady && profileChanged && words.length) renderDashboard();
 }
 function defaultState() { return { dailyCount: 20, nextIndex: 0, carryIds: [], cohorts: [], totalAnswers: 0, correctAnswers: 0 }; }
@@ -51,6 +54,17 @@ function saveState() {
   state.updatedAt = new Date().toISOString();
   localStorage.setItem(activeStorageKey, JSON.stringify(state));
   queueCloudProgressSave(state);
+}
+function applyCloudMergedState(merged) {
+  state = sanitizeProgressState(merged);
+  normalizeDailyLearningCohorts();
+  saveState();
+}
+function applyPendingCloudMerge() {
+  if (!pendingCloudMerge) return;
+  const merged = mergeProgressStates(state, pendingCloudMerge);
+  pendingCloudMerge = null;
+  applyCloudMergedState(merged);
 }
 function todayKst() { return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()); }
 function examDays() { return Math.max(0, Math.ceil((Date.parse(`${EXAM_DATE}T00:00:00+09:00`) - Date.parse(`${todayKst()}T00:00:00+09:00`)) / 86400000)); }
@@ -79,7 +93,14 @@ function normalizeDailyLearningCohorts() {
   return changed;
 }
 
+function clearReviewTransition() {
+  if (reviewTransitionTimer !== null) clearTimeout(reviewTransitionTimer);
+  reviewTransitionTimer = null;
+}
+
 function renderDashboard() {
+  clearReviewTransition();
+  applyPendingCloudMerge();
   const today = todayKst();
   const due = dueReviews(state.cohorts, today);
   const todayCohort = state.cohorts.find(cohort => cohort.learnedDate === today);
@@ -774,6 +795,7 @@ function startReview(type, cohort) {
 }
 
 function renderQuestion(type, cohort, queue, misses, completed) {
+  clearReviewTransition();
   if (!queue.length) {
     if (type === 'morning') cohort.morningDone = true;
     else {
@@ -788,21 +810,30 @@ function renderQuestion(type, cohort, queue, misses, completed) {
   const options = makeChoices(item, germanPrompt ? 'korean' : 'german');
   app.innerHTML=`<section class="session"><div class="session-head"><h1>${type==='morning'?'아침 재시험':'이틀 뒤 최종시험'}</h1><span class="pill">완료 ${completed.size} / ${cohort.wordIds.length}</span></div><article class="flashcard"><div class="quiz-prompt">${germanPrompt?'독일어의 뜻을 고르세요':'한국어·영어 뜻에 맞는 독일어를 고르세요'}</div><div class="word">${escapeHtml(germanPrompt?item.german:bilingualMeaning(item))}</div><div class="choices">${options.map(option=>`<button class="choice" data-id="${option.id}">${escapeHtml(germanPrompt?bilingualMeaning(option):option.german)}</button>`).join('')}</div><div class="feedback" id="feedback"></div></article><div class="card-actions"><button id="home" class="secondary">나가기</button><button id="skip" class="secondary">모르겠어요</button></div></section>`;
   document.querySelector('#home').onclick=renderDashboard;
+  const skipButton = document.querySelector('#skip');
+  let answered = false;
   const answer = chosenId => {
+    if (answered) return;
+    answered = true;
     const correct = chosenId === id; state.totalAnswers += 1;
     if (correct) { state.correctAnswers += 1; completed.add(id); }
     else { misses[id]=(misses[id]||0)+1; queue.push(id); }
     saveState();
     document.querySelectorAll('.choice').forEach(btn=>{btn.disabled=true;if(btn.dataset.id===id)btn.classList.add('correct');else if(btn.dataset.id===chosenId)btn.classList.add('wrong')});
+    skipButton.disabled = true;
     document.querySelector('#feedback').textContent=correct?'Richtig(정답)!':'다시 나오니 그때 맞혀보세요.';
-    setTimeout(()=>renderQuestion(type,cohort,queue,misses,completed),650);
+    reviewTransitionTimer = setTimeout(()=>{
+      reviewTransitionTimer = null;
+      renderQuestion(type,cohort,queue,misses,completed);
+    },650);
   };
   document.querySelectorAll('.choice').forEach(button=>button.onclick=()=>answer(button.dataset.id));
-  document.querySelector('#skip').onclick=()=>answer('');
+  skipButton.onclick=()=>answer('');
 }
 
 function makeChoices(correct, field) {
-  const pool = words.filter(item => item.id !== correct.id && item[field] && item[field] !== correct[field]);
+  const germanPrompt = field === 'korean';
+  const pool = reviewChoicePool(words, correct, germanPrompt);
   for (let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
   const choices=[correct,...pool.slice(0,3)];
   for (let i=choices.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[choices[i],choices[j]]=[choices[j],choices[i]];}
@@ -904,9 +935,14 @@ function bindAuth() {
   return initializeCloudSync({
     getLocalState: () => structuredClone(state),
     applyMergedState: merged => {
-      state = { ...defaultState(), ...merged };
-      normalizeDailyLearningCohorts();
-      saveState();
+      const dashboardVisible = Boolean(app.querySelector('.hero'));
+      if (shouldDeferCloudMerge({ appReady, dashboardVisible })) {
+        pendingCloudMerge = pendingCloudMerge
+          ? mergeProgressStates(pendingCloudMerge, merged)
+          : structuredClone(merged);
+        return;
+      }
+      applyCloudMergedState(merged);
       if (appReady) renderDashboard();
     },
     onUserChanged: user => {
@@ -939,7 +975,7 @@ function bindSettings() {
       if(!file)return;
       const parsed=JSON.parse(await file.text());
       if(!parsed||!Array.isArray(parsed.cohorts))throw new Error('올바른 진도 파일이 아닙니다.');
-      state={...defaultState(),...parsed};
+      state=sanitizeProgressState(parsed);
       normalizeDailyLearningCohorts();
       saveState();
       settingsDialog.close();

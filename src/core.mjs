@@ -23,6 +23,114 @@ export function bilingualMeaning(item) {
   return `${item.korean} · ${item.english}`;
 }
 
+function normalizedGloss(value) {
+  return String(value ?? '').normalize('NFKC').toLocaleLowerCase('de-DE')
+    .split('/').map(part => part.trim()).filter(Boolean).sort().join('/');
+}
+
+function normalizedMeaningKey(item) {
+  return `${normalizedGloss(item.korean)} · ${normalizedGloss(item.english)}`;
+}
+
+export function reviewChoicePool(items, correct, germanPrompt) {
+  const correctMeaning = normalizedMeaningKey(correct);
+  const correctChoice = germanPrompt ? correctMeaning : correct.german;
+  return items.filter(item => item.id !== correct.id
+    && item.german
+    && item.korean
+    && item.english
+    && normalizedMeaningKey(item) !== correctMeaning
+    && (germanPrompt ? normalizedMeaningKey(item) : item.german) !== correctChoice);
+}
+
+function safeInteger(value, fallback = 0, maximum = 1_000_000) {
+  const number = Number(value);
+  return Number.isInteger(number) && number >= 0 && number <= maximum ? number : fallback;
+}
+
+function safeString(value, maximum = 500) {
+  return typeof value === 'string' ? value.slice(0, maximum) : '';
+}
+
+function safeIsoTime(value) {
+  return typeof value === 'string' && Number.isFinite(Date.parse(value)) ? value : null;
+}
+
+function safeWordIds(value) {
+  return Array.isArray(value)
+    ? [...new Set(value.filter(id => typeof id === 'string' && id.length > 0 && id.length <= 200))]
+    : [];
+}
+
+function safeMisses(value) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
+  return Object.fromEntries(Object.entries(value)
+    .filter(([id]) => typeof id === 'string' && id.length > 0 && id.length <= 200)
+    .map(([id, count]) => [id, safeInteger(count)]));
+}
+
+function sanitizeReverseAttempt(attempt) {
+  if (!attempt || typeof attempt !== 'object' || Array.isArray(attempt)) return null;
+  const results = Array.isArray(attempt.results) ? attempt.results.map(result => {
+    if (!result || typeof result !== 'object' || Array.isArray(result)) return null;
+    const wordId = safeString(result.wordId, 200);
+    if (!wordId) return null;
+    return {
+      wordId,
+      answer: safeString(result.answer),
+      correct: result.correct === true,
+      answeredAt: safeIsoTime(result.answeredAt),
+    };
+  }).filter(Boolean) : [];
+  return {
+    id: safeString(attempt.id, 200),
+    number: safeInteger(attempt.number),
+    startedAt: safeIsoTime(attempt.startedAt),
+    completedAt: safeIsoTime(attempt.completedAt),
+    completed: attempt.completed === true,
+    correctCount: safeInteger(attempt.correctCount),
+    totalCount: safeInteger(attempt.totalCount),
+    wordIds: safeWordIds(attempt.wordIds),
+    practiceAfterMastery: attempt.practiceAfterMastery === true,
+    results,
+  };
+}
+
+export function sanitizeProgressState(value = {}) {
+  const source = value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+  const cohorts = Array.isArray(source.cohorts) ? source.cohorts.map(cohort => {
+    if (!cohort || typeof cohort !== 'object' || Array.isArray(cohort)) return null;
+    const learnedDate = safeString(cohort.learnedDate, 10);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(learnedDate) || !Number.isFinite(Date.parse(`${learnedDate}T00:00:00Z`))) return null;
+    const wordIds = safeWordIds(cohort.wordIds);
+    const explicitNewWordIds = Array.isArray(cohort.newWordIds) ? safeWordIds(cohort.newWordIds) : undefined;
+    return {
+      id: safeString(cohort.id, 200) || `cohort-${learnedDate}`,
+      learnedDate,
+      wordIds,
+      newWordIds: explicitNewWordIds,
+      newCount: safeInteger(cohort.newCount, wordIds.length),
+      learningDone: cohort.learningDone === true,
+      morningDone: cohort.morningDone === true,
+      finalDone: cohort.finalDone === true,
+      finalMisses: safeMisses(cohort.finalMisses),
+      reverseAttempts: Array.isArray(cohort.reverseAttempts) ? cohort.reverseAttempts.map(sanitizeReverseAttempt).filter(Boolean) : [],
+      memorized: cohort.memorized === true,
+      memorizedAt: safeIsoTime(cohort.memorizedAt),
+    };
+  }).filter(Boolean) : [];
+  const dailyCount = safeInteger(source.dailyCount, 20, 40);
+  return {
+    dailyCount: dailyCount >= 5 ? dailyCount : 20,
+    nextIndex: safeInteger(source.nextIndex),
+    carryIds: [],
+    cohorts,
+    totalAnswers: safeInteger(source.totalAnswers),
+    correctAnswers: safeInteger(source.correctAnswers),
+    ...(safeIsoTime(source.updatedAt) ? { updatedAt: source.updatedAt } : {}),
+  };
+}
+
 export function learningTaskTitle(cohort) {
   if (!cohort) return null;
   return cohort.learningDone ? '오늘 단어 랜덤으로 다시 보기' : '오늘 단어 이어서 보기';
@@ -593,16 +701,23 @@ function mergeAttempts(left = [], right = []) {
         : recordTime(attempt) >= recordTime(current) ? attempt : current;
     const resultByWord = new Map();
     for (const result of [...(current.results || []), ...(attempt.results || [])]) {
-      if (result?.wordId) resultByWord.set(result.wordId, result);
+      if (!result?.wordId) continue;
+      const existing = resultByWord.get(result.wordId);
+      const resultTime = Date.parse(result.answeredAt || '') || 0;
+      const existingTime = Date.parse(existing?.answeredAt || '') || 0;
+      if (!existing || resultTime >= existingTime) resultByWord.set(result.wordId, result);
     }
+    const mergedResults = [...resultByWord.values()];
     byId.set(attempt.id, {
       ...current,
       ...attempt,
       ...preferred,
       completed: Boolean(current.completed || attempt.completed),
       wordIds: uniqueValues(current.wordIds || [], attempt.wordIds || []),
-      results: [...resultByWord.values()],
-      correctCount: Math.max(Number(current.correctCount) || 0, Number(attempt.correctCount) || 0),
+      results: mergedResults,
+      correctCount: mergedResults.length
+        ? mergedResults.filter(result => result.correct).length
+        : Math.max(Number(current.correctCount) || 0, Number(attempt.correctCount) || 0),
       totalCount: Math.max(Number(current.totalCount) || 0, Number(attempt.totalCount) || 0),
     });
   }
@@ -631,7 +746,13 @@ function mergeCohort(left = {}, right = {}) {
   };
 }
 
+export function shouldDeferCloudMerge({ appReady, dashboardVisible }) {
+  return Boolean(appReady && !dashboardVisible);
+}
+
 export function mergeProgressStates(local = {}, remote = {}) {
+  local = sanitizeProgressState(local);
+  remote = sanitizeProgressState(remote);
   const localTime = Date.parse(local.updatedAt || '') || 0;
   const remoteTime = Date.parse(remote.updatedAt || '') || 0;
   const newer = remoteTime > localTime ? remote : local;

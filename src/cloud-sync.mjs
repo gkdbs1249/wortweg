@@ -12,6 +12,11 @@ let hooks = null;
 let pendingState = null;
 let saveTimer = null;
 let syncInFlight = false;
+let syncCompletion = Promise.resolve();
+
+export function cloudOperationIsCurrent(operationUserId, user) {
+  return Boolean(operationUserId && user?.uid === operationUserId);
+}
 
 export function cloudSyncConfigured() {
   return Boolean(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.authDomain && FIREBASE_CONFIG.projectId && FIREBASE_CONFIG.appId);
@@ -26,11 +31,19 @@ function reportStatus(status, message = '') {
 }
 
 async function writeMergedProgress(localState, applyMerged = false) {
-  if (!currentUser || !firestoreApi || !db || syncInFlight) return localState;
+  const operationUserId = currentUser?.uid;
+  if (!operationUserId || !firestoreApi || !db) return localState;
+  if (syncInFlight) {
+    await syncCompletion;
+    if (!cloudOperationIsCurrent(operationUserId, currentUser)) return localState;
+    return writeMergedProgress(localState, applyMerged);
+  }
+  let settleSync;
+  syncCompletion = new Promise(resolve => { settleSync = resolve; });
   syncInFlight = true;
   reportStatus('syncing', '진도를 동기화하는 중…');
   try {
-    const ref = progressRef(currentUser.uid);
+    const ref = progressRef(operationUserId);
     let mergedState = localState;
     await firestoreApi.runTransaction(db, async transaction => {
       const snapshot = await transaction.get(ref);
@@ -40,22 +53,25 @@ async function writeMergedProgress(localState, applyMerged = false) {
       transaction.set(ref, {
         state: mergedState,
         schemaVersion: 1,
-        ownerUid: currentUser.uid,
+        ownerUid: operationUserId,
         updatedAt: firestoreApi.serverTimestamp(),
       });
     });
+    if (!cloudOperationIsCurrent(operationUserId, currentUser)) return localState;
     if (applyMerged) hooks?.applyMergedState?.(mergedState);
     if (pendingState === localState) pendingState = null;
     reportStatus('synced', '클라우드에 저장됨');
     return mergedState;
   } catch (error) {
+    if (!cloudOperationIsCurrent(operationUserId, currentUser)) return localState;
     pendingState = localState;
     reportStatus('offline', navigator.onLine ? '동기화에 실패했어요. 다시 시도합니다.' : '오프라인 · 기기에 안전하게 저장됨');
     hooks?.onError?.(error);
     return localState;
   } finally {
     syncInFlight = false;
-    if (currentUser && pendingState && pendingState !== localState) {
+    settleSync();
+    if (cloudOperationIsCurrent(operationUserId, currentUser) && pendingState && pendingState !== localState) {
       clearTimeout(saveTimer);
       saveTimer = setTimeout(() => {
         const nextState = pendingState;
@@ -118,7 +134,12 @@ export async function initializeCloudSync(options) {
     const initialAuthReady = new Promise(resolve => { settleInitialAuth = resolve; });
     authApi.onAuthStateChanged(auth, async user => {
       try {
+        const profileChanged = currentUser?.uid !== user?.uid;
         currentUser = user;
+        if (profileChanged) {
+          clearTimeout(saveTimer);
+          pendingState = null;
+        }
         hooks?.onUserChanged?.(user);
         if (!user) {
           reportStatus('signed-out', '로그인하면 여러 기기에서 진도가 이어져요.');

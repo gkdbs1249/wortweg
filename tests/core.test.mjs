@@ -32,11 +32,46 @@ import {
   pronounceableGerman,
   reverseEnterAction,
   reverseAttemptWordIds,
+  reviewChoicePool,
+  sanitizeProgressState,
   shuffleCopy,
+  shouldDeferCloudMerge,
   summarizeLearningDay,
   summarizeReverseAttempts,
   validPracticeCount,
 } from '../src/core.mjs';
+
+test('cloud hydration is deferred while an exercise or result screen is active', () => {
+  assert.equal(shouldDeferCloudMerge({ appReady: false, dashboardVisible: false }), false);
+  assert.equal(shouldDeferCloudMerge({ appReady: true, dashboardVisible: true }), false);
+  assert.equal(shouldDeferCloudMerge({ appReady: true, dashboardVisible: false }), true);
+});
+
+test('review choices exclude synonyms that make the prompt or answer ambiguous', () => {
+  const correct = { id: 'a', german: 'anfangen', korean: '시작하다', english: 'begin/start' };
+  const synonym = { id: 'b', german: 'beginnen', korean: '시작하다', english: 'begin/start' };
+  const reorderedSynonym = { id: 'd', german: 'telefonieren', korean: '전화하다', english: 'phone/call' };
+  const call = { id: 'e', german: 'anrufen', korean: '전화하다', english: 'call/phone' };
+  const distractor = { id: 'c', german: 'bezahlen', korean: '지불하다', english: 'pay' };
+  assert.deepEqual(reviewChoicePool([correct, synonym, distractor], correct, false).map(item => item.id), ['c']);
+  assert.deepEqual(reviewChoicePool([correct, synonym, distractor], correct, true).map(item => item.id), ['c']);
+  assert.deepEqual(reviewChoicePool([call, reorderedSynonym, distractor], call, false).map(item => item.id), ['c']);
+});
+
+test('progress state sanitizer rejects malformed cohorts and neutralizes imported markup', () => {
+  assert.deepEqual(sanitizeProgressState({ cohorts: {} }).cohorts, []);
+  assert.deepEqual(sanitizeProgressState({ cohorts: [null] }).cohorts, []);
+  const sanitized = sanitizeProgressState({
+    dailyCount: '<img src=x onerror=alert(1)>',
+    cohorts: [{
+      id: 'safe', learnedDate: '2026-08-28', wordIds: ['a'], learningDone: true,
+      reverseAttempts: [{ id: 'attempt', number: '<svg onload=alert(1)>', correctCount: '<b>x</b>', totalCount: 1, completed: true, results: [] }],
+    }],
+  });
+  assert.equal(sanitized.dailyCount, 20);
+  assert.equal(sanitized.cohorts[0].reverseAttempts[0].number, 0);
+  assert.equal(sanitized.cohorts[0].reverseAttempts[0].correctCount, 0);
+});
 
 
 test('final review identifies words missed at least twice', () => {
@@ -582,11 +617,26 @@ test('cloud progress merge preserves both devices without duplicating cohorts or
 
 test('cloud progress merge keeps mastery and cohorts created on only one device', () => {
   const merged = mergeProgressStates(
-    { updatedAt: '2026-08-25T12:00:00.000Z', cohorts: [{ id: 'day-a', wordIds: ['a'], memorized: true }] },
-    { updatedAt: '2026-08-25T11:00:00.000Z', cohorts: [{ id: 'day-b', wordIds: ['b'], learningDone: true }] },
+    { updatedAt: '2026-08-25T12:00:00.000Z', cohorts: [{ id: 'day-a', learnedDate: '2026-08-25', wordIds: ['a'], memorized: true }] },
+    { updatedAt: '2026-08-25T11:00:00.000Z', cohorts: [{ id: 'day-b', learnedDate: '2026-08-26', wordIds: ['b'], learningDone: true }] },
   );
   assert.deepEqual(merged.cohorts.map(cohort => cohort.id), ['day-a', 'day-b']);
   assert.equal(merged.cohorts[0].memorized, true);
+});
+
+test('cloud merge selects the newest same-word result and recomputes its score consistently', () => {
+  const attempt = (correct, answeredAt, correctCount) => ({
+    id: 'same-attempt', number: 1, completed: true, completedAt: '2026-08-25T12:00:00Z',
+    wordIds: ['a'], totalCount: 1, correctCount,
+    results: [{ wordId: 'a', answer: correct ? 'ab' : 'x', correct, answeredAt }],
+  });
+  const merged = mergeProgressStates(
+    { cohorts: [{ learnedDate: '2026-08-25', wordIds: ['a'], reverseAttempts: [attempt(true, '2026-08-25T10:00:00Z', 1)] }] },
+    { cohorts: [{ learnedDate: '2026-08-25', wordIds: ['a'], reverseAttempts: [attempt(false, '2026-08-25T11:00:00Z', 1)] }] },
+  );
+  const result = merged.cohorts[0].reverseAttempts[0];
+  assert.equal(result.results[0].correct, false);
+  assert.equal(result.correctCount, 0);
 });
 
 test('learner can add a chosen number of fresh words to today without duplicates', () => {

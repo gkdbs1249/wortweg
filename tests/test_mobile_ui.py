@@ -263,6 +263,14 @@ class MobileInputTests(unittest.TestCase):
         self.assertIn("if (applyMerged) hooks?.applyMergedState?.(mergedState)", cloud)
         self.assertIn("if (appReady) renderDashboard()", app)
 
+    def test_review_answer_is_single_shot_and_exit_cancels_stale_question_timer(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        review = app.split("function renderQuestion(type, cohort, queue, misses, completed)", 1)[1].split("function renderComplete", 1)[0]
+        self.assertIn("if (answered) return", review)
+        self.assertIn("skipButton.disabled = true", review)
+        self.assertIn("reviewTransitionTimer = setTimeout", review)
+        self.assertIn("clearReviewTransition()", app.split("function renderDashboard()", 1)[1].split("const today", 1)[0])
+
     def test_invalid_progress_import_shows_a_message_instead_of_throwing(self):
         app = (ROOT / "app.mjs").read_text(encoding="utf-8")
         settings = app.split("function bindSettings()", 1)[1].split("async function init()", 1)[0]
@@ -314,7 +322,7 @@ class MobileInputTests(unittest.TestCase):
         manifest = (ROOT / "manifest.webmanifest").read_text(encoding="utf-8")
         worker = (ROOT / "sw.js").read_text(encoding="utf-8")
         workflow = (ROOT / ".github/workflows/pages.yml").read_text(encoding="utf-8")
-        self.assertIn("wortweg-v50", worker)
+        self.assertIn("wortweg-v51", worker)
         self.assertIn("wortweg-cache=${encodeURIComponent(CACHE)}", worker)
         self.assertIn("const responses=await Promise.all(ASSETS.map", worker)
         self.assertIn("cache.put(asset,responses[index])", worker)
