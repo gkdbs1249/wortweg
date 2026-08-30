@@ -1,4 +1,4 @@
-const CACHE='wortweg-v51';
+const CACHE='wortweg-v52';
 const ASSETS=['./','./index.html','./styles.css','./app.mjs','./firebase-config.mjs','./src/core.mjs','./src/cloud-sync.mjs','./src/practice-data.mjs','./data/words.json','./manifest.webmanifest','./favicon.ico','./icons/wortweg-tab-v49.png','./icons/wortweg-touch-v49.png','./icons/wortweg-app-v49-192.png','./icons/wortweg-app-v49-512.png'];
 
 async function precacheFreshAssets(){

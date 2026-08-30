@@ -10,13 +10,16 @@ export function isCorrect(answer, expected) {
 }
 
 export function isGermanHeadwordCorrect(answer, expected) {
-  const headword = String(expected ?? '').replace(/,.*$/, '').trim();
-  const articleVariant = headword.match(/^(\S+)\/(\S+)\s+(.+)$/);
-  const accepted = articleVariant
-    ? [`${articleVariant[1]} ${articleVariant[3]}`, `${articleVariant[2]} ${articleVariant[3]}`]
-    : [headword];
+  const expectedHeadwords = Array.isArray(expected) ? expected : [expected];
   const actual = normalizeAnswer(answer);
-  return accepted.map(normalizeAnswer).includes(actual);
+  return expectedHeadwords.some(value => {
+    const headword = String(value ?? '').replace(/,.*$/, '').trim();
+    const articleVariant = headword.match(/^(\S+)\/(\S+)\s+(.+)$/);
+    const accepted = articleVariant
+      ? [`${articleVariant[1]} ${articleVariant[3]}`, `${articleVariant[2]} ${articleVariant[3]}`]
+      : [headword];
+    return accepted.map(normalizeAnswer).includes(actual);
+  });
 }
 
 export function bilingualMeaning(item) {
@@ -30,6 +33,13 @@ function normalizedGloss(value) {
 
 function normalizedMeaningKey(item) {
   return `${normalizedGloss(item.korean)} · ${normalizedGloss(item.english)}`;
+}
+
+export function reverseAnswerHeadwords(items, target) {
+  const targetMeaning = normalizedMeaningKey(target);
+  return [...new Set((items || [])
+    .filter(item => item?.german && normalizedMeaningKey(item) === targetMeaning)
+    .map(item => item.german))];
 }
 
 export function reviewChoicePool(items, correct, germanPrompt) {

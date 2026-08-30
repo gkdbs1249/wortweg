@@ -1,4 +1,4 @@
-import { addDays, bilingualMeaning, calendarDayStatus, calendarStatusLabel, cohortLearningWordIds, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, isExampleGapCorrect, isGermanHeadwordCorrect, isPerfectReverseAttempt, learningCardSides, learningTaskTitle, lessonOverview, mergeProgressStates, monthCalendarDays, practiceGroupWords, practiceWordsForCount, prioritizeReviewItems, pronounceableGerman, reverseAttemptWordIds, reverseEnterAction, reviewChoicePool, sanitizeProgressState, shouldDeferCloudMerge, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts, validPracticeCount } from './src/core.mjs';
+import { addDays, bilingualMeaning, calendarDayStatus, calendarStatusLabel, cohortLearningWordIds, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, isExampleGapCorrect, isGermanHeadwordCorrect, isPerfectReverseAttempt, learningCardSides, learningTaskTitle, lessonOverview, mergeProgressStates, monthCalendarDays, practiceGroupWords, practiceWordsForCount, prioritizeReviewItems, pronounceableGerman, reverseAnswerHeadwords, reverseAttemptWordIds, reverseEnterAction, reviewChoicePool, sanitizeProgressState, shouldDeferCloudMerge, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts, validPracticeCount } from './src/core.mjs';
 import { createAccountWithPin, initializeCloudSync, queueCloudProgressSave, signInWithPin, signOutFromAccount } from './src/cloud-sync.mjs';
 import { ANTONYM_PAIRS, PREFIX_CARDS, ROOT_FAMILIES, SUPPLEMENTAL_PRACTICE_WORDS, TOPIC_GROUPS } from './src/practice-data.mjs';
 
@@ -70,6 +70,7 @@ function todayKst() { return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seo
 function examDays() { return Math.max(0, Math.ceil((Date.parse(`${EXAM_DATE}T00:00:00+09:00`) - Date.parse(`${todayKst()}T00:00:00+09:00`)) / 86400000)); }
 function escapeHtml(value) { return String(value).replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char])); }
 function word(id) { return byId.get(id); }
+function reverseAnswerPool() { return [...words, ...SUPPLEMENTAL_PRACTICE_WORDS]; }
 function learningWordIds(cohort) { return cohort ? cohortLearningWordIds(cohort, state.cohorts).filter(id => byId.has(id)) : []; }
 function normalizeDailyLearningCohorts() {
   let changed = false;
@@ -306,8 +307,10 @@ function renderIndependentReversePractice(items, index = 0, correctCount = 0, ti
   }
   const item = items[index];
   const submitted = submittedAnswer !== null;
-  const correct = submitted && isGermanHeadwordCorrect(submittedAnswer, item.german);
-  app.innerHTML = `<section class="session independent-reverse-session"><div class="session-head"><div><p class="eyebrow">Zusatzübung(추가 연습)</p><h1>${escapeHtml(title)}</h1></div><span class="pill">${index+1} / ${items.length}</span></div><div class="progress-track"><div class="progress-bar" style="width:${(index/items.length)*100}%"></div></div><article class="flashcard"><div class="word">${escapeHtml(bilingualMeaning(item))}</div><div class="meta">뜻에 맞는 독일어를 직접 입력하세요. 명사는 관사까지 써보세요.</div><form id="practiceReverseForm" class="answer-form"><input class="practice-answer-input" id="practiceAnswer" type="text" value="${escapeHtml(submittedAnswer ?? '')}" placeholder="독일어를 입력하세요" autocomplete="off" autocapitalize="none" spellcheck="false" ${submitted?'disabled':'required'}><button class="primary" type="submit" ${submitted?'disabled':''}>제출</button></form>${submitted?`<div class="feedback ${correct?'correct-text':'wrong-text'}" role="status" aria-live="polite">${correct?'✓ Richtig(정답)!':'✕ Noch nicht(아직 아니에요).'}</div><div class="meaning">정답: ${escapeHtml(item.german)}</div>${pronunciationButton(item.german)}`:''}</article><div class="card-actions"><button id="backToPractice" class="secondary">나가기</button>${submitted?`<button id="nextPractice" class="primary">${index===items.length-1?'결과 보기':'다음 문제'}</button>`:''}</div></section>`;
+  const acceptedHeadwords = reverseAnswerHeadwords(reverseAnswerPool(), item);
+  const correct = submitted && isGermanHeadwordCorrect(submittedAnswer, acceptedHeadwords);
+  const answerLabel = acceptedHeadwords.length > 1 ? '가능한 정답:' : '정답:';
+  app.innerHTML = `<section class="session independent-reverse-session"><div class="session-head"><div><p class="eyebrow">Zusatzübung(추가 연습)</p><h1>${escapeHtml(title)}</h1></div><span class="pill">${index+1} / ${items.length}</span></div><div class="progress-track"><div class="progress-bar" style="width:${(index/items.length)*100}%"></div></div><article class="flashcard"><div class="word">${escapeHtml(bilingualMeaning(item))}</div><div class="meta">뜻에 맞는 독일어를 직접 입력하세요. 명사는 관사까지 써보세요.</div><form id="practiceReverseForm" class="answer-form"><input class="practice-answer-input" id="practiceAnswer" type="text" value="${escapeHtml(submittedAnswer ?? '')}" placeholder="독일어를 입력하세요" autocomplete="off" autocapitalize="none" spellcheck="false" ${submitted?'disabled':'required'}><button class="primary" type="submit" ${submitted?'disabled':''}>제출</button></form>${submitted?`<div class="feedback ${correct?'correct-text':'wrong-text'}" role="status" aria-live="polite">${correct?'✓ Richtig(정답)!':'✕ Noch nicht(아직 아니에요).'}</div><div class="meaning">${answerLabel} ${escapeHtml(acceptedHeadwords.join(' · '))}</div>${pronunciationButton(item.german)}`:''}</article><div class="card-actions"><button id="backToPractice" class="secondary">나가기</button>${submitted?`<button id="nextPractice" class="primary">${index===items.length-1?'결과 보기':'다음 문제'}</button>`:''}</div></section>`;
   document.querySelector('#backToPractice').onclick=renderExtraPracticeHub;
   if (submitted) {
     const nextButton = document.querySelector('#nextPractice');
@@ -697,14 +700,16 @@ function renderReverseLearning(cohort, sessionWordIds, index, attemptId, submitt
   const item = word(sessionWordIds[index]);
   const prompt = bilingualMeaning(item);
   const submitted = submittedAnswer !== null;
-  const correct = submitted && isGermanHeadwordCorrect(submittedAnswer, item.german);
+  const acceptedHeadwords = reverseAnswerHeadwords(reverseAnswerPool(), item);
+  const correct = submitted && isGermanHeadwordCorrect(submittedAnswer, acceptedHeadwords);
+  const answerLabel = acceptedHeadwords.length > 1 ? '가능한 정답:' : '정답:';
   const isFinalQuestion = index === sessionWordIds.length - 1;
   const isFullPerfectNow = submitted && isFinalQuestion && sessionWordIds.length === cohort.wordIds.length && attempt.results.length === sessionWordIds.length && attempt.results.every(result => result.correct);
   const answerFeedback = correct
     ? isFullPerfectNow ? '✓ Richtig(정답)! 🎉 이번 회차 전체 무오답이에요!' : '✓ Richtig(정답)!'
     : '✕ Noch nicht(아직 아니에요).';
   const nextLabel = isFinalQuestion ? '전체 단어 보기' : '다음 단어';
-  app.innerHTML = `<section class="session reverse-learning-session" data-reverse-submitted="${submitted}"><div class="session-head"><h1>뜻 → 독일어 거꾸로 학습</h1><span class="pill">${attempt.number}회차 · ${index+1} / ${sessionWordIds.length}</span></div><div class="progress-track"><div class="progress-bar" style="width:${(index/sessionWordIds.length)*100}%"></div></div><article class="flashcard"><div class="word">${escapeHtml(prompt)}</div><div class="meta">한국어·영어 뜻에 맞는 독일어를 직접 입력하세요. 명사는 관사까지 써보세요.</div><form id="reverseForm" class="answer-form"><input id="reverseAnswer" type="text" style="font-size:20px" value="${escapeHtml(submittedAnswer ?? '')}" placeholder="독일어를 입력하세요" autocomplete="off" autocapitalize="none" spellcheck="false" ${submitted?'disabled':'required'}><button class="primary" type="submit" ${submitted?'disabled':''}>제출</button></form>${submitted?`<div class="feedback ${correct?'correct-text':'wrong-text'}" role="status" aria-live="polite">${answerFeedback}</div><div class="meaning">정답: ${escapeHtml(item.german)}</div>${pronunciationButton(item.german)}`:''}</article><div class="card-actions"><button id="home" class="secondary">나가기</button>${submitted?`<button id="next" class="primary">${nextLabel}</button>`:''}</div></section>`;
+  app.innerHTML = `<section class="session reverse-learning-session" data-reverse-submitted="${submitted}"><div class="session-head"><h1>뜻 → 독일어 거꾸로 학습</h1><span class="pill">${attempt.number}회차 · ${index+1} / ${sessionWordIds.length}</span></div><div class="progress-track"><div class="progress-bar" style="width:${(index/sessionWordIds.length)*100}%"></div></div><article class="flashcard"><div class="word">${escapeHtml(prompt)}</div><div class="meta">한국어·영어 뜻에 맞는 독일어를 직접 입력하세요. 명사는 관사까지 써보세요.</div><form id="reverseForm" class="answer-form"><input id="reverseAnswer" type="text" style="font-size:20px" value="${escapeHtml(submittedAnswer ?? '')}" placeholder="독일어를 입력하세요" autocomplete="off" autocapitalize="none" spellcheck="false" ${submitted?'disabled':'required'}><button class="primary" type="submit" ${submitted?'disabled':''}>제출</button></form>${submitted?`<div class="feedback ${correct?'correct-text':'wrong-text'}" role="status" aria-live="polite">${answerFeedback}</div><div class="meaning">${answerLabel} ${escapeHtml(acceptedHeadwords.join(' · '))}</div>${pronunciationButton(item.german)}`:''}</article><div class="card-actions"><button id="home" class="secondary">나가기</button>${submitted?`<button id="next" class="primary">${nextLabel}</button>`:''}</div></section>`;
   document.querySelector('#home').onclick=renderDashboard;
   if (submitted) {
     const nextButton = document.querySelector('#next');
@@ -717,7 +722,7 @@ function renderReverseLearning(cohort, sessionWordIds, index, attemptId, submitt
       event.preventDefault();
       const answer = input.value.trim();
       if (!answer) return;
-      const answerCorrect = isGermanHeadwordCorrect(answer, item.german);
+      const answerCorrect = isGermanHeadwordCorrect(answer, acceptedHeadwords);
       attempt.results.push({ wordId:item.id, answer, correct:answerCorrect, answeredAt:new Date().toISOString() });
       attempt.correctCount = attempt.results.filter(result => result.correct).length;
       state.totalAnswers += 1;

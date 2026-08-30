@@ -290,6 +290,11 @@ class MobileInputTests(unittest.TestCase):
         self.assertIn(".extra-word-task .task-copy{min-width:0}", styles)
         self.assertIn(".extra-word-controls{grid-column:1/-1;width:100%", styles)
 
+    def test_reverse_recall_accepts_every_headword_for_an_identical_bilingual_prompt(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        self.assertGreaterEqual(app.count("reverseAnswerHeadwords(reverseAnswerPool(), item)"), 2)
+        self.assertIn("가능한 정답:", app)
+
     def test_reverse_answer_feedback_has_distinct_success_and_error_colors(self):
         app = (ROOT / "app.mjs").read_text(encoding="utf-8")
         styles = (ROOT / "styles.css").read_text(encoding="utf-8")
@@ -322,7 +327,7 @@ class MobileInputTests(unittest.TestCase):
         manifest = (ROOT / "manifest.webmanifest").read_text(encoding="utf-8")
         worker = (ROOT / "sw.js").read_text(encoding="utf-8")
         workflow = (ROOT / ".github/workflows/pages.yml").read_text(encoding="utf-8")
-        self.assertIn("wortweg-v51", worker)
+        self.assertIn("wortweg-v52", worker)
         self.assertIn("wortweg-cache=${encodeURIComponent(CACHE)}", worker)
         self.assertIn("const responses=await Promise.all(ASSETS.map", worker)
         self.assertIn("cache.put(asset,responses[index])", worker)

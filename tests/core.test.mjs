@@ -30,6 +30,7 @@ import {
   practiceGroupWords,
   practiceWordsForCount,
   pronounceableGerman,
+  reverseAnswerHeadwords,
   reverseEnterAction,
   reverseAttemptWordIds,
   reviewChoicePool,
@@ -56,6 +57,16 @@ test('review choices exclude synonyms that make the prompt or answer ambiguous',
   assert.deepEqual(reviewChoicePool([correct, synonym, distractor], correct, false).map(item => item.id), ['c']);
   assert.deepEqual(reviewChoicePool([correct, synonym, distractor], correct, true).map(item => item.id), ['c']);
   assert.deepEqual(reviewChoicePool([call, reorderedSynonym, distractor], call, false).map(item => item.id), ['c']);
+});
+
+test('reverse recall accepts every German headword that shares the same bilingual prompt', () => {
+  const anfangen = { id: 'a', german: 'anfangen', korean: '시작하다', english: 'begin/start' };
+  const beginnen = { id: 'b', german: 'beginnen', korean: '시작하다', english: 'start/begin' };
+  const bezahlen = { id: 'c', german: 'bezahlen', korean: '지불하다', english: 'pay' };
+  const accepted = reverseAnswerHeadwords([anfangen, beginnen, bezahlen], anfangen);
+  assert.deepEqual(accepted, ['anfangen', 'beginnen']);
+  assert.equal(isGermanHeadwordCorrect('beginnen', accepted), true);
+  assert.equal(isGermanHeadwordCorrect('bezahlen', accepted), false);
 });
 
 test('progress state sanitizer rejects malformed cohorts and neutralizes imported markup', () => {
@@ -110,6 +121,7 @@ test('typed German answers ignore case and plural notation but require the artic
   assert.equal(isGermanHeadwordCorrect('Adresse', 'die Adresse,-en'), false);
   assert.equal(isGermanHeadwordCorrect('die Bekannte', 'der/die Bekannte, -n'), true);
   assert.equal(isGermanHeadwordCorrect('die Abfahrt', 'die Abfahrt'), true);
+  assert.equal(isGermanHeadwordCorrect('beginnen', ['anfangen', 'beginnen']), true);
 });
 
 test('German TTS text removes dictionary notation but keeps meaningful articles and reflexives', () => {
