@@ -282,6 +282,15 @@ class MobileInputTests(unittest.TestCase):
         self.assertIn(".extra-word-task .task-copy{min-width:0}", styles)
         self.assertIn(".extra-word-controls{grid-column:1/-1;width:100%", styles)
 
+    def test_reverse_answer_feedback_has_distinct_success_and_error_colors(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertGreaterEqual(app.count('aria-live="polite"'), 2)
+        self.assertGreaterEqual(app.count('✓ Richtig(정답)!'), 2)
+        self.assertGreaterEqual(app.count('✕ Noch nicht(아직 아니에요).'), 2)
+        self.assertRegex(styles, r"\.feedback\.correct-text\{[^}]*background:#eafaf4;[^}]*border:2px solid #66c7a5;[^}]*color:#066343")
+        self.assertRegex(styles, r"\.feedback\.wrong-text\{[^}]*background:#fff0f0;[^}]*border:2px solid #ed8d8d;[^}]*color:#a61b1b")
+
     def test_reverse_enter_submits_then_advances_on_a_fresh_second_press(self):
         app = (ROOT / "app.mjs").read_text(encoding="utf-8")
         self.assertIn("bindReverseKeyboard()", app)
@@ -305,7 +314,7 @@ class MobileInputTests(unittest.TestCase):
         manifest = (ROOT / "manifest.webmanifest").read_text(encoding="utf-8")
         worker = (ROOT / "sw.js").read_text(encoding="utf-8")
         workflow = (ROOT / ".github/workflows/pages.yml").read_text(encoding="utf-8")
-        self.assertIn("wortweg-v49", worker)
+        self.assertIn("wortweg-v50", worker)
         self.assertIn("wortweg-cache=${encodeURIComponent(CACHE)}", worker)
         self.assertIn("const responses=await Promise.all(ASSETS.map", worker)
         self.assertIn("cache.put(asset,responses[index])", worker)
