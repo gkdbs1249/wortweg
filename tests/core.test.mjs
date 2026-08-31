@@ -18,6 +18,7 @@ import {
   isCorrect,
   isExampleGapCorrect,
   isGermanHeadwordCorrect,
+  incorrectPracticeItems,
   isPerfectReverseAttempt,
   learningCardSides,
   learningTaskTitle,
@@ -57,6 +58,15 @@ test('review choices exclude synonyms that make the prompt or answer ambiguous',
   assert.deepEqual(reviewChoicePool([correct, synonym, distractor], correct, false).map(item => item.id), ['c']);
   assert.deepEqual(reviewChoicePool([correct, synonym, distractor], correct, true).map(item => item.id), ['c']);
   assert.deepEqual(reviewChoicePool([call, reorderedSynonym, distractor], call, false).map(item => item.id), ['c']);
+});
+
+test('all-words practice retries only incorrect words until none remain', () => {
+  const items = Array.from({ length: 5 }, (_, index) => ({ id: `word-${index + 1}` }));
+  const firstResults = [true, true, false, true, false].map((correct, index) => ({ wordId: items[index].id, correct }));
+  const firstRetry = incorrectPracticeItems(items, firstResults);
+  assert.deepEqual(firstRetry.map(item => item.id), ['word-3', 'word-5']);
+  const secondResults = firstRetry.map(item => ({ wordId: item.id, correct: true }));
+  assert.deepEqual(incorrectPracticeItems(firstRetry, secondResults), []);
 });
 
 test('reverse recall accepts every German headword that shares the same bilingual prompt', () => {

@@ -475,6 +475,11 @@ export function validPracticeCount(requestedCount, availableCount) {
   return Number.isSafeInteger(count) && count >= 1 && count <= available ? count : null;
 }
 
+export function incorrectPracticeItems(items, results) {
+  const resultByWordId = new Map((results || []).map(result => [result.wordId, result]));
+  return (items || []).filter(item => resultByWordId.get(item.id)?.correct === false);
+}
+
 export function practiceWordsForCount(cohorts, items, requestedCount = 'all', random = Math.random) {
   const learnedIds = new Set(completedLearnedWordIds(cohorts));
   const shuffled = shuffleCopy((items || []).filter(item => learnedIds.has(item.id)), random);

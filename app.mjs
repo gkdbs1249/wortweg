@@ -1,4 +1,4 @@
-import { addDays, bilingualMeaning, calendarDayStatus, calendarStatusLabel, cohortLearningWordIds, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, isExampleGapCorrect, isGermanHeadwordCorrect, isPerfectReverseAttempt, learningCardSides, learningTaskTitle, lessonOverview, mergeProgressStates, monthCalendarDays, practiceGroupWords, practiceWordsForCount, prioritizeReviewItems, pronounceableGerman, reverseAnswerHeadwords, reverseAttemptWordIds, reverseEnterAction, reviewChoicePool, sanitizeProgressState, shouldDeferCloudMerge, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts, validPracticeCount } from './src/core.mjs';
+import { addDays, bilingualMeaning, calendarDayStatus, calendarStatusLabel, cohortLearningWordIds, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, incorrectPracticeItems, isExampleGapCorrect, isGermanHeadwordCorrect, isPerfectReverseAttempt, learningCardSides, learningTaskTitle, lessonOverview, mergeProgressStates, monthCalendarDays, practiceGroupWords, practiceWordsForCount, prioritizeReviewItems, pronounceableGerman, reverseAnswerHeadwords, reverseAttemptWordIds, reverseEnterAction, reviewChoicePool, sanitizeProgressState, shouldDeferCloudMerge, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts, validPracticeCount } from './src/core.mjs';
 import { createAccountWithPin, initializeCloudSync, queueCloudProgressSave, signInWithPin, signOutFromAccount } from './src/cloud-sync.mjs';
 import { ANTONYM_PAIRS, PREFIX_CARDS, ROOT_FAMILIES, SUPPLEMENTAL_PRACTICE_WORDS, TOPIC_GROUPS } from './src/practice-data.mjs';
 
@@ -278,7 +278,7 @@ function renderAllWordsPracticeSetup() {
   document.querySelectorAll('[data-practice-count]').forEach(button => button.onclick=()=>{
     const selected = button.dataset.practiceCount;
     const items = practiceWordsForCount(state.cohorts, words, selected === 'all' ? 'all' : Number(selected));
-    renderIndependentReversePractice(items, 0, 0, '전체 단어 거꾸로 학습');
+    renderIndependentReversePractice(items, 0, 0, '전체 단어 거꾸로 학습', null, { retryMisses:true });
   });
   const customPracticeCountInput = document.querySelector('#customPracticeCount');
   customPracticeCountInput.oninput=()=>customPracticeCountInput.setCustomValidity('');
@@ -293,28 +293,49 @@ function renderAllWordsPracticeSetup() {
       return;
     }
     const items = practiceWordsForCount(state.cohorts, words, requestedCount);
-    renderIndependentReversePractice(items, 0, 0, '전체 단어 거꾸로 학습');
+    renderIndependentReversePractice(items, 0, 0, '전체 단어 거꾸로 학습', null, { retryMisses:true });
   };
 }
 
-function renderIndependentReversePractice(items, index = 0, correctCount = 0, title = '거꾸로 학습', submittedAnswer = null) {
+function renderIndependentReversePractice(items, index = 0, correctCount = 0, title = '거꾸로 학습', submittedAnswer = null, options = {}) {
   resetPracticeScroll();
+  const retryMisses = options.retryMisses === true;
+  const initialCount = Number(options.initialCount) || items.length;
+  const originalItems = options.originalItems || items;
+  const round = Number(options.round) || 1;
+  const roundResults = Array.isArray(options.roundResults) ? options.roundResults : [];
   if (index >= items.length) {
-    app.innerHTML = `<section class="complete practice-result"><div class="celebrate">🎯</div><p class="eyebrow">추가 연습 결과</p><h1>${correctCount}/${items.length} 정답</h1><p>이 결과는 달력의 암기 완료 기록과 별도로 유지돼요.</p><div class="result-actions"><button id="backToPractice" class="secondary">추가 연습으로</button><button id="retryPractice" class="primary">같은 단어 다시 풀기</button></div></section>`;
+    const resultTitle = retryMisses ? '오답 없이 완료!' : `${correctCount}/${items.length} 정답`;
+    const resultDescription = retryMisses
+      ? `선택한 ${initialCount}개를 모두 한 번 이상 맞혔어요. 오답을 모두 없앴어요!`
+      : '이 결과는 달력의 암기 완료 기록과 별도로 유지돼요.';
+    app.innerHTML = `<section class="complete practice-result"><div class="celebrate">🎯</div><p class="eyebrow">추가 연습 결과</p><h1>${resultTitle}</h1><p>${resultDescription}</p><div class="result-actions"><button id="backToPractice" class="secondary">추가 연습으로</button><button id="retryPractice" class="primary">같은 단어 다시 풀기</button></div></section>`;
     document.querySelector('#backToPractice').onclick=renderExtraPracticeHub;
-    document.querySelector('#retryPractice').onclick=()=>renderIndependentReversePractice(shuffleCopy(items),0,0,title);
+    document.querySelector('#retryPractice').onclick=()=>renderIndependentReversePractice(shuffleCopy(originalItems),0,0,title,null,retryMisses?{retryMisses:true,initialCount,originalItems}:{ });
     return;
   }
   const item = items[index];
   const submitted = submittedAnswer !== null;
   const acceptedHeadwords = reverseAnswerHeadwords(reverseAnswerPool(), item);
   const correct = submitted && isGermanHeadwordCorrect(submittedAnswer, acceptedHeadwords);
+  const nextRoundResults = submitted ? [...roundResults, { wordId:item.id, correct }] : roundResults;
+  const retryItems = retryMisses && submitted && index === items.length - 1
+    ? incorrectPracticeItems(items, nextRoundResults)
+    : [];
   const answerLabel = acceptedHeadwords.length > 1 ? '가능한 정답:' : '정답:';
-  app.innerHTML = `<section class="session independent-reverse-session"><div class="session-head"><div><p class="eyebrow">Zusatzübung(추가 연습)</p><h1>${escapeHtml(title)}</h1></div><span class="pill">${index+1} / ${items.length}</span></div><div class="progress-track"><div class="progress-bar" style="width:${(index/items.length)*100}%"></div></div><article class="flashcard"><div class="word">${escapeHtml(bilingualMeaning(item))}</div><div class="meta">뜻에 맞는 독일어를 직접 입력하세요. 명사는 관사까지 써보세요.</div><form id="practiceReverseForm" class="answer-form"><input class="practice-answer-input" id="practiceAnswer" type="text" value="${escapeHtml(submittedAnswer ?? '')}" placeholder="독일어를 입력하세요" autocomplete="off" autocapitalize="none" spellcheck="false" ${submitted?'disabled':'required'}><button class="primary" type="submit" ${submitted?'disabled':''}>제출</button></form>${submitted?`<div class="feedback ${correct?'correct-text':'wrong-text'}" role="status" aria-live="polite">${correct?'✓ Richtig(정답)!':'✕ Noch nicht(아직 아니에요).'}</div><div class="meaning">${answerLabel} ${escapeHtml(acceptedHeadwords.join(' · '))}</div>${pronunciationButton(item.german)}`:''}</article><div class="card-actions"><button id="backToPractice" class="secondary">나가기</button>${submitted?`<button id="nextPractice" class="primary">${index===items.length-1?'결과 보기':'다음 문제'}</button>`:''}</div></section>`;
+  const nextLabel = index === items.length - 1
+    ? retryItems.length ? `오답 ${retryItems.length}개 다시 풀기` : '결과 보기'
+    : '다음 문제';
+  app.innerHTML = `<section class="session independent-reverse-session"><div class="session-head"><div><p class="eyebrow">Zusatzübung(추가 연습)</p><h1>${escapeHtml(title)}</h1></div><span class="pill">${retryMisses?`${round}회차 · `:''}${index+1} / ${items.length}</span></div><div class="progress-track"><div class="progress-bar" style="width:${(index/items.length)*100}%"></div></div><article class="flashcard"><div class="word">${escapeHtml(bilingualMeaning(item))}</div><div class="meta">뜻에 맞는 독일어를 직접 입력하세요. 명사는 관사까지 써보세요.</div><form id="practiceReverseForm" class="answer-form"><input class="practice-answer-input" id="practiceAnswer" type="text" value="${escapeHtml(submittedAnswer ?? '')}" placeholder="독일어를 입력하세요" autocomplete="off" autocapitalize="none" spellcheck="false" ${submitted?'disabled':'required'}><button class="primary" type="submit" ${submitted?'disabled':''}>제출</button></form>${submitted?`<div class="feedback ${correct?'correct-text':'wrong-text'}" role="status" aria-live="polite">${correct?'✓ Richtig(정답)!':'✕ Noch nicht(아직 아니에요).'}</div><div class="meaning">${answerLabel} ${escapeHtml(acceptedHeadwords.join(' · '))}</div>${pronunciationButton(item.german)}`:''}</article><div class="card-actions"><button id="backToPractice" class="secondary">나가기</button>${submitted?`<button id="nextPractice" class="primary">${nextLabel}</button>`:''}</div></section>`;
   document.querySelector('#backToPractice').onclick=renderExtraPracticeHub;
   if (submitted) {
     const nextButton = document.querySelector('#nextPractice');
-    nextButton.onclick=()=>renderIndependentReversePractice(items,index+1,correctCount+(correct?1:0),title);
+    nextButton.onclick=()=>{
+      if (retryItems.length) {
+        return renderIndependentReversePractice(shuffleCopy(retryItems),0,0,title,null,{retryMisses:true,initialCount,originalItems,round:round+1,roundResults:[]});
+      }
+      renderIndependentReversePractice(items,index+1,correctCount+(correct?1:0),title,null,{...options,initialCount,originalItems,round,roundResults:nextRoundResults});
+    };
     nextButton.focus();
   } else {
     const input = document.querySelector('#practiceAnswer');
@@ -322,7 +343,7 @@ function renderIndependentReversePractice(items, index = 0, correctCount = 0, ti
     document.querySelector('#practiceReverseForm').onsubmit=event=>{
       event.preventDefault();
       const answer = input.value.trim();
-      if (answer) renderIndependentReversePractice(items,index,correctCount,title,answer);
+      if (answer) renderIndependentReversePractice(items,index,correctCount,title,answer,{...options,initialCount,originalItems,round,roundResults});
     };
   }
 }

@@ -290,6 +290,13 @@ class MobileInputTests(unittest.TestCase):
         self.assertIn(".extra-word-task .task-copy{min-width:0}", styles)
         self.assertIn(".extra-word-controls{grid-column:1/-1;width:100%", styles)
 
+    def test_all_words_practice_retries_only_the_wrong_answers(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        self.assertGreaterEqual(app.count("retryMisses:true"), 2)
+        self.assertIn("incorrectPracticeItems(items, nextRoundResults)", app)
+        self.assertIn("오답 ${retryItems.length}개 다시 풀기", app)
+        self.assertIn("선택한 ${initialCount}개를 모두 한 번 이상 맞혔어요", app)
+
     def test_reverse_recall_accepts_every_headword_for_an_identical_bilingual_prompt(self):
         app = (ROOT / "app.mjs").read_text(encoding="utf-8")
         self.assertGreaterEqual(app.count("reverseAnswerHeadwords(reverseAnswerPool(), item)"), 2)
@@ -327,7 +334,7 @@ class MobileInputTests(unittest.TestCase):
         manifest = (ROOT / "manifest.webmanifest").read_text(encoding="utf-8")
         worker = (ROOT / "sw.js").read_text(encoding="utf-8")
         workflow = (ROOT / ".github/workflows/pages.yml").read_text(encoding="utf-8")
-        self.assertIn("wortweg-v52", worker)
+        self.assertIn("wortweg-v53", worker)
         self.assertIn("wortweg-cache=${encodeURIComponent(CACHE)}", worker)
         self.assertIn("const responses=await Promise.all(ASSETS.map", worker)
         self.assertIn("cache.put(asset,responses[index])", worker)
