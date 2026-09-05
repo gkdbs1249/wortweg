@@ -334,34 +334,34 @@ class MobileInputTests(unittest.TestCase):
         manifest = (ROOT / "manifest.webmanifest").read_text(encoding="utf-8")
         worker = (ROOT / "sw.js").read_text(encoding="utf-8")
         workflow = (ROOT / ".github/workflows/pages.yml").read_text(encoding="utf-8")
-        self.assertIn("wortweg-v53", worker)
+        self.assertIn("wortweg-v54", worker)
         self.assertIn("wortweg-cache=${encodeURIComponent(CACHE)}", worker)
         self.assertIn("const responses=await Promise.all(ASSETS.map", worker)
         self.assertIn("cache.put(asset,responses[index])", worker)
         self.assertIn("await caches.delete(CACHE)", worker)
         self.assertIn("key.startsWith('wortweg-v')&&key!==CACHE", worker)
         self.assertIn("caches.open(CACHE).then(cache=>cache.match(event.request))", worker)
-        self.assertIn('rel="icon" type="image/png" sizes="32x32" href="icons/wortweg-tab-v49.png"', index)
-        self.assertIn('rel="shortcut icon" type="image/png" href="icons/wortweg-tab-v49.png"', index)
-        self.assertIn('rel="apple-touch-icon" sizes="180x180" href="icons/wortweg-touch-v49.png"', index)
+        self.assertIn('rel="icon" type="image/png" sizes="32x32" href="icons/wortweg-tab-v54.png"', index)
+        self.assertIn('rel="shortcut icon" type="image/png" href="icons/wortweg-tab-v54.png"', index)
+        self.assertIn('rel="apple-touch-icon" sizes="180x180" href="icons/wortweg-touch-v54.png"', index)
         self.assertNotIn('rel="icon" type="image/svg+xml"', index)
-        self.assertIn('"src": "icons/wortweg-app-v49-192.png"', manifest)
-        self.assertIn('"src": "icons/wortweg-app-v49-512.png"', manifest)
+        self.assertIn('"src": "icons/wortweg-app-v54-192.png"', manifest)
+        self.assertIn('"src": "icons/wortweg-app-v54-512.png"', manifest)
         manifest_data = json.loads(manifest)
         self.assertEqual([icon["sizes"] for icon in manifest_data["icons"]], ["192x192", "512x512"])
         self.assertTrue(all(icon["type"] == "image/png" for icon in manifest_data["icons"]))
-        for asset in ["./favicon.ico", "./icons/wortweg-tab-v49.png", "./icons/wortweg-touch-v49.png", "./icons/wortweg-app-v49-192.png", "./icons/wortweg-app-v49-512.png"]:
+        for asset in ["./favicon.ico", "./icons/wortweg-tab-v54.png", "./icons/wortweg-touch-v54.png", "./icons/wortweg-app-v54-192.png", "./icons/wortweg-app-v54-512.png"]:
             self.assertIn(asset, worker)
         self.assertIn("cp favicon.ico _site/", workflow)
         self.assertIn("cp -R icons _site/", workflow)
         self.assertTrue((ROOT / "favicon.ico").is_file())
-        for filename in ["wortweg-tab-v49.png", "wortweg-touch-v49.png", "wortweg-app-v49-192.png", "wortweg-app-v49-512.png"]:
+        for filename in ["wortweg-tab-v54.png", "wortweg-touch-v54.png", "wortweg-app-v54-192.png", "wortweg-app-v54-512.png"]:
             self.assertTrue((ROOT / "icons" / filename).is_file(), filename)
         expected_dimensions = {
-            "wortweg-tab-v49.png": (32, 32),
-            "wortweg-touch-v49.png": (180, 180),
-            "wortweg-app-v49-192.png": (192, 192),
-            "wortweg-app-v49-512.png": (512, 512),
+            "wortweg-tab-v54.png": (32, 32),
+            "wortweg-touch-v54.png": (180, 180),
+            "wortweg-app-v54-192.png": (192, 192),
+            "wortweg-app-v54-512.png": (512, 512),
         }
         for filename, expected in expected_dimensions.items():
             png = (ROOT / "icons" / filename).read_bytes()
