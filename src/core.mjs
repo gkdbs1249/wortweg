@@ -137,6 +137,7 @@ export function sanitizeProgressState(value = {}) {
     cohorts,
     totalAnswers: safeInteger(source.totalAnswers),
     correctAnswers: safeInteger(source.correctAnswers),
+    ...(safeIsoTime(source.resetAt) ? { resetAt: source.resetAt } : {}),
     ...(safeIsoTime(source.updatedAt) ? { updatedAt: source.updatedAt } : {}),
   };
 }
@@ -768,6 +769,15 @@ export function shouldDeferCloudMerge({ appReady, dashboardVisible }) {
 export function mergeProgressStates(local = {}, remote = {}) {
   local = sanitizeProgressState(local);
   remote = sanitizeProgressState(remote);
+  const localResetTime = Date.parse(local.resetAt || '') || 0;
+  const remoteResetTime = Date.parse(remote.resetAt || '') || 0;
+  const latestResetTime = Math.max(localResetTime, remoteResetTime);
+  const latestResetAt = localResetTime >= remoteResetTime ? local.resetAt : remote.resetAt;
+  if (latestResetTime) {
+    const clearedState = () => sanitizeProgressState({ resetAt:latestResetAt, updatedAt:latestResetAt });
+    if (localResetTime < latestResetTime) local = clearedState();
+    if (remoteResetTime < latestResetTime) remote = clearedState();
+  }
   const localTime = Date.parse(local.updatedAt || '') || 0;
   const remoteTime = Date.parse(remote.updatedAt || '') || 0;
   const newer = remoteTime > localTime ? remote : local;
@@ -799,6 +809,7 @@ export function mergeProgressStates(local = {}, remote = {}) {
     cohorts,
     totalAnswers: Math.max(Number(local.totalAnswers) || 0, Number(remote.totalAnswers) || 0),
     correctAnswers: Math.max(Number(local.correctAnswers) || 0, Number(remote.correctAnswers) || 0),
+    ...(latestResetAt ? { resetAt:latestResetAt } : {}),
     updatedAt: localTime >= remoteTime ? local.updatedAt : remote.updatedAt,
   };
 }

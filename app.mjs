@@ -1,5 +1,5 @@
 import { addDays, bilingualMeaning, calendarDayStatus, calendarStatusLabel, cohortLearningWordIds, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, incorrectPracticeItems, isExampleGapCorrect, isGermanHeadwordCorrect, isPerfectReverseAttempt, learningCardSides, learningTaskTitle, lessonOverview, mergeProgressStates, monthCalendarDays, practiceGroupWords, practiceWordsForCount, prioritizeReviewItems, pronounceableGerman, reverseAnswerHeadwords, reverseAttemptWordIds, reverseEnterAction, reviewChoicePool, sanitizeProgressState, shouldDeferCloudMerge, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts, validPracticeCount } from './src/core.mjs';
-import { createAccountWithPin, initializeCloudSync, queueCloudProgressSave, signInWithPin, signOutFromAccount } from './src/cloud-sync.mjs';
+import { createAccountWithPin, initializeCloudSync, queueCloudProgressSave, signInWithPin, signOutFromAccount, syncCloudProgressNow, waitForCloudStartup } from './src/cloud-sync.mjs';
 import { ANTONYM_PAIRS, PREFIX_CARDS, ROOT_FAMILIES, SUPPLEMENTAL_PRACTICE_WORDS, TOPIC_GROUPS } from './src/practice-data.mjs';
 
 const STORAGE_KEY = 'wortweg-a1-progress-v1';
@@ -8,6 +8,20 @@ const ANONYMOUS_STORAGE_KEY = `${STORAGE_KEY}:anonymous`;
 const EXAM_DATE = '2026-10-20';
 const STUDY_START_DATE = '2026-08-25';
 const GOETHE_SOURCE = 'https://www.goethe.de/pro/relaunch/prf/de/A1_SD1_Wortliste_02.pdf';
+
+function storageGet(key) {
+  try { return localStorage.getItem(key); }
+  catch { return null; }
+}
+function storageSet(key, value) {
+  try { localStorage.setItem(key, value); return true; }
+  catch { return false; }
+}
+function storageRemove(key) {
+  try { localStorage.removeItem(key); return true; }
+  catch { return false; }
+}
+
 const app = document.querySelector('#app');
 const settingsDialog = document.querySelector('#settingsDialog');
 const dayDetailDialog = document.querySelector('#dayDetailDialog');
@@ -15,7 +29,8 @@ let words = [];
 let byId = new Map();
 let byGerman = new Map();
 const supplementalPracticeByGerman = new Map(SUPPLEMENTAL_PRACTICE_WORDS.map(item => [item.german, item]));
-let activeStorageKey = STORAGE_KEY;
+const hasAnonymousState = Boolean(storageGet(ANONYMOUS_STORAGE_KEY));
+let activeStorageKey = hasAnonymousState ? ANONYMOUS_STORAGE_KEY : STORAGE_KEY;
 let state = loadState(activeStorageKey);
 let calendarCursor = null;
 let appReady = false;
@@ -24,39 +39,47 @@ let reviewTransitionTimer = null;
 
 function loadState(storageKey = activeStorageKey) {
   try {
-    return sanitizeProgressState(JSON.parse(localStorage.getItem(storageKey) || '{}'));
+    return sanitizeProgressState(JSON.parse(storageGet(storageKey) || '{}'));
   } catch { return defaultState(); }
 }
 function switchLocalProfile(user) {
   const previousStorageKey = activeStorageKey;
-  const previousOwner = localStorage.getItem(STORAGE_OWNER_KEY);
+  const previousState = state;
+  const previousOwner = storageGet(STORAGE_OWNER_KEY);
   if (user) {
     const userStorageKey = `${STORAGE_KEY}:user:${user.uid}`;
-    const hasUserState = Boolean(localStorage.getItem(userStorageKey));
+    const hasUserState = Boolean(storageGet(userStorageKey));
     const migratedState = !previousOwner && !hasUserState ? state : null;
     activeStorageKey = userStorageKey;
     state = migratedState || loadState(userStorageKey);
-    localStorage.setItem(STORAGE_OWNER_KEY, user.uid);
-    localStorage.setItem(activeStorageKey, JSON.stringify(state));
-  } else if (previousOwner) {
-    activeStorageKey = ANONYMOUS_STORAGE_KEY;
-    state = loadState(activeStorageKey);
+    storageSet(STORAGE_OWNER_KEY, user.uid);
+    storageSet(activeStorageKey, JSON.stringify(state));
+  } else {
+    if (previousOwner) {
+      activeStorageKey = ANONYMOUS_STORAGE_KEY;
+      state = loadState(activeStorageKey);
+      storageSet(activeStorageKey, JSON.stringify(state));
+    }
+    storageRemove(STORAGE_OWNER_KEY);
   }
   if (words.length && normalizeDailyLearningCohorts()) {
-    localStorage.setItem(activeStorageKey, JSON.stringify(state));
+    storageSet(activeStorageKey, JSON.stringify(state));
   }
   const profileChanged = previousStorageKey !== activeStorageKey;
   if (profileChanged) pendingCloudMerge = null;
-  if (appReady && profileChanged && words.length) renderDashboard();
+  const stateWasMigrated = state === previousState;
+  const dashboardVisible = Boolean(app.querySelector('.hero'));
+  if (appReady && profileChanged && words.length && (dashboardVisible || !stateWasMigrated)) renderDashboard();
 }
 function defaultState() { return { dailyCount: 20, nextIndex: 0, carryIds: [], cohorts: [], totalAnswers: 0, correctAnswers: 0 }; }
-function saveState() {
+function saveState(syncImmediately = false) {
   state.updatedAt = new Date().toISOString();
-  localStorage.setItem(activeStorageKey, JSON.stringify(state));
-  queueCloudProgressSave(state);
+  storageSet(activeStorageKey, JSON.stringify(state));
+  if (syncImmediately) syncCloudProgressNow(state);
+  else queueCloudProgressSave(state);
 }
 function applyCloudMergedState(merged) {
-  state = sanitizeProgressState(merged);
+  state = sanitizeProgressState(mergeProgressStates(state, merged));
   normalizeDailyLearningCohorts();
   saveState();
 }
@@ -698,7 +721,7 @@ function renderLessonOverview(cohort, sessionWordIds) {
   document.querySelector('#finishLearning').onclick=()=>{
     if (pastReview) return renderComplete('📚','복습 완료!',`${formatStudyDate(cohort.learnedDate)}에 배운 단어 ${items.length}개를 다시 공부했어요.`);
     cohort.learningDone = true;
-    saveState();
+    saveState(true);
     renderComplete('🎉','오늘 학습 완료!',`신규 ${cohort.newCount}개${cohort.wordIds.length-cohort.newCount ? `와 이월 ${cohort.wordIds.length-cohort.newCount}개` : ''}를 학습했어요. 원하는 만큼 다시 학습할 수 있어요.`);
   };
 }
@@ -715,7 +738,7 @@ function renderReverseLearning(cohort, sessionWordIds, index, attemptId, submitt
     if (summary.memorized && !cohort.memorizedAt) cohort.memorizedAt = attempt.completedAt;
     if (!summary.memorized) delete cohort.memorizedAt;
     cohort.learningDone = true;
-    saveState();
+    saveState(true);
     return renderReverseOverview(cohort, attempt);
   }
   const item = word(sessionWordIds[index]);
@@ -820,17 +843,26 @@ function startReview(type, cohort) {
   renderQuestion(type, cohort, queue, misses, new Set());
 }
 
+function persistReviewCompletion(type, cohort, misses) {
+  if (type === 'morning') cohort.morningDone = true;
+  else {
+    cohort.finalDone = true;
+    cohort.finalMisses = misses;
+    state.carryIds = [];
+  }
+  saveState(true);
+}
+
+function renderReviewCompletion(type, misses) {
+  const failed = type === 'final' ? finalFailures(misses).length : 0;
+  renderComplete(type==='morning'?'☀️':'🌙',type==='morning'?'아침 재시험 완료!':'최종시험 완료!',failed?`${failed}개는 이 시험에서 다시 확인했어요. 오늘 신규 학습에는 추가되지 않아요.`:'모든 단어를 안정적으로 기억했어요.');
+}
+
 function renderQuestion(type, cohort, queue, misses, completed) {
   clearReviewTransition();
   if (!queue.length) {
-    if (type === 'morning') cohort.morningDone = true;
-    else {
-      cohort.finalDone = true; cohort.finalMisses = misses;
-      state.carryIds = [];
-    }
-    saveState();
-    const failed = type === 'final' ? finalFailures(misses).length : 0;
-    return renderComplete(type==='morning'?'☀️':'🌙',type==='morning'?'아침 재시험 완료!':'최종시험 완료!',failed?`${failed}개는 이 시험에서 다시 확인했어요. 오늘 신규 학습에는 추가되지 않아요.`:'모든 단어를 안정적으로 기억했어요.');
+    persistReviewCompletion(type, cohort, misses);
+    return renderReviewCompletion(type, misses);
   }
   const id = queue.shift(), item = word(id), germanPrompt = type === 'morning';
   const options = makeChoices(item, germanPrompt ? 'korean' : 'german');
@@ -844,13 +876,16 @@ function renderQuestion(type, cohort, queue, misses, completed) {
     const correct = chosenId === id; state.totalAnswers += 1;
     if (correct) { state.correctAnswers += 1; completed.add(id); }
     else { misses[id]=(misses[id]||0)+1; queue.push(id); }
-    saveState();
+    const reviewFinished = queue.length === 0;
+    if (reviewFinished) persistReviewCompletion(type, cohort, misses);
+    else saveState();
     document.querySelectorAll('.choice').forEach(btn=>{btn.disabled=true;if(btn.dataset.id===id)btn.classList.add('correct');else if(btn.dataset.id===chosenId)btn.classList.add('wrong')});
     skipButton.disabled = true;
     document.querySelector('#feedback').textContent=correct?'Richtig(정답)!':'다시 나오니 그때 맞혀보세요.';
     reviewTransitionTimer = setTimeout(()=>{
       reviewTransitionTimer = null;
-      renderQuestion(type,cohort,queue,misses,completed);
+      if (reviewFinished) renderReviewCompletion(type, misses);
+      else renderQuestion(type,cohort,queue,misses,completed);
     },650);
   };
   document.querySelectorAll('.choice').forEach(button=>button.onclick=()=>answer(button.dataset.id));
@@ -890,11 +925,15 @@ function bindReverseKeyboard() {
 }
 
 function bindGlobalNavigation() {
-  document.querySelector('.brand').onclick=event=>{
+  document.querySelector('.brand').onclick=async event=>{
     event.preventDefault();
-    if (settingsDialog.open) settingsDialog.close();
-    if (dayDetailDialog.open) dayDetailDialog.close();
-    renderDashboard();
+    try {
+      await waitForCloudStartup(syncCloudProgressNow(state, true), 1500);
+    } catch (error) {
+      console.error('WortWeg logo sync failed', error);
+    } finally {
+      window.location.reload();
+    }
   };
 }
 
@@ -1001,9 +1040,10 @@ function bindSettings() {
       if(!file)return;
       const parsed=JSON.parse(await file.text());
       if(!parsed||!Array.isArray(parsed.cohorts))throw new Error('올바른 진도 파일이 아닙니다.');
-      state=sanitizeProgressState(parsed);
+      const importedAt = new Date().toISOString();
+      state = { ...sanitizeProgressState(parsed), resetAt:importedAt };
       normalizeDailyLearningCohorts();
-      saveState();
+      saveState(true);
       settingsDialog.close();
       renderDashboard();
     }catch(error){
@@ -1011,17 +1051,43 @@ function bindSettings() {
       event.target.value='';
     }
   };
-  document.querySelector('#resetButton').onclick=()=>{if(confirm('모든 학습 진도를 지울까요?')){state=defaultState();saveState();settingsDialog.close();renderDashboard()}};
+  document.querySelector('#resetButton').onclick=()=>{
+    if(confirm('모든 학습 진도를 지울까요?')){
+      const resetAt = new Date().toISOString();
+      state = { ...defaultState(), resetAt };
+      saveState(true);
+      settingsDialog.close();
+      renderDashboard();
+    }
+  };
+}
+
+async function fetchWithDeadline(url, timeoutMs = 6000) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { signal:controller.signal });
+  } catch (error) {
+    if (error?.name === 'AbortError') throw new Error('단어 데이터 연결 시간이 초과됐습니다.');
+    throw error;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+function renderInitializationError(error) {
+  app.innerHTML=`<section class="complete"><div class="celebrate">⚠️</div><h1>앱을 시작할 수 없어요</h1><p>${escapeHtml(error.message)}</p><button id="retryInit" class="primary">다시 시도</button></section>`;
+  document.querySelector('#retryInit').onclick=()=>window.location.reload();
 }
 
 async function init() {
-  const response=await fetch('./data/words.json');
+  const response=await fetchWithDeadline('./data/words.json');
   if(!response.ok) throw new Error('단어 데이터를 불러오지 못했습니다.');
   words=await response.json();
   if(words.some(item=>!item.korean||!item.english||!item.exampleGerman)) throw new Error('한국어·영어 뜻 또는 공식 예문 데이터가 아직 완성되지 않았습니다.');
   byId=new Map(words.map(item=>[item.id,item]));
   byGerman=new Map(words.map(item=>[item.german,item]));
-  if (normalizeDailyLearningCohorts()) localStorage.setItem(activeStorageKey, JSON.stringify(state));
+  if (normalizeDailyLearningCohorts()) storageSet(activeStorageKey, JSON.stringify(state));
   bindGlobalNavigation();
   bindPronunciation();
   bindReverseKeyboard();
@@ -1029,6 +1095,6 @@ async function init() {
   await bindAuth();
   appReady = true;
   renderDashboard();
-  if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(error=>console.error('WortWeg service worker registration failed', error));
 }
-init().catch(error=>{app.innerHTML=`<section class="complete"><div class="celebrate">⚠️</div><h1>앱을 시작할 수 없어요</h1><p>${escapeHtml(error.message)}</p></section>`});
+init().catch(renderInitializationError);

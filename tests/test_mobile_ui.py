@@ -254,14 +254,45 @@ class MobileInputTests(unittest.TestCase):
         app = (ROOT / "app.mjs").read_text(encoding="utf-8")
         cloud = (ROOT / "src" / "cloud-sync.mjs").read_text(encoding="utf-8")
         self.assertIn("let appReady = false", app)
-        self.assertIn("if (appReady && profileChanged && words.length) renderDashboard()", app)
+        self.assertIn("if (appReady && profileChanged && words.length &&", app)
         self.assertIn("await bindAuth()", app)
         self.assertIn("appReady = true", app)
         self.assertIn("initialAuthReady", cloud)
-        self.assertIn("await initialAuthReady", cloud)
+        self.assertIn("const authOutcome = await waitForCloudStartup(initialAuthReady)", cloud)
+        self.assertNotIn("unsubscribeAuth", cloud)
+        self.assertLess(cloud.index("settleInitialAuth();"), cloud.index("await writeMergedProgress(hooks.getLocalState(), true)"))
         self.assertIn("writeMergedProgress(hooks.getLocalState(), true)", cloud)
-        self.assertIn("if (applyMerged) hooks?.applyMergedState?.(mergedState)", cloud)
+        self.assertIn("hooks?.applyMergedState?.(hydratedState)", cloud)
         self.assertIn("if (appReady) renderDashboard()", app)
+
+    def test_delayed_sdk_reconnects_and_hydration_preserves_newer_local_state(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        cloud = (ROOT / "src" / "cloud-sync.mjs").read_text(encoding="utf-8")
+        self.assertIn("const hasAnonymousState = Boolean(storageGet(ANONYMOUS_STORAGE_KEY))", app)
+        self.assertNotIn("storedOwner ?", app)
+        self.assertIn("mergeProgressStates(state, merged)", app)
+        self.assertIn("const modulePromise = Promise.all", cloud)
+        self.assertIn("modulePromise.then(activateCloudModules)", cloud)
+        self.assertIn("const latestLocalState = hooks.getLocalState()", cloud)
+        self.assertIn("mergeProgressStates(latestLocalState", cloud)
+
+    def test_auth_timeout_recovers_without_exposing_a_logged_out_profile(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        cloud = (ROOT / "src" / "cloud-sync.mjs").read_text(encoding="utf-8")
+        activation = cloud.split("async function activateCloudModules", 1)[1].split("function handleCloudInitializationError", 1)[0]
+        self.assertIn("storageRemove(STORAGE_OWNER_KEY)", app)
+        self.assertIn("const authOutcome = await waitForCloudStartup(initialAuthReady)", activation)
+        self.assertIn("if (authOutcome.timedOut)", activation)
+        self.assertIn("catch (error)", activation)
+
+    def test_initialization_failures_leave_the_spinner_with_a_retry_path(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        self.assertIn("function storageGet", app)
+        self.assertIn("function storageSet", app)
+        self.assertIn("function fetchWithDeadline", app)
+        self.assertIn("AbortController", app)
+        self.assertIn('id="retryInit"', app)
+        self.assertIn("navigator.serviceWorker.register('./sw.js').catch", app)
 
     def test_review_answer_is_single_shot_and_exit_cancels_stale_question_timer(self):
         app = (ROOT / "app.mjs").read_text(encoding="utf-8")
@@ -271,6 +302,13 @@ class MobileInputTests(unittest.TestCase):
         self.assertIn("reviewTransitionTimer = setTimeout", review)
         self.assertIn("clearReviewTransition()", app.split("function renderDashboard()", 1)[1].split("const today", 1)[0])
 
+    def test_last_review_answer_persists_completion_before_delayed_feedback_transition(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        review = app.split("function renderQuestion(type, cohort, queue, misses, completed)", 1)[1].split("function makeChoices", 1)[0]
+        self.assertIn("const reviewFinished = queue.length === 0", review)
+        self.assertIn("persistReviewCompletion(type, cohort, misses)", review)
+        self.assertIn("if (reviewFinished) persistReviewCompletion", review)
+
     def test_invalid_progress_import_shows_a_message_instead_of_throwing(self):
         app = (ROOT / "app.mjs").read_text(encoding="utf-8")
         settings = app.split("function bindSettings()", 1)[1].split("async function init()", 1)[0]
@@ -278,6 +316,19 @@ class MobileInputTests(unittest.TestCase):
         self.assertIn("catch(error)", settings)
         self.assertIn("진도 파일을 가져오지 못했습니다", settings)
         self.assertIn("event.target.value=''", settings)
+
+    def test_reset_creates_a_cloud_tombstone_and_syncs_it_immediately(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        settings = app.split("function bindSettings()", 1)[1].split("async function init()", 1)[0]
+        self.assertIn("resetAt", settings)
+        self.assertIn("saveState(true)", settings)
+
+    def test_progress_import_starts_a_new_sync_generation_after_reset(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        settings = app.split("function bindSettings()", 1)[1].split("async function fetchWithDeadline", 1)[0]
+        self.assertIn("const importedAt = new Date().toISOString()", settings)
+        self.assertIn("resetAt:importedAt", settings)
+        self.assertIn("saveState(true)", settings)
 
     def test_disabled_learning_buttons_are_visually_distinct(self):
         styles = (ROOT / "styles.css").read_text(encoding="utf-8")
@@ -329,12 +380,32 @@ class MobileInputTests(unittest.TestCase):
         worker = (ROOT / "sw.js").read_text(encoding="utf-8")
         self.assertIn("./src/practice-data.mjs", worker)
 
+    def test_brand_click_performs_a_real_reload_for_fresh_cloud_sync(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        index = (ROOT / "index.html").read_text(encoding="utf-8")
+        navigation = app.split("function bindGlobalNavigation()", 1)[1].split("function authErrorMessage", 1)[0]
+        self.assertIn('aria-label="홈으로 새로고침 및 동기화"', index)
+        self.assertIn("syncCloudProgressNow(state, true)", navigation)
+        self.assertIn("waitForCloudStartup", navigation)
+        self.assertIn("window.location.reload()", navigation)
+        self.assertNotIn("renderDashboard()", navigation)
+
+    def test_completed_sessions_and_foreground_return_sync_immediately(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        cloud = (ROOT / "src" / "cloud-sync.mjs").read_text(encoding="utf-8")
+        self.assertIn("function saveState(syncImmediately = false)", app)
+        self.assertIn("if (syncImmediately) syncCloudProgressNow(state)", app)
+        self.assertGreaterEqual(app.count("saveState(true)"), 3)
+        self.assertIn("export function syncCloudProgressNow", cloud)
+        self.assertIn("visibilitychange", cloud)
+        self.assertIn("window.addEventListener('focus'", cloud)
+
     def test_wortweg_favicon_and_install_icons_replace_the_browser_default(self):
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         manifest = (ROOT / "manifest.webmanifest").read_text(encoding="utf-8")
         worker = (ROOT / "sw.js").read_text(encoding="utf-8")
         workflow = (ROOT / ".github/workflows/pages.yml").read_text(encoding="utf-8")
-        self.assertIn("wortweg-v54", worker)
+        self.assertIn("wortweg-v55", worker)
         self.assertIn("wortweg-cache=${encodeURIComponent(CACHE)}", worker)
         self.assertIn("const responses=await Promise.all(ASSETS.map", worker)
         self.assertIn("cache.put(asset,responses[index])", worker)

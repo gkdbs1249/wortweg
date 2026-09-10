@@ -14,6 +14,28 @@ let saveTimer = null;
 let syncInFlight = false;
 let syncCompletion = Promise.resolve();
 
+export async function waitForCloudStartup(startupPromise, timeoutMs = 5000) {
+  let timeoutId;
+  const deadline = new Promise(resolve => {
+    timeoutId = setTimeout(() => resolve({ timedOut: true }), timeoutMs);
+  });
+  const completion = Promise.resolve(startupPromise).then(value => ({ timedOut: false, value }));
+  try {
+    return await Promise.race([completion, deadline]);
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+export function mergeHydratedProgress(latestLocalState, committedHydration, sourceUpdatedAt) {
+  const merged = mergeProgressStates(latestLocalState, {
+    ...committedHydration,
+    updatedAt: sourceUpdatedAt || '',
+  });
+  merged.updatedAt = committedHydration.updatedAt;
+  return merged;
+}
+
 export function cloudOperationIsCurrent(operationUserId, user) {
   return Boolean(operationUserId && user?.uid === operationUserId);
 }
@@ -45,10 +67,12 @@ async function writeMergedProgress(localState, applyMerged = false) {
   try {
     const ref = progressRef(operationUserId);
     let mergedState = localState;
+    let mergedSourceUpdatedAt = localState?.updatedAt || '';
     await firestoreApi.runTransaction(db, async transaction => {
       const snapshot = await transaction.get(ref);
       const remoteState = snapshot.exists() ? snapshot.data().state || {} : {};
       mergedState = mergeProgressStates(localState, remoteState);
+      mergedSourceUpdatedAt = mergedState.updatedAt || '';
       mergedState.updatedAt = new Date().toISOString();
       transaction.set(ref, {
         state: mergedState,
@@ -58,7 +82,11 @@ async function writeMergedProgress(localState, applyMerged = false) {
       });
     });
     if (!cloudOperationIsCurrent(operationUserId, currentUser)) return localState;
-    if (applyMerged) hooks?.applyMergedState?.(mergedState);
+    if (applyMerged) {
+      const latestLocalState = hooks.getLocalState();
+      const hydratedState = mergeHydratedProgress(latestLocalState, mergedState, mergedSourceUpdatedAt);
+      hooks?.applyMergedState?.(hydratedState);
+    }
     if (pendingState === localState) pendingState = null;
     reportStatus('synced', '클라우드에 저장됨');
     return mergedState;
@@ -91,6 +119,14 @@ export function queueCloudProgressSave(state) {
   }, 700);
 }
 
+export function syncCloudProgressNow(state, applyMerged = false) {
+  pendingState = structuredClone(state);
+  clearTimeout(saveTimer);
+  const stateToSave = pendingState;
+  if (!currentUser) return Promise.resolve(stateToSave);
+  return writeMergedProgress(stateToSave, applyMerged);
+}
+
 export async function createAccountWithPin(accountId, pin) {
   if (!auth || !authApi) throw new Error('Firebase 로그인이 아직 준비되지 않았어요.');
   const credentials = accountCredentials(accountId, pin);
@@ -111,6 +147,74 @@ export async function signOutFromAccount() {
   await authApi.signOut(auth);
 }
 
+async function activateCloudModules([appModule, loadedAuthApi, loadedFirestoreApi]) {
+  if (auth && db) return { configured: true };
+  authApi = loadedAuthApi;
+  firestoreApi = loadedFirestoreApi;
+  const firebaseApp = appModule.initializeApp(FIREBASE_CONFIG);
+  auth = authApi.getAuth(firebaseApp);
+  db = firestoreApi.getFirestore(firebaseApp);
+
+  let settleInitialAuth;
+  const initialAuthReady = new Promise(resolve => { settleInitialAuth = resolve; });
+  authApi.onAuthStateChanged(auth, async user => {
+    try {
+      const profileChanged = currentUser?.uid !== user?.uid;
+      currentUser = user;
+      if (profileChanged) {
+        clearTimeout(saveTimer);
+        pendingState = null;
+      }
+      hooks?.onUserChanged?.(user);
+      if (!user) {
+        reportStatus('signed-out', '로그인하면 여러 기기에서 진도가 이어져요.');
+        return;
+      }
+      reportStatus('syncing', '계정 진도를 불러오는 중…');
+      if (settleInitialAuth) {
+        settleInitialAuth();
+        settleInitialAuth = null;
+      }
+      await writeMergedProgress(hooks.getLocalState(), true);
+    } catch (error) {
+      reportStatus('error', '계정 진도를 연결하지 못했어요.');
+      hooks?.onError?.(error);
+    } finally {
+      if (settleInitialAuth) {
+        settleInitialAuth();
+        settleInitialAuth = null;
+      }
+    }
+  });
+
+  window.addEventListener('online', () => {
+    if (currentUser && pendingState) writeMergedProgress(pendingState);
+  });
+  let lastForegroundSyncAt = 0;
+  const syncOnForeground = () => {
+    const now = Date.now();
+    if (!currentUser || now - lastForegroundSyncAt < 1000) return;
+    lastForegroundSyncAt = now;
+    syncCloudProgressNow(hooks.getLocalState(), true);
+  };
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') syncOnForeground();
+  });
+  window.addEventListener('focus', syncOnForeground);
+  const authOutcome = await waitForCloudStartup(initialAuthReady);
+  if (authOutcome.timedOut) {
+    reportStatus('offline', '로그인 확인이 늦어 기기 진도로 먼저 열었어요. 확인되면 자동으로 동기화합니다.');
+    return { configured: true, delayed: true };
+  }
+  return { configured: true };
+}
+
+function handleCloudInitializationError(error) {
+  reportStatus('error', 'Google 로그인 모듈을 불러오지 못했어요.');
+  hooks?.onError?.(error);
+  return { configured: false, error };
+}
+
 export async function initializeCloudSync(options) {
   hooks = options;
   if (!cloudSyncConfigured()) {
@@ -118,51 +222,20 @@ export async function initializeCloudSync(options) {
     return { configured: false };
   }
 
+  const modulePromise = Promise.all([
+    import(`${SDK_BASE}/firebase-app.js`),
+    import(`${SDK_BASE}/firebase-auth.js`),
+    import(`${SDK_BASE}/firebase-firestore.js`),
+  ]);
   try {
-    const [appModule, loadedAuthApi, loadedFirestoreApi] = await Promise.all([
-      import(`${SDK_BASE}/firebase-app.js`),
-      import(`${SDK_BASE}/firebase-auth.js`),
-      import(`${SDK_BASE}/firebase-firestore.js`),
-    ]);
-    authApi = loadedAuthApi;
-    firestoreApi = loadedFirestoreApi;
-    const firebaseApp = appModule.initializeApp(FIREBASE_CONFIG);
-    auth = authApi.getAuth(firebaseApp);
-    db = firestoreApi.getFirestore(firebaseApp);
-
-    let settleInitialAuth;
-    const initialAuthReady = new Promise(resolve => { settleInitialAuth = resolve; });
-    authApi.onAuthStateChanged(auth, async user => {
-      try {
-        const profileChanged = currentUser?.uid !== user?.uid;
-        currentUser = user;
-        if (profileChanged) {
-          clearTimeout(saveTimer);
-          pendingState = null;
-        }
-        hooks?.onUserChanged?.(user);
-        if (!user) {
-          reportStatus('signed-out', '로그인하면 여러 기기에서 진도가 이어져요.');
-          return;
-        }
-        reportStatus('syncing', '계정 진도를 불러오는 중…');
-        await writeMergedProgress(hooks.getLocalState(), true);
-      } finally {
-        if (settleInitialAuth) {
-          settleInitialAuth();
-          settleInitialAuth = null;
-        }
-      }
-    });
-
-    window.addEventListener('online', () => {
-      if (currentUser && pendingState) writeMergedProgress(pendingState);
-    });
-    await initialAuthReady;
-    return { configured: true };
+    const moduleOutcome = await waitForCloudStartup(modulePromise);
+    if (moduleOutcome.timedOut) {
+      reportStatus('offline', '동기화 연결이 늦어 기기 진도로 먼저 열었어요. 연결되면 자동으로 동기화합니다.');
+      modulePromise.then(activateCloudModules).catch(handleCloudInitializationError);
+      return { configured: true, delayed: true };
+    }
+    return await activateCloudModules(moduleOutcome.value);
   } catch (error) {
-    reportStatus('error', 'Google 로그인 모듈을 불러오지 못했어요.');
-    hooks?.onError?.(error);
-    return { configured: false, error };
+    return handleCloudInitializationError(error);
   }
 }

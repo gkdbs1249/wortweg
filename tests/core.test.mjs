@@ -699,3 +699,30 @@ test('simple account credentials reject unsafe IDs and non-six-digit PINs', () =
   assert.throws(() => accountCredentials('hayoon', '12345'), /6자리/);
   assert.throws(() => accountCredentials('hayoon', '12345a'), /6자리/);
 });
+
+test('a cloud reset tombstone blocks stale devices from restoring deleted progress', () => {
+  const resetAt = '2026-09-10T12:00:00.000Z';
+  const resetState = { dailyCount:20, nextIndex:0, cohorts:[], totalAnswers:0, correctAnswers:0, resetAt, updatedAt:resetAt };
+  const staleDevice = {
+    dailyCount:30,
+    nextIndex:20,
+    cohorts:[{ id:'old', learnedDate:'2026-09-09', wordIds:['w1'], learningDone:true }],
+    totalAnswers:10,
+    correctAnswers:8,
+    updatedAt:'2026-09-10T12:01:00.000Z',
+  };
+  const mergedStale = mergeProgressStates(resetState, staleDevice);
+  assert.equal(mergedStale.nextIndex, 0);
+  assert.deepEqual(mergedStale.cohorts, []);
+  assert.equal(mergedStale.resetAt, resetAt);
+
+  const postResetProgress = {
+    ...resetState,
+    nextIndex:1,
+    cohorts:[{ id:'new', learnedDate:'2026-09-10', wordIds:['w2'], learningDone:true }],
+    updatedAt:'2026-09-10T12:02:00.000Z',
+  };
+  const mergedFresh = mergeProgressStates(resetState, postResetProgress);
+  assert.equal(mergedFresh.nextIndex, 1);
+  assert.deepEqual(mergedFresh.cohorts.map(cohort => cohort.wordIds), [['w2']]);
+});
