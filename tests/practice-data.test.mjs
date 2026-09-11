@@ -1,13 +1,28 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { ANTONYM_PAIRS, PREFIX_CARDS, ROOT_FAMILIES, SUPPLEMENTAL_PRACTICE_WORDS, TOPIC_GROUPS } from '../src/practice-data.mjs';
+import { ANTONYM_PAIRS, GRAMMAR_CASE_QUESTIONS, PREFIX_CARDS, ROOT_FAMILIES, SUPPLEMENTAL_PRACTICE_WORDS, TOPIC_GROUPS } from '../src/practice-data.mjs';
 
 const words = JSON.parse(await readFile(new URL('../data/words.json', import.meta.url), 'utf8'));
 const byGerman = new Map(words.map(item => [item.german, item]));
 const supplementalByGerman = new Map(SUPPLEMENTAL_PRACTICE_WORDS.map(item => [item.german, item]));
 const assertKnown = (german, context) => assert.ok(byGerman.has(german), `${context}: unknown headword ${german}`);
 const assertPracticeWord = (german, context) => assert.ok(byGerman.has(german) || supplementalByGerman.has(german), `${context}: unavailable practice word ${german}`);
+
+test('case grammar drill has six complete four-choice questions for each German case', () => {
+  assert.equal(GRAMMAR_CASE_QUESTIONS.length, 24);
+  assert.equal(new Set(GRAMMAR_CASE_QUESTIONS.map(item => item.id)).size, 24);
+  for (const caseNumber of [1, 2, 3, 4]) {
+    assert.equal(GRAMMAR_CASE_QUESTIONS.filter(item => item.caseNumber === caseNumber).length, 6);
+  }
+  for (const item of GRAMMAR_CASE_QUESTIONS) {
+    assert.equal((item.sentence.match(/___/g) || []).length, 1, `${item.id}: needs one blank`);
+    assert.equal(item.choices.length, 4, `${item.id}: needs four choices`);
+    assert.equal(new Set(item.choices).size, 4, `${item.id}: choices must be unique`);
+    assert.ok(item.choices.includes(item.answer), `${item.id}: answer must be a choice`);
+    assert.ok(item.translation && item.explanation && item.caseLabel, `${item.id}: feedback is incomplete`);
+  }
+});
 
 test('root transformation families include useful unlearned supplemental words', () => {
   assert.ok(ROOT_FAMILIES.length >= 15);

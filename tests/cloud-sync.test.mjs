@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { cloudOperationIsCurrent, mergeHydratedProgress, waitForCloudStartup } from '../src/cloud-sync.mjs';
+import { cloudOperationIsCurrent, mergeHydratedProgress, pendingStateAfterFailure, waitForCloudStartup } from '../src/cloud-sync.mjs';
 
 test('cloud writes and hydration results belong only to the user that started them', () => {
   assert.equal(cloudOperationIsCurrent('user-a', { uid: 'user-a' }), true);
@@ -37,4 +37,12 @@ test('late hydration keeps newer local settings while preserving merged cloud pr
   assert.equal(merged.nextIndex, 20);
   assert.deepEqual(merged.cohorts.map(cohort => cohort.learnedDate), ['2026-09-08', '2026-09-07']);
   assert.equal(merged.updatedAt, committedHydration.updatedAt);
+});
+
+test('a failed older write cannot replace a newer pending progress state', () => {
+  const olderWrite = { nextIndex: 5 };
+  const newerPending = { nextIndex: 10 };
+  assert.equal(pendingStateAfterFailure(newerPending, olderWrite), newerPending);
+  assert.equal(pendingStateAfterFailure(olderWrite, olderWrite), olderWrite);
+  assert.equal(pendingStateAfterFailure(null, olderWrite), olderWrite);
 });

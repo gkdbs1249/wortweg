@@ -123,6 +123,21 @@ class MobileInputTests(unittest.TestCase):
         self.assertRegex(styles, r"\.article-choices\{[^}]*grid-template-columns:repeat\(3,1fr\)")
         self.assertRegex(styles, r"\.article-choice\{[^}]*min-height:64px")
 
+    def test_case_grammar_quiz_is_an_isolated_extra_practice_mode(self):
+        app = (ROOT / "app.mjs").read_text(encoding="utf-8")
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        practice = (ROOT / "src" / "practice-data.mjs").read_text(encoding="utf-8")
+        drill = app.split("function startCaseGrammarPractice()", 1)[1].split("function renderAllWordsPracticeSetup", 1)[0]
+        self.assertIn('data-practice="${practice}"', app)
+        self.assertIn("'case-grammar'", app)
+        self.assertIn("function renderCaseGrammarQuestion", app)
+        self.assertIn('data-case-choice=', app)
+        self.assertIn("GRAMMAR_CASE_QUESTIONS", practice)
+        self.assertNotIn("saveState(", drill)
+        self.assertNotIn("queueCloudProgressSave", drill)
+        self.assertRegex(styles, r"\.case-choice-grid\{[^}]*grid-template-columns:repeat\(2")
+        self.assertRegex(styles, r"\.case-choice\{[^}]*min-height:54px")
+
     def test_extra_practice_modes_are_independent_from_calendar_progress(self):
         app = (ROOT / "app.mjs").read_text(encoding="utf-8")
         styles = (ROOT / "styles.css").read_text(encoding="utf-8")
@@ -264,8 +279,8 @@ class MobileInputTests(unittest.TestCase):
         self.assertIn("initialAuthReady", cloud)
         self.assertIn("const authOutcome = await waitForCloudStartup(initialAuthReady)", cloud)
         self.assertNotIn("unsubscribeAuth", cloud)
-        self.assertLess(cloud.index("settleInitialAuth();"), cloud.index("await writeMergedProgress(hooks.getLocalState(), true)"))
-        self.assertIn("writeMergedProgress(hooks.getLocalState(), true)", cloud)
+        self.assertLess(cloud.index("settleInitialAuth();"), cloud.index("await writeMergedProgress(hooks.getLocalState())"))
+        self.assertIn("writeMergedProgress(hooks.getLocalState())", cloud)
         self.assertIn("hooks?.applyMergedState?.(hydratedState)", cloud)
         self.assertIn("if (appReady) renderDashboard()", app)
 
@@ -389,7 +404,7 @@ class MobileInputTests(unittest.TestCase):
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         navigation = app.split("function bindGlobalNavigation()", 1)[1].split("function authErrorMessage", 1)[0]
         self.assertIn('aria-label="홈으로 새로고침 및 동기화"', index)
-        self.assertIn("syncCloudProgressNow(state, true)", navigation)
+        self.assertIn("syncCloudProgressNow(state)", navigation)
         self.assertIn("waitForCloudStartup", navigation)
         self.assertIn("window.location.reload()", navigation)
         self.assertNotIn("renderDashboard()", navigation)
@@ -403,13 +418,20 @@ class MobileInputTests(unittest.TestCase):
         self.assertIn("export function syncCloudProgressNow", cloud)
         self.assertIn("visibilitychange", cloud)
         self.assertIn("window.addEventListener('focus'", cloud)
+        self.assertIn("window.addEventListener('pageshow'", cloud)
+        self.assertIn("pendingState || hooks.getLocalState()", cloud)
+        self.assertIn("firestoreApi.onSnapshot", cloud)
+        self.assertIn("stopProgressSubscription()", cloud)
+        cloud_apply = app.split("function applyCloudMergedState(merged)", 1)[1].split("function applyPendingCloudMerge", 1)[0]
+        self.assertIn("storageSet(activeStorageKey", cloud_apply)
+        self.assertNotIn("saveState(", cloud_apply)
 
     def test_wortweg_favicon_and_install_icons_replace_the_browser_default(self):
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         manifest = (ROOT / "manifest.webmanifest").read_text(encoding="utf-8")
         worker = (ROOT / "sw.js").read_text(encoding="utf-8")
         workflow = (ROOT / ".github/workflows/pages.yml").read_text(encoding="utf-8")
-        self.assertIn("wortweg-v56", worker)
+        self.assertIn("wortweg-v57", worker)
         self.assertIn("wortweg-cache=${encodeURIComponent(CACHE)}", worker)
         self.assertIn("const responses=await Promise.all(ASSETS.map", worker)
         self.assertIn("cache.put(asset,responses[index])", worker)

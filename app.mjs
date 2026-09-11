@@ -1,6 +1,6 @@
 import { addDays, bilingualMeaning, calendarDayStatus, calendarStatusLabel, cohortLearningWordIds, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, incorrectPracticeItems, isExampleGapCorrect, isGermanHeadwordCorrect, isPerfectReverseAttempt, learningCardSides, learningTaskTitle, lessonOverview, mergeProgressStates, monthCalendarDays, practiceGroupWords, practiceWordsForCount, preferredGermanVoice, prioritizeReviewItems, pronounceableGerman, reverseAnswerHeadwords, reverseAttemptWordIds, reverseEnterAction, reviewChoicePool, sanitizeProgressState, shouldDeferCloudMerge, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts, validPracticeCount } from './src/core.mjs';
 import { createAccountWithPin, initializeCloudSync, queueCloudProgressSave, signInWithPin, signOutFromAccount, syncCloudProgressNow, waitForCloudStartup } from './src/cloud-sync.mjs';
-import { ANTONYM_PAIRS, PREFIX_CARDS, ROOT_FAMILIES, SUPPLEMENTAL_PRACTICE_WORDS, TOPIC_GROUPS } from './src/practice-data.mjs';
+import { ANTONYM_PAIRS, GRAMMAR_CASE_QUESTIONS, PREFIX_CARDS, ROOT_FAMILIES, SUPPLEMENTAL_PRACTICE_WORDS, TOPIC_GROUPS } from './src/practice-data.mjs';
 
 const STORAGE_KEY = 'wortweg-a1-progress-v1';
 const STORAGE_OWNER_KEY = `${STORAGE_KEY}:owner`;
@@ -81,7 +81,7 @@ function saveState(syncImmediately = false) {
 function applyCloudMergedState(merged) {
   state = sanitizeProgressState(mergeProgressStates(state, merged));
   normalizeDailyLearningCohorts();
-  saveState();
+  storageSet(activeStorageKey, JSON.stringify(state));
 }
 function applyPendingCloudMerge() {
   if (!pendingCloudMerge) return;
@@ -161,7 +161,7 @@ function renderDashboard() {
     </section>
     <div class="section-title extra-practice-title"><h2>Zusatzübung(추가 연습)</h2><span>배운 단어 ${completedLearnedWordIds(state.cohorts).length}개</span></div>
     <section class="task-list extra-practice-list">
-      <article class="task"><div class="task-icon">🧠</div><div class="task-copy"><h3>추가 연습 모아보기</h3><p>전체 단어 거꾸로 학습, 접두사, 주제별, 반대말과 관사 연습을 골라서 공부해요.</p></div><button class="primary" data-action="extra-practice">열기</button></article>
+      <article class="task"><div class="task-icon">🧠</div><div class="task-copy"><h3>추가 연습 모아보기</h3><p>전체 단어 거꾸로 학습, 접두사, 주제별, 반대말, 관사와 1·2·3·4격 연습을 골라서 공부해요.</p></div><button class="primary" data-action="extra-practice">열기</button></article>
     </section>
     ${calendar}
     <p class="source">어휘 출처: <a href="${GOETHE_SOURCE}" target="_blank" rel="noreferrer">Goethe-Zertifikat A1 공식 Wortliste(단어 목록)</a> · 로그인하면 계정별 클라우드에, 로그아웃 상태에서는 현재 기기에 진도가 저장됩니다.</p>`;
@@ -277,7 +277,7 @@ function renderExtraPracticeHub() {
   const rootCount = ROOT_FAMILIES.filter(group => resolvedPracticeItems(group, false).length >= 2).length;
   const topicCount = TOPIC_GROUPS.filter(group => resolvedPracticeItems(group).length > 0).length;
   const antonymCount = ANTONYM_PAIRS.length;
-  app.innerHTML = `<section class="practice-hub"><div class="session-head"><div><p class="eyebrow">Zusatzübung(추가 연습)</p><h1>원하는 방식으로 더 연습해요</h1></div><span class="pill">배운 단어 ${learnedCount}개</span></div><p class="practice-intro">추가 연습 결과는 학습 캘린더와 암기 완료 기록에 영향을 주지 않아요.</p><div class="practice-hub-grid">${practiceHubCard('🔄','전체 단어 학습','배운 단어 중 원하는 문제 수로 무작위 거꾸로 학습','all-words',learnedCount===0)}${practiceHubCard('🧩','접두사 변형 연습',`${rootCount}개 어근 그룹 · 미학습 추천 단어 포함`,'root-family',rootCount===0)}${practiceHubCard('🗂️','접두사 연습',`${PREFIX_CARDS.length}개 접두사 카드와 예시`,'prefix-cards')}${practiceHubCard('🏷️','주제별 연습',`${topicCount}개 주제에서 배운 단어 복습`,'topics',topicCount===0)}${practiceHubCard('↔️','반대말 연습',`${antonymCount}쌍 · 미학습 추천 단어 포함`,'antonyms',antonymCount===0)}${practiceHubCard('🧠','Nomen(명사) 관사 연습',`누적 명사 ${nounCount}개 · der/das/die`,'noun-articles',nounCount===0)}</div><button id="practiceHome" class="secondary practice-back">홈으로</button></section>`;
+  app.innerHTML = `<section class="practice-hub"><div class="session-head"><div><p class="eyebrow">Zusatzübung(추가 연습)</p><h1>원하는 방식으로 더 연습해요</h1></div><span class="pill">배운 단어 ${learnedCount}개</span></div><p class="practice-intro">추가 연습 결과는 학습 캘린더와 암기 완료 기록에 영향을 주지 않아요.</p><div class="practice-hub-grid">${practiceHubCard('🔄','전체 단어 학습','배운 단어 중 원하는 문제 수로 무작위 거꾸로 학습','all-words',learnedCount===0)}${practiceHubCard('🧩','접두사 변형 연습',`${rootCount}개 어근 그룹 · 미학습 추천 단어 포함`,'root-family',rootCount===0)}${practiceHubCard('🗂️','접두사 연습',`${PREFIX_CARDS.length}개 접두사 카드와 예시`,'prefix-cards')}${practiceHubCard('🏷️','주제별 연습',`${topicCount}개 주제에서 배운 단어 복습`,'topics',topicCount===0)}${practiceHubCard('↔️','반대말 연습',`${antonymCount}쌍 · 미학습 추천 단어 포함`,'antonyms',antonymCount===0)}${practiceHubCard('🧠','Nomen(명사) 관사 연습',`누적 명사 ${nounCount}개 · der/das/die`,'noun-articles',nounCount===0)}${practiceHubCard('🧭','관사·1/2/3/4격 문장 연습',`빈칸 4지선다 ${GRAMMAR_CASE_QUESTIONS.length}문제 · 관사와 대명사`,'case-grammar')}</div><button id="practiceHome" class="secondary practice-back">홈으로</button></section>`;
   document.querySelector('#practiceHome').onclick=renderDashboard;
   app.querySelectorAll('[data-practice]').forEach(button => button.onclick=()=>{
     const mode = button.dataset.practice;
@@ -287,7 +287,40 @@ function renderExtraPracticeHub() {
     else if (mode === 'topics') renderTopicPracticeHub();
     else if (mode === 'antonyms') startAntonymPractice();
     else if (mode === 'noun-articles') startNounArticleQuiz();
+    else if (mode === 'case-grammar') startCaseGrammarPractice();
   });
+}
+
+function startCaseGrammarPractice() {
+  const questions = shuffleCopy(GRAMMAR_CASE_QUESTIONS).map(question => ({
+    ...question,
+    choices: shuffleCopy(question.choices),
+  }));
+  renderCaseGrammarQuestion(questions, 0, 0);
+}
+
+function renderCaseGrammarQuestion(questions, index, correctCount, selectedChoice = null) {
+  resetPracticeScroll();
+  if (index >= questions.length) {
+    app.innerHTML = `<section class="complete case-grammar-result"><div class="celebrate">🧭</div><p class="eyebrow">관사·격 추가 연습</p><h1>${correctCount}/${questions.length} 정답</h1><p>1격 Nominativ부터 4격 Akkusativ까지 문장 속 형태를 확인했어요. 이 결과는 정규 진도에 저장되지 않아요.</p><div class="result-actions"><button id="backToPractice" class="secondary">추가 연습으로</button><button id="retryCaseGrammar" class="primary">다시 풀기</button></div></section>`;
+    document.querySelector('#backToPractice').onclick=renderExtraPracticeHub;
+    document.querySelector('#retryCaseGrammar').onclick=startCaseGrammarPractice;
+    return;
+  }
+  const question = questions[index];
+  const answered = selectedChoice !== null;
+  const correct = answered && selectedChoice === question.answer;
+  const [beforeBlank, afterBlank] = question.sentence.split('___');
+  const choiceClass = choice => answered ? choice === question.answer ? 'correct' : choice === selectedChoice ? 'wrong' : '' : '';
+  app.innerHTML = `<section class="session case-grammar-session"><div class="session-head"><div><p class="eyebrow">관사·격 추가 연습</p><h1>문장에 맞는 형태를 고르세요</h1></div><span class="pill">${index+1} / ${questions.length}</span></div><div class="progress-track"><div class="progress-bar" style="width:${(index/questions.length)*100}%"></div></div><article class="flashcard case-grammar-card"><div class="case-sentence">${escapeHtml(beforeBlank)}<span class="case-blank">${answered?escapeHtml(question.answer):'___'}</span>${escapeHtml(afterBlank)}</div><div class="case-choice-grid">${question.choices.map(choice=>`<button type="button" class="choice case-choice ${choiceClass(choice)}" data-case-choice="${escapeHtml(choice)}" ${answered?'disabled':''}>${escapeHtml(choice)}</button>`).join('')}</div>${answered?`<div class="feedback ${correct?'correct-text':'wrong-text'}" role="status" aria-live="polite">${correct?'✓ Richtig(정답)!':'✕ Noch nicht(아직 아니에요).'}</div><section class="case-explanation"><strong>${escapeHtml(question.caseLabel)}</strong><p>${escapeHtml(question.translation)}</p><small>${escapeHtml(question.explanation)}</small></section>`:''}</article><div class="card-actions"><button id="backToPractice" class="secondary">나가기</button>${answered?`<button id="nextCaseGrammar" class="primary">${index===questions.length-1?'결과 보기':'다음 문제'}</button>`:''}</div></section>`;
+  document.querySelector('#backToPractice').onclick=renderExtraPracticeHub;
+  if (answered) {
+    const nextButton = document.querySelector('#nextCaseGrammar');
+    nextButton.onclick=()=>renderCaseGrammarQuestion(questions,index+1,correctCount+(correct?1:0));
+    nextButton.focus();
+  } else {
+    document.querySelectorAll('[data-case-choice]').forEach(button => button.onclick=()=>renderCaseGrammarQuestion(questions,index,correctCount,button.dataset.caseChoice));
+  }
 }
 
 function renderAllWordsPracticeSetup() {
@@ -926,7 +959,7 @@ function bindGlobalNavigation() {
   document.querySelector('.brand').onclick=async event=>{
     event.preventDefault();
     try {
-      await waitForCloudStartup(syncCloudProgressNow(state, true), 1500);
+      await waitForCloudStartup(syncCloudProgressNow(state), 1500);
     } catch (error) {
       console.error('WortWeg logo sync failed', error);
     } finally {

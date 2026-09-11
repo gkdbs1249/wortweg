@@ -13,6 +13,7 @@ let pendingState = null;
 let saveTimer = null;
 let syncInFlight = false;
 let syncCompletion = Promise.resolve();
+let unsubscribeProgress = null;
 
 export async function waitForCloudStartup(startupPromise, timeoutMs = 5000) {
   let timeoutId;
@@ -40,6 +41,10 @@ export function cloudOperationIsCurrent(operationUserId, user) {
   return Boolean(operationUserId && user?.uid === operationUserId);
 }
 
+export function pendingStateAfterFailure(currentPending, failedState) {
+  return currentPending && currentPending !== failedState ? currentPending : failedState;
+}
+
 export function cloudSyncConfigured() {
   return Boolean(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.authDomain && FIREBASE_CONFIG.projectId && FIREBASE_CONFIG.appId);
 }
@@ -52,13 +57,37 @@ function reportStatus(status, message = '') {
   hooks?.onStatus?.({ status, message, user: currentUser });
 }
 
-async function writeMergedProgress(localState, applyMerged = false) {
+function stopProgressSubscription() {
+  unsubscribeProgress?.();
+  unsubscribeProgress = null;
+}
+
+function startProgressSubscription(userId) {
+  stopProgressSubscription();
+  if (!userId || typeof firestoreApi?.onSnapshot !== 'function') return;
+  const ref = progressRef(userId);
+  unsubscribeProgress = firestoreApi.onSnapshot(ref, snapshot => {
+    if (!cloudOperationIsCurrent(userId, currentUser) || !snapshot.exists()) return;
+    const latestLocalState = hooks.getLocalState();
+    const remoteState = snapshot.data().state || {};
+    const mergedState = mergeProgressStates(latestLocalState, remoteState);
+    if (JSON.stringify(mergedState) === JSON.stringify(latestLocalState)) return;
+    hooks?.applyMergedState?.(mergedState);
+    reportStatus('synced', '다른 기기의 최신 진도와 동기화됨');
+  }, error => {
+    if (!cloudOperationIsCurrent(userId, currentUser)) return;
+    reportStatus('offline', '실시간 동기화 연결을 다시 시도합니다.');
+    hooks?.onError?.(error);
+  });
+}
+
+async function writeMergedProgress(localState) {
   const operationUserId = currentUser?.uid;
   if (!operationUserId || !firestoreApi || !db) return localState;
   if (syncInFlight) {
     await syncCompletion;
     if (!cloudOperationIsCurrent(operationUserId, currentUser)) return localState;
-    return writeMergedProgress(localState, applyMerged);
+    return writeMergedProgress(localState);
   }
   let settleSync;
   syncCompletion = new Promise(resolve => { settleSync = resolve; });
@@ -82,17 +111,15 @@ async function writeMergedProgress(localState, applyMerged = false) {
       });
     });
     if (!cloudOperationIsCurrent(operationUserId, currentUser)) return localState;
-    if (applyMerged) {
-      const latestLocalState = hooks.getLocalState();
-      const hydratedState = mergeHydratedProgress(latestLocalState, mergedState, mergedSourceUpdatedAt);
-      hooks?.applyMergedState?.(hydratedState);
-    }
+    const latestLocalState = hooks.getLocalState();
+    const hydratedState = mergeHydratedProgress(latestLocalState, mergedState, mergedSourceUpdatedAt);
+    hooks?.applyMergedState?.(hydratedState);
     if (pendingState === localState) pendingState = null;
     reportStatus('synced', '클라우드에 저장됨');
     return mergedState;
   } catch (error) {
     if (!cloudOperationIsCurrent(operationUserId, currentUser)) return localState;
-    pendingState = localState;
+    pendingState = pendingStateAfterFailure(pendingState, localState);
     reportStatus('offline', navigator.onLine ? '동기화에 실패했어요. 다시 시도합니다.' : '오프라인 · 기기에 안전하게 저장됨');
     hooks?.onError?.(error);
     return localState;
@@ -119,12 +146,12 @@ export function queueCloudProgressSave(state) {
   }, 700);
 }
 
-export function syncCloudProgressNow(state, applyMerged = false) {
+export function syncCloudProgressNow(state) {
   pendingState = structuredClone(state);
   clearTimeout(saveTimer);
   const stateToSave = pendingState;
   if (!currentUser) return Promise.resolve(stateToSave);
-  return writeMergedProgress(stateToSave, applyMerged);
+  return writeMergedProgress(stateToSave);
 }
 
 export async function createAccountWithPin(accountId, pin) {
@@ -160,6 +187,7 @@ async function activateCloudModules([appModule, loadedAuthApi, loadedFirestoreAp
   authApi.onAuthStateChanged(auth, async user => {
     try {
       const profileChanged = currentUser?.uid !== user?.uid;
+      if (profileChanged) stopProgressSubscription();
       currentUser = user;
       if (profileChanged) {
         clearTimeout(saveTimer);
@@ -170,12 +198,13 @@ async function activateCloudModules([appModule, loadedAuthApi, loadedFirestoreAp
         reportStatus('signed-out', '로그인하면 여러 기기에서 진도가 이어져요.');
         return;
       }
+      startProgressSubscription(user.uid);
       reportStatus('syncing', '계정 진도를 불러오는 중…');
       if (settleInitialAuth) {
         settleInitialAuth();
         settleInitialAuth = null;
       }
-      await writeMergedProgress(hooks.getLocalState(), true);
+      await writeMergedProgress(hooks.getLocalState());
     } catch (error) {
       reportStatus('error', '계정 진도를 연결하지 못했어요.');
       hooks?.onError?.(error);
@@ -188,19 +217,22 @@ async function activateCloudModules([appModule, loadedAuthApi, loadedFirestoreAp
   });
 
   window.addEventListener('online', () => {
-    if (currentUser && pendingState) writeMergedProgress(pendingState);
+    if (currentUser) writeMergedProgress(pendingState || hooks.getLocalState());
   });
   let lastForegroundSyncAt = 0;
   const syncOnForeground = () => {
     const now = Date.now();
     if (!currentUser || now - lastForegroundSyncAt < 1000) return;
     lastForegroundSyncAt = now;
-    syncCloudProgressNow(hooks.getLocalState(), true);
+    syncCloudProgressNow(hooks.getLocalState());
   };
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') syncOnForeground();
   });
   window.addEventListener('focus', syncOnForeground);
+  window.addEventListener('pageshow', event => {
+    if (event.persisted) syncOnForeground();
+  });
   const authOutcome = await waitForCloudStartup(initialAuthReady);
   if (authOutcome.timedOut) {
     reportStatus('offline', '로그인 확인이 늦어 기기 진도로 먼저 열었어요. 확인되면 자동으로 동기화합니다.');

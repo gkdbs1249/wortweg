@@ -1,3 +1,33 @@
+export const GRAMMAR_CASE_QUESTIONS = [
+  { id:'nom-m-def', caseNumber:1, caseLabel:'1격 · Nominativ(주격)', sentence:'___ Mann ist mein Lehrer.', choices:['der','den','dem','des'], answer:'der', translation:'그 남자는 나의 선생님이다.', explanation:'Mann이 문장의 주어이므로 1격이에요. 남성 정관사 1격은 der예요.' },
+  { id:'nom-f-def', caseNumber:1, caseLabel:'1격 · Nominativ(주격)', sentence:'___ Frau kommt aus Köln.', choices:['die','der','den','das'], answer:'die', translation:'그 여자는 쾰른에서 온다.', explanation:'Frau가 행동하는 주어이므로 1격이에요. 여성 정관사 1격은 die예요.' },
+  { id:'nom-n-def', caseNumber:1, caseLabel:'1격 · Nominativ(주격)', sentence:'___ Kind spielt im Garten.', choices:['das','dem','des','den'], answer:'das', translation:'그 아이는 정원에서 논다.', explanation:'Kind가 행동하는 주어이므로 1격이에요. 중성 정관사 1격은 das예요.' },
+  { id:'nom-pl-def', caseNumber:1, caseLabel:'1격 · Nominativ(주격)', sentence:'___ Kinder lernen Deutsch.', choices:['die','den','der','das'], answer:'die', translation:'그 아이들은 독일어를 배운다.', explanation:'Kinder가 문장의 주어예요. 복수 정관사 1격은 die예요.' },
+  { id:'nom-m-indef', caseNumber:1, caseLabel:'1격 · Nominativ(주격)', sentence:'Das ist ___ Freund von Anna.', choices:['ein','einen','einem','eines'], answer:'ein', translation:'이 사람은 안나의 친구 한 명이다.', explanation:'sein 뒤에서 주어를 설명하는 Freund도 1격이에요. 남성 부정관사 1격은 ein이에요.' },
+  { id:'nom-f-indef', caseNumber:1, caseLabel:'1격 · Nominativ(주격)', sentence:'Sie ist ___ Lehrerin.', choices:['eine','einer','einen','einem'], answer:'eine', translation:'그녀는 선생님이다.', explanation:'sein 뒤에서 주어를 설명하는 Lehrerin은 1격이에요. 여성 부정관사 1격은 eine예요.' },
+
+  { id:'gen-m-def', caseNumber:2, caseLabel:'2격 · Genitiv(소유격)', sentence:'Das Auto ___ Mannes ist neu.', choices:['der','den','dem','des'], answer:'des', translation:'그 남자의 자동차는 새것이다.', explanation:'누구의 자동차인지 나타내므로 2격이에요. 남성 정관사 2격은 des이고 Mann에는 -es가 붙어요.' },
+  { id:'gen-f-def', caseNumber:2, caseLabel:'2격 · Genitiv(소유격)', sentence:'Die Tasche ___ Frau ist rot.', choices:['die','der','den','dem'], answer:'der', translation:'그 여자의 가방은 빨간색이다.', explanation:'누구의 가방인지 나타내므로 2격이에요. 여성 정관사 2격은 der예요.' },
+  { id:'gen-n-def', caseNumber:2, caseLabel:'2격 · Genitiv(소유격)', sentence:'Das Spielzeug ___ Kindes liegt hier.', choices:['das','des','dem','den'], answer:'des', translation:'그 아이의 장난감이 여기에 있다.', explanation:'누구의 장난감인지 나타내므로 2격이에요. 중성 정관사 2격은 des이고 Kind에는 -es가 붙어요.' },
+  { id:'gen-pl-def', caseNumber:2, caseLabel:'2격 · Genitiv(소유격)', sentence:'Die Eltern ___ Kinder arbeiten.', choices:['die','der','den','des'], answer:'der', translation:'그 아이들의 부모님은 일한다.', explanation:'누구의 부모님인지 나타내므로 2격이에요. 복수 정관사 2격은 der예요.' },
+  { id:'gen-m-indef', caseNumber:2, caseLabel:'2격 · Genitiv(소유격)', sentence:'Das ist der Name ___ Freundes.', choices:['ein','einen','einem','eines'], answer:'eines', translation:'이것은 한 친구의 이름이다.', explanation:'누구의 이름인지 나타내므로 2격이에요. 남성 부정관사 2격은 eines예요.' },
+  { id:'gen-f-indef', caseNumber:2, caseLabel:'2격 · Genitiv(소유격)', sentence:'Die Farbe ___ Tasche gefällt mir.', choices:['eine','einer','einen','einem'], answer:'einer', translation:'한 가방의 색이 내 마음에 든다.', explanation:'어느 가방의 색인지 나타내므로 2격이에요. 여성 부정관사 2격은 einer예요.' },
+
+  { id:'dat-m-help', caseNumber:3, caseLabel:'3격 · Dativ(여격)', sentence:'Ich helfe ___ Mann.', choices:['der','den','dem','des'], answer:'dem', translation:'나는 그 남자를 돕는다.', explanation:'helfen은 도움을 받는 사람을 3격으로 써요. 남성 정관사 3격은 dem이에요.' },
+  { id:'dat-f-thank', caseNumber:3, caseLabel:'3격 · Dativ(여격)', sentence:'Wir danken ___ Frau.', choices:['die','der','den','dem'], answer:'der', translation:'우리는 그 여자에게 감사한다.', explanation:'danken은 감사의 대상을 3격으로 써요. 여성 정관사 3격은 der예요.' },
+  { id:'dat-n-belong', caseNumber:3, caseLabel:'3격 · Dativ(여격)', sentence:'Das Buch gehört ___ Kind.', choices:['das','des','dem','den'], answer:'dem', translation:'그 책은 그 아이의 것이다.', explanation:'gehören은 소유자를 3격으로 써요. 중성 정관사 3격은 dem이에요.' },
+  { id:'dat-pl-mit', caseNumber:3, caseLabel:'3격 · Dativ(여격)', sentence:'Anna spielt mit ___ Kindern.', choices:['die','der','den','dem'], answer:'den', translation:'안나는 그 아이들과 함께 논다.', explanation:'mit는 항상 3격을 요구해요. 복수는 den Kindern처럼 명사에도 보통 -n이 붙어요.' },
+  { id:'dat-n-give', caseNumber:3, caseLabel:'3격 · Dativ(여격)', sentence:'Sie gibt ___ Kind einen Apfel.', choices:['ein','einen','einem','eines'], answer:'einem', translation:'그녀는 한 아이에게 사과 하나를 준다.', explanation:'geben에서 물건을 받는 사람은 3격이에요. 중성 부정관사 3격은 einem이에요.' },
+  { id:'dat-pronoun-like', caseNumber:3, caseLabel:'3격 · Dativ(여격)', sentence:'Der Film gefällt ___.', choices:['ich','mich','mir','meiner'], answer:'mir', translation:'그 영화가 내 마음에 든다.', explanation:'gefallen은 마음에 들어 하는 사람을 3격으로 써요. ich의 3격은 mir예요.' },
+
+  { id:'acc-m-see', caseNumber:4, caseLabel:'4격 · Akkusativ(목적격)', sentence:'Ich sehe ___ Mann.', choices:['der','den','dem','des'], answer:'den', translation:'나는 그 남자를 본다.', explanation:'sehen의 직접 목적어는 4격이에요. 남성 정관사 4격은 den이에요.' },
+  { id:'acc-f-visit', caseNumber:4, caseLabel:'4격 · Akkusativ(목적격)', sentence:'Wir besuchen ___ Frau.', choices:['die','der','den','dem'], answer:'die', translation:'우리는 그 여자를 방문한다.', explanation:'besuchen의 직접 목적어는 4격이에요. 여성 정관사 4격은 die예요.' },
+  { id:'acc-n-need', caseNumber:4, caseLabel:'4격 · Akkusativ(목적격)', sentence:'Er braucht ___ Auto.', choices:['ein','einen','einem','eines'], answer:'ein', translation:'그는 자동차 한 대가 필요하다.', explanation:'brauchen의 직접 목적어는 4격이에요. 중성 부정관사 4격은 1격과 같은 ein이에요.' },
+  { id:'acc-f-buy', caseNumber:4, caseLabel:'4격 · Akkusativ(목적격)', sentence:'Sie kauft ___ Tasche.', choices:['eine','einer','einen','einem'], answer:'eine', translation:'그녀는 가방 하나를 산다.', explanation:'kaufen의 직접 목적어는 4격이에요. 여성 부정관사 4격은 eine예요.' },
+  { id:'acc-pronoun-see', caseNumber:4, caseLabel:'4격 · Akkusativ(목적격)', sentence:'Ich sehe ___.', choices:['er','ihn','ihm','seiner'], answer:'ihn', translation:'나는 그를 본다.', explanation:'sehen은 목적어를 4격으로 써요. er의 4격은 ihn이에요.' },
+  { id:'acc-pronoun-ask', caseNumber:4, caseLabel:'4격 · Akkusativ(목적격)', sentence:'Das Kind fragt ___.', choices:['ich','mich','mir','meiner'], answer:'mich', translation:'그 아이가 나에게 묻는다.', explanation:'fragen은 묻는 대상을 4격으로 써요. ich의 4격은 mich예요.' },
+];
+
 export const SUPPLEMENTAL_PRACTICE_WORDS = [
   { id:'practice-aufmachen', german:'aufmachen', korean:'열다', english:'open' },
   { id:'practice-zumachen', german:'zumachen', korean:'닫다', english:'close' },
