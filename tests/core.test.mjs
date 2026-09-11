@@ -27,6 +27,7 @@ import {
   monthCalendarDays,
   normalizeAnswer,
   nounArticleQuestion,
+  preferredGermanVoice,
   prioritizeReviewItems,
   practiceGroupWords,
   practiceWordsForCount,
@@ -42,6 +43,17 @@ import {
   summarizeReverseAttempts,
   validPracticeCount,
 } from '../src/core.mjs';
+
+test('German speech keeps Anna on Apple and falls back to a Microsoft de-DE voice', () => {
+  const anna = { name: 'Anna', lang: 'de-DE' };
+  const microsoft = { name: 'Microsoft Katja Online (Natural) - German (Germany)', lang: 'de-DE' };
+  const austrianMicrosoft = { name: 'Microsoft Michael - German (Austria)', lang: 'de-AT' };
+  const generic = { name: 'Generic German', lang: 'de-DE' };
+
+  assert.equal(preferredGermanVoice([microsoft, anna]), anna);
+  assert.equal(preferredGermanVoice([generic, austrianMicrosoft, microsoft]), microsoft);
+  assert.equal(preferredGermanVoice([austrianMicrosoft, generic]), null);
+});
 
 test('cloud hydration is deferred while an exercise or result screen is active', () => {
   assert.equal(shouldDeferCloudMerge({ appReady: false, dashboardVisible: false }), false);

@@ -1,5 +1,16 @@
 const DAY_MS = 24 * 60 * 60 * 1000;
 
+export function preferredGermanVoice(voices = []) {
+  const germanGermany = voices.filter(voice =>
+    String(voice?.lang || '').toLowerCase() === 'de-de'
+  );
+  return germanGermany.find(voice =>
+    String(voice?.name || '').toLowerCase().includes('anna')
+  ) || germanGermany.find(voice =>
+    String(voice?.name || '').toLowerCase().includes('microsoft')
+  ) || null;
+}
+
 export function normalizeAnswer(value) {
   return String(value ?? '').normalize('NFC').trim().toLocaleLowerCase('de-DE').replace(/\s+/g, ' ');
 }

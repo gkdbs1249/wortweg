@@ -1,4 +1,4 @@
-import { addDays, bilingualMeaning, calendarDayStatus, calendarStatusLabel, cohortLearningWordIds, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, incorrectPracticeItems, isExampleGapCorrect, isGermanHeadwordCorrect, isPerfectReverseAttempt, learningCardSides, learningTaskTitle, lessonOverview, mergeProgressStates, monthCalendarDays, practiceGroupWords, practiceWordsForCount, prioritizeReviewItems, pronounceableGerman, reverseAnswerHeadwords, reverseAttemptWordIds, reverseEnterAction, reviewChoicePool, sanitizeProgressState, shouldDeferCloudMerge, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts, validPracticeCount } from './src/core.mjs';
+import { addDays, bilingualMeaning, calendarDayStatus, calendarStatusLabel, cohortLearningWordIds, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, incorrectPracticeItems, isExampleGapCorrect, isGermanHeadwordCorrect, isPerfectReverseAttempt, learningCardSides, learningTaskTitle, lessonOverview, mergeProgressStates, monthCalendarDays, practiceGroupWords, practiceWordsForCount, preferredGermanVoice, prioritizeReviewItems, pronounceableGerman, reverseAnswerHeadwords, reverseAttemptWordIds, reverseEnterAction, reviewChoicePool, sanitizeProgressState, shouldDeferCloudMerge, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts, validPracticeCount } from './src/core.mjs';
 import { createAccountWithPin, initializeCloudSync, queueCloudProgressSave, signInWithPin, signOutFromAccount, syncCloudProgressNow, waitForCloudStartup } from './src/cloud-sync.mjs';
 import { ANTONYM_PAIRS, PREFIX_CARDS, ROOT_FAMILIES, SUPPLEMENTAL_PRACTICE_WORDS, TOPIC_GROUPS } from './src/practice-data.mjs';
 
@@ -213,11 +213,9 @@ function speakGerman(text, rate, button) {
     return;
   }
   refreshGermanVoices();
-  const voice = availableGermanVoices.find(voice =>
-    voice.lang.toLowerCase() === 'de-de' && voice.name.toLowerCase().includes('anna')
-  );
+  const voice = preferredGermanVoice(availableGermanVoices);
   if (!voice) {
-    alert('Anna 독일어 음성을 찾지 못했어요. 기기 설정에서 독일어(독일) Anna 음성을 설치한 뒤 다시 시도해주세요.');
+    alert('독일어(독일) 음성을 찾지 못했어요. Apple 기기에서는 Anna, Windows에서는 Microsoft 독일어 음성을 설치한 뒤 다시 시도해주세요.');
     return;
   }
   window.speechSynthesis.cancel();
