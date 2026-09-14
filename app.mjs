@@ -182,6 +182,8 @@ function renderDashboard() {
 }
 
 let availableGermanVoices = [];
+let activeGermanUtterance = null;
+let pendingGermanSpeechTimer = null;
 
 function pronunciationButton(text, label = '발음 듣기', rate = 0.86) {
   const spoken = pronounceableGerman(text);
@@ -192,7 +194,7 @@ function pronunciationButton(text, label = '발음 듣기', rate = 0.86) {
 function refreshGermanVoices() {
   if (!('speechSynthesis' in window)) return;
   availableGermanVoices = window.speechSynthesis.getVoices()
-    .filter(voice => voice.lang.toLowerCase().startsWith('de'));
+    .filter(voice => String(voice?.lang || '').toLowerCase().startsWith('de'));
 }
 
 function resetPronunciationButtons() {
@@ -203,6 +205,11 @@ function resetPronunciationButtons() {
 }
 
 function stopGermanSpeech() {
+  if (pendingGermanSpeechTimer !== null) {
+    clearTimeout(pendingGermanSpeechTimer);
+    pendingGermanSpeechTimer = null;
+  }
+  activeGermanUtterance = null;
   if ('speechSynthesis' in window) window.speechSynthesis.cancel();
   resetPronunciationButtons();
 }
@@ -212,26 +219,39 @@ function speakGerman(text, rate, button) {
     alert('이 기기에서는 독일어 음성 재생을 지원하지 않아요.');
     return;
   }
+  if (pendingGermanSpeechTimer !== null) {
+    clearTimeout(pendingGermanSpeechTimer);
+    pendingGermanSpeechTimer = null;
+  }
   refreshGermanVoices();
   const voice = preferredGermanVoice(availableGermanVoices);
-  if (!voice) {
-    alert('독일어(독일) 음성을 찾지 못했어요. Apple 기기에서는 Anna, Windows에서는 Microsoft 독일어 음성을 설치한 뒤 다시 시도해주세요.');
-    return;
-  }
-  window.speechSynthesis.cancel();
-  resetPronunciationButtons();
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = 'de-DE';
-  utterance.voice = voice;
+  if (voice) utterance.voice = voice;
   utterance.rate = rate;
   utterance.pitch = 1;
+  resetPronunciationButtons();
   if (button) {
     button.classList.add('speaking');
     button.setAttribute('aria-pressed', 'true');
   }
-  utterance.onend = resetPronunciationButtons;
-  utterance.onerror = resetPronunciationButtons;
-  window.speechSynthesis.speak(utterance);
+  const finish = () => {
+    if (activeGermanUtterance === utterance) activeGermanUtterance = null;
+    resetPronunciationButtons();
+  };
+  utterance.onend = finish;
+  utterance.onerror = finish;
+  const play = () => {
+    pendingGermanSpeechTimer = null;
+    activeGermanUtterance = utterance;
+    window.speechSynthesis.speak(utterance);
+  };
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+    window.speechSynthesis.cancel();
+    pendingGermanSpeechTimer = setTimeout(play, 0);
+  } else {
+    play();
+  }
 }
 
 function bindPronunciation() {

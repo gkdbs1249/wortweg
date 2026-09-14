@@ -44,15 +44,20 @@ import {
   validPracticeCount,
 } from '../src/core.mjs';
 
-test('German speech keeps Anna on Apple and falls back to a Microsoft de-DE voice', () => {
+test('German speech keeps Anna first and falls back to any available German voice', () => {
   const anna = { name: 'Anna', lang: 'de-DE' };
   const microsoft = { name: 'Microsoft Katja Online (Natural) - German (Germany)', lang: 'de-DE' };
   const austrianMicrosoft = { name: 'Microsoft Michael - German (Austria)', lang: 'de-AT' };
-  const generic = { name: 'Generic German', lang: 'de-DE' };
+  const generic = { name: 'Google Deutsch', lang: 'de-DE' };
+  const swiss = { name: 'German Switzerland', lang: 'de-CH' };
+  const english = { name: 'Samantha', lang: 'en-US' };
 
   assert.equal(preferredGermanVoice([microsoft, anna]), anna);
   assert.equal(preferredGermanVoice([generic, austrianMicrosoft, microsoft]), microsoft);
-  assert.equal(preferredGermanVoice([austrianMicrosoft, generic]), null);
+  assert.equal(preferredGermanVoice([english, swiss, generic]), generic);
+  assert.equal(preferredGermanVoice([english, swiss]), swiss);
+  assert.equal(preferredGermanVoice([english]), null);
+  assert.equal(preferredGermanVoice([]), null);
 });
 
 test('cloud hydration is deferred while an exercise or result screen is active', () => {

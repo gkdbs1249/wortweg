@@ -8,6 +8,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class MobileInputTests(unittest.TestCase):
+    def test_tts_fix_bumps_the_installed_pwa_cache(self):
+        worker = (ROOT / "sw.js").read_text(encoding="utf-8")
+        self.assertIn("const CACHE='wortweg-v58';", worker)
+
     def test_reverse_answer_input_has_ios_safe_inline_font_size(self):
         app = (ROOT / "app.mjs").read_text(encoding="utf-8")
         match = re.search(
@@ -74,7 +78,7 @@ class MobileInputTests(unittest.TestCase):
         self.assertRegex(styles, r"\.example-token\{[^}]*min-height:44px")
         self.assertRegex(styles, r"#exampleAnswer\{[^}]*font-size:20px")
 
-    def test_pronunciation_prefers_anna_then_windows_microsoft_german(self):
+    def test_pronunciation_prefers_anna_and_keeps_cross_platform_playback_available(self):
         app = (ROOT / "app.mjs").read_text(encoding="utf-8")
         core = (ROOT / "src" / "core.mjs").read_text(encoding="utf-8")
         styles = (ROOT / "styles.css").read_text(encoding="utf-8")
@@ -92,12 +96,14 @@ class MobileInputTests(unittest.TestCase):
         self.assertIn("aria-pressed=\"false\"", app)
         self.assertIn("utterance.onend", app)
         self.assertIn("if (event.target.closest('button')) stopGermanSpeech();", app)
-        self.assertIn("voice.lang.toLowerCase().startsWith('de')", app)
+        self.assertIn("String(voice?.lang || '').toLowerCase().startsWith('de')", app)
         self.assertIn("preferredGermanVoice(availableGermanVoices)", app)
         self.assertIn("includes('anna')", core)
         self.assertIn("includes('microsoft')", core)
         self.assertLess(core.index("includes('anna')"), core.index("includes('microsoft')"))
-        self.assertIn("Windows에서는 Microsoft 독일어 음성을 설치", app)
+        self.assertIn("if (voice) utterance.voice = voice;", app)
+        self.assertIn("window.speechSynthesis.speaking || window.speechSynthesis.pending", app)
+        self.assertNotIn("Windows에서는 Microsoft 독일어 음성을 설치", app)
         self.assertNotIn("availableGermanVoices.at(0)", app)
         self.assertNotIn("voices[0]", app)
         self.assertRegex(styles, r"\.pronunciation-button\{[^}]*min-height:44px")
@@ -431,7 +437,7 @@ class MobileInputTests(unittest.TestCase):
         manifest = (ROOT / "manifest.webmanifest").read_text(encoding="utf-8")
         worker = (ROOT / "sw.js").read_text(encoding="utf-8")
         workflow = (ROOT / ".github/workflows/pages.yml").read_text(encoding="utf-8")
-        self.assertIn("wortweg-v57", worker)
+        self.assertIn("wortweg-v58", worker)
         self.assertIn("wortweg-cache=${encodeURIComponent(CACHE)}", worker)
         self.assertIn("const responses=await Promise.all(ASSETS.map", worker)
         self.assertIn("cache.put(asset,responses[index])", worker)
