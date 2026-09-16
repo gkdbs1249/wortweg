@@ -1,4 +1,4 @@
-import { addDays, bilingualMeaning, calendarDayStatus, calendarStatusLabel, cohortLearningWordIds, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, incorrectPracticeItems, isExampleGapCorrect, isGermanHeadwordCorrect, isPerfectReverseAttempt, learningCardSides, learningTaskTitle, lessonOverview, mergeProgressStates, monthCalendarDays, practiceGroupWords, practiceWordsForCount, preferredGermanVoice, prioritizeReviewItems, pronounceableGerman, reverseAnswerHeadwords, reverseAttemptWordIds, reverseEnterAction, reviewChoicePool, sanitizeProgressState, shouldDeferCloudMerge, shuffleCopy, summarizeLearningDay, summarizeReverseAttempts, validPracticeCount } from './src/core.mjs';
+import { addDays, bilingualMeaning, calendarDayStatus, calendarStatusLabel, cohortLearningWordIds, completedLearnedWordIds, cumulativeNounQuestions, dueReviews, exampleClozeQuestion, exampleFormExplanation, examplePromptParts, extendCohortWithWords, finalFailures, incorrectPracticeItems, isExampleGapCorrect, isGermanHeadwordCorrect, isPerfectReverseAttempt, learningCardSides, learningTaskTitle, lessonOverview, mergeProgressStates, monthCalendarDays, practiceGroupWords, practiceWordsForCount, preferredGermanVoice, prioritizeReviewItems, pronounceableGerman, reverseAnswerHeadwords, reverseAttemptWordIds, reverseEnterAction, reviewChoicePool, sanitizeProgressState, shouldRenderCloudMerge, shuffleCopy, stagedCloudMergeState, summarizeLearningDay, summarizeReverseAttempts, validPracticeCount } from './src/core.mjs';
 import { createAccountWithPin, initializeCloudSync, queueCloudProgressSave, signInWithPin, signOutFromAccount, syncCloudProgressNow, waitForCloudStartup } from './src/cloud-sync.mjs';
 import { ANTONYM_PAIRS, GRAMMAR_CASE_QUESTIONS, PREFIX_CARDS, ROOT_FAMILIES, SUPPLEMENTAL_PRACTICE_WORDS, TOPIC_GROUPS } from './src/practice-data.mjs';
 
@@ -74,21 +74,27 @@ function switchLocalProfile(user) {
 function defaultState() { return { dailyCount: 20, nextIndex: 0, carryIds: [], cohorts: [], totalAnswers: 0, correctAnswers: 0 }; }
 function saveState(syncImmediately = false) {
   state.updatedAt = new Date().toISOString();
-  storageSet(activeStorageKey, JSON.stringify(state));
-  if (syncImmediately) syncCloudProgressNow(state);
-  else queueCloudProgressSave(state);
+  const stateToSave = pendingCloudMerge
+    ? stagedCloudMergeState(state, pendingCloudMerge)
+    : state;
+  if (pendingCloudMerge) pendingCloudMerge = stateToSave;
+  storageSet(activeStorageKey, JSON.stringify(stateToSave));
+  if (syncImmediately) syncCloudProgressNow(stateToSave);
+  else queueCloudProgressSave(stateToSave);
 }
 function applyCloudMergedState(merged) {
   state = sanitizeProgressState(mergeProgressStates(state, merged));
   normalizeDailyLearningCohorts();
   storageSet(activeStorageKey, JSON.stringify(state));
 }
+
 function applyPendingCloudMerge() {
   if (!pendingCloudMerge) return;
-  const merged = mergeProgressStates(state, pendingCloudMerge);
+  const merged = stagedCloudMergeState(state, pendingCloudMerge);
   pendingCloudMerge = null;
   applyCloudMergedState(merged);
 }
+
 function todayKst() { return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()); }
 function examDays() { return Math.max(0, Math.ceil((Date.parse(`${EXAM_DATE}T00:00:00+09:00`) - Date.parse(`${todayKst()}T00:00:00+09:00`)) / 86400000)); }
 function escapeHtml(value) { return String(value).replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char])); }
@@ -1052,14 +1058,14 @@ function bindAuth() {
     getLocalState: () => structuredClone(state),
     applyMergedState: merged => {
       const dashboardVisible = Boolean(app.querySelector('.hero'));
-      if (shouldDeferCloudMerge({ appReady, dashboardVisible })) {
-        pendingCloudMerge = pendingCloudMerge
-          ? mergeProgressStates(pendingCloudMerge, merged)
-          : structuredClone(merged);
+      if (appReady && !dashboardVisible) {
+        pendingCloudMerge = stagedCloudMergeState(state, pendingCloudMerge, merged);
+        storageSet(activeStorageKey, JSON.stringify(pendingCloudMerge));
         return;
       }
+      pendingCloudMerge = null;
       applyCloudMergedState(merged);
-      if (appReady) renderDashboard();
+      if (shouldRenderCloudMerge({ appReady, dashboardVisible })) renderDashboard();
     },
     onUserChanged: user => {
       switchLocalProfile(user);

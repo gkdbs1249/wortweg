@@ -776,8 +776,13 @@ function mergeCohort(left = {}, right = {}) {
   };
 }
 
-export function shouldDeferCloudMerge({ appReady, dashboardVisible }) {
-  return Boolean(appReady && !dashboardVisible);
+export function shouldRenderCloudMerge({ appReady, dashboardVisible }) {
+  return Boolean(appReady && dashboardVisible);
+}
+
+export function stagedCloudMergeState(local = {}, pending = null, incoming = {}) {
+  const baseline = pending ? mergeProgressStates(local, pending) : local;
+  return mergeProgressStates(baseline, incoming);
 }
 
 export function mergeProgressStates(local = {}, remote = {}) {

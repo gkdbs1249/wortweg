@@ -38,7 +38,8 @@ import {
   reviewChoicePool,
   sanitizeProgressState,
   shuffleCopy,
-  shouldDeferCloudMerge,
+  shouldRenderCloudMerge,
+  stagedCloudMergeState,
   summarizeLearningDay,
   summarizeReverseAttempts,
   validPracticeCount,
@@ -60,10 +61,30 @@ test('German speech keeps Anna first and falls back to any available German voic
   assert.equal(preferredGermanVoice([]), null);
 });
 
-test('cloud hydration is deferred while an exercise or result screen is active', () => {
-  assert.equal(shouldDeferCloudMerge({ appReady: false, dashboardVisible: false }), false);
-  assert.equal(shouldDeferCloudMerge({ appReady: true, dashboardVisible: true }), false);
-  assert.equal(shouldDeferCloudMerge({ appReady: true, dashboardVisible: false }), true);
+test('cloud hydration applies immediately but rerenders only a visible dashboard', () => {
+  assert.equal(shouldRenderCloudMerge({ appReady: false, dashboardVisible: false }), false);
+  assert.equal(shouldRenderCloudMerge({ appReady: true, dashboardVisible: true }), true);
+  assert.equal(shouldRenderCloudMerge({ appReady: true, dashboardVisible: false }), false);
+});
+
+test('staged cloud hydration preserves active local work and consecutive remote updates', () => {
+  const local = {
+    cohorts: [{ id:'local', learnedDate:'2026-09-16', wordIds:['local-word'], learningDone:false }],
+  };
+  const firstRemote = {
+    cohorts: [{ id:'remote-1', learnedDate:'2026-09-15', wordIds:['remote-word-1'], learningDone:true }],
+  };
+  const secondRemote = {
+    cohorts: [{ id:'remote-2', learnedDate:'2026-09-14', wordIds:['remote-word-2'], learningDone:true }],
+  };
+
+  const stagedOnce = stagedCloudMergeState(local, null, firstRemote);
+  const stagedTwice = stagedCloudMergeState(local, stagedOnce, secondRemote);
+
+  assert.deepEqual(
+    stagedTwice.cohorts.map(cohort => cohort.wordIds[0]).sort(),
+    ['local-word', 'remote-word-1', 'remote-word-2'],
+  );
 });
 
 test('review choices exclude synonyms that make the prompt or answer ambiguous', () => {

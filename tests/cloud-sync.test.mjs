@@ -1,6 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { cloudOperationIsCurrent, mergeHydratedProgress, pendingStateAfterFailure, waitForCloudStartup } from '../src/cloud-sync.mjs';
+import {
+  CLOUD_SAVE_DEBOUNCE_MS,
+  cloudOperationIsCurrent,
+  mergeHydratedProgress,
+  pendingStateAfterFailure,
+  scheduleCloudSave,
+  waitForCloudStartup,
+} from '../src/cloud-sync.mjs';
 
 test('cloud writes and hydration results belong only to the user that started them', () => {
   assert.equal(cloudOperationIsCurrent('user-a', { uid: 'user-a' }), true);
@@ -45,4 +52,33 @@ test('a failed older write cannot replace a newer pending progress state', () =>
   assert.equal(pendingStateAfterFailure(newerPending, olderWrite), newerPending);
   assert.equal(pendingStateAfterFailure(olderWrite, olderWrite), olderWrite);
   assert.equal(pendingStateAfterFailure(null, olderWrite), olderWrite);
+});
+
+test('cloud saves start quickly and use the newest state when the timer fires', () => {
+  const cancelled = [];
+  const writes = [];
+  let scheduledDelay = null;
+  let scheduledCallback = null;
+  let pending = { nextIndex: 1 };
+
+  const timer = scheduleCloudSave({
+    previousTimer: 'old-timer',
+    getPendingState: () => pending,
+    write: state => writes.push(state),
+    cancelTimer: value => cancelled.push(value),
+    setTimer: (callback, delay) => {
+      scheduledCallback = callback;
+      scheduledDelay = delay;
+      return 'new-timer';
+    },
+  });
+
+  pending = { nextIndex: 2 };
+  scheduledCallback();
+
+  assert.equal(timer, 'new-timer');
+  assert.deepEqual(cancelled, ['old-timer']);
+  assert.equal(scheduledDelay, CLOUD_SAVE_DEBOUNCE_MS);
+  assert.ok(scheduledDelay <= 100);
+  assert.deepEqual(writes, [{ nextIndex: 2 }]);
 });

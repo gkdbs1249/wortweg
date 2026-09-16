@@ -10,7 +10,9 @@ ROOT = Path(__file__).resolve().parents[1]
 class MobileInputTests(unittest.TestCase):
     def test_tts_fix_bumps_the_installed_pwa_cache(self):
         worker = (ROOT / "sw.js").read_text(encoding="utf-8")
-        self.assertIn("const CACHE='wortweg-v58';", worker)
+        cache_version = re.search(r"const CACHE='wortweg-v(\d+)';", worker)
+        self.assertIsNotNone(cache_version)
+        self.assertGreaterEqual(int(cache_version.group(1)), 58)
 
     def test_reverse_answer_input_has_ios_safe_inline_font_size(self):
         app = (ROOT / "app.mjs").read_text(encoding="utf-8")
@@ -288,7 +290,7 @@ class MobileInputTests(unittest.TestCase):
         self.assertLess(cloud.index("settleInitialAuth();"), cloud.index("await writeMergedProgress(hooks.getLocalState())"))
         self.assertIn("writeMergedProgress(hooks.getLocalState())", cloud)
         self.assertIn("hooks?.applyMergedState?.(hydratedState)", cloud)
-        self.assertIn("if (appReady) renderDashboard()", app)
+        self.assertIn("if (shouldRenderCloudMerge({ appReady, dashboardVisible })) renderDashboard()", app)
 
     def test_delayed_sdk_reconnects_and_hydration_preserves_newer_local_state(self):
         app = (ROOT / "app.mjs").read_text(encoding="utf-8")
@@ -419,7 +421,7 @@ class MobileInputTests(unittest.TestCase):
         app = (ROOT / "app.mjs").read_text(encoding="utf-8")
         cloud = (ROOT / "src" / "cloud-sync.mjs").read_text(encoding="utf-8")
         self.assertIn("function saveState(syncImmediately = false)", app)
-        self.assertIn("if (syncImmediately) syncCloudProgressNow(state)", app)
+        self.assertIn("if (syncImmediately) syncCloudProgressNow(stateToSave)", app)
         self.assertGreaterEqual(app.count("saveState(true)"), 3)
         self.assertIn("export function syncCloudProgressNow", cloud)
         self.assertIn("visibilitychange", cloud)
@@ -437,7 +439,7 @@ class MobileInputTests(unittest.TestCase):
         manifest = (ROOT / "manifest.webmanifest").read_text(encoding="utf-8")
         worker = (ROOT / "sw.js").read_text(encoding="utf-8")
         workflow = (ROOT / ".github/workflows/pages.yml").read_text(encoding="utf-8")
-        self.assertIn("wortweg-v58", worker)
+        self.assertRegex(worker, r"const CACHE='wortweg-v\d+';")
         self.assertIn("wortweg-cache=${encodeURIComponent(CACHE)}", worker)
         self.assertIn("const responses=await Promise.all(ASSETS.map", worker)
         self.assertIn("cache.put(asset,responses[index])", worker)

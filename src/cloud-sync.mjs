@@ -15,6 +15,23 @@ let syncInFlight = false;
 let syncCompletion = Promise.resolve();
 let unsubscribeProgress = null;
 
+export const CLOUD_SAVE_DEBOUNCE_MS = 75;
+
+export function scheduleCloudSave({
+  previousTimer,
+  getPendingState,
+  write,
+  cancelTimer = clearTimeout,
+  setTimer = setTimeout,
+  delayMs = CLOUD_SAVE_DEBOUNCE_MS,
+}) {
+  if (previousTimer) cancelTimer(previousTimer);
+  return setTimer(() => {
+    const stateToSave = getPendingState();
+    if (stateToSave) write(stateToSave);
+  }, delayMs);
+}
+
 export async function waitForCloudStartup(startupPromise, timeoutMs = 5000) {
   let timeoutId;
   const deadline = new Promise(resolve => {
@@ -139,16 +156,20 @@ async function writeMergedProgress(localState) {
 export function queueCloudProgressSave(state) {
   pendingState = structuredClone(state);
   if (!currentUser) return;
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(() => {
-    const stateToSave = pendingState;
-    if (stateToSave) writeMergedProgress(stateToSave);
-  }, 700);
+  saveTimer = scheduleCloudSave({
+    previousTimer: saveTimer,
+    getPendingState: () => pendingState,
+    write: stateToSave => {
+      saveTimer = null;
+      writeMergedProgress(stateToSave);
+    },
+  });
 }
 
 export function syncCloudProgressNow(state) {
   pendingState = structuredClone(state);
   clearTimeout(saveTimer);
+  saveTimer = null;
   const stateToSave = pendingState;
   if (!currentUser) return Promise.resolve(stateToSave);
   return writeMergedProgress(stateToSave);
@@ -228,6 +249,7 @@ async function activateCloudModules([appModule, loadedAuthApi, loadedFirestoreAp
   };
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') syncOnForeground();
+    else if (currentUser) syncCloudProgressNow(pendingState || hooks.getLocalState());
   });
   window.addEventListener('focus', syncOnForeground);
   window.addEventListener('pageshow', event => {
